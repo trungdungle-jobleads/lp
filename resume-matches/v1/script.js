@@ -515,6 +515,7 @@ document.querySelectorAll('.des148-acc[data-toggle]').forEach(function(acc){
     var show = !heroFullyVisible && !finalFullyVisible && !atBottom && !modalOpen;
     bar.classList.toggle('is-visible', show);
     bar.setAttribute('aria-hidden', show ? 'false' : 'true');
+    if (window.des148StickyRotator) window.des148StickyRotator(show);   /* pause/resume the copy rotator with the bar's visibility */
   }
   window.des148UpdateSticky = update;
   /* Hide the bar once the page is scrolled to its bottom EDGE — i.e. the end of the document reaches
@@ -551,45 +552,80 @@ document.querySelectorAll('.des148-acc[data-toggle]').forEach(function(acc){
   }
 })();
 
-/* Sticky CTA rotator — softly crossfade two lines in place (fade one out, then the next in).
-   Desktop: "Find jobs that match your resume" (title) <-> "Free · See your matches..." (value); the badges on the right show the formats.
-   Mobile:  "Free · See your matches..." (value) <-> "Supports PDF/Word" (formats); the title is hidden. */
+/* Copy rotators — ONE shared 3.6s clock drives every crossfading label so they never drift or run
+   at different speeds: the hero notes (header hero + final CTA) and the sticky bar all advance on the
+   same tick. Each rotator just toggles the .is-on class; the fade itself is pure CSS (opacity .5s).
+     Hero notes  : "Free · See your matches..." <-> "Supports PDF/Word" — always active.
+     Sticky bar  : Desktop "Find jobs that match your resume" (title) <-> "Free..." (value);
+                   Mobile  "Free..." (value) <-> "Supports PDF/Word" (formats), title hidden.
+   The sticky rotator only runs WHILE THE BAR IS VISIBLE, and resets to its first line whenever the
+   bar (re)appears — so the first line always gets a full dwell instead of flipping early, which was
+   why the bar looked "faster" on mobile (its timer was running unseen while the bar was still hidden). */
 (function(){
-  var copy = document.querySelector('.des148-stickycta-copy');
-  if (!copy) return;
-  var title = copy.querySelector('.des148-stickycta-title');
-  var value = copy.querySelector('.des148-stickycta-msg-value');
-  var formats = copy.querySelector('.des148-stickycta-msg-formats');
-  if (!value) return;
+  var PERIOD = 3600;
   var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var mq = window.matchMedia ? matchMedia('(max-width: 768px)') : null;
-  var all = [title, value, formats].filter(Boolean);
-  var timer = null, i = 0, set = [];
-  var show = function(n){ set.forEach(function(el, k){ el.classList.toggle('is-on', k === n); }); };
-  var apply = function(){
-    if (timer) { clearInterval(timer); timer = null; }
-    all.forEach(function(el){ el.classList.remove('is-on'); });
-    set = ((mq && mq.matches) ? [value, formats] : [title, value]).filter(Boolean);
-    i = 0; show(0);
-    if (reduce || set.length < 2) return;
-    timer = setInterval(function(){ i = (i + 1) % set.length; show(i); }, 3600);
-  };
-  apply();
-  if (mq) { mq.addEventListener ? mq.addEventListener('change', apply) : mq.addListener(apply); }
-})();
+  var rotators = [];
+  var clock = null;
 
-/* Hero notes — crossfade "Free..." <-> "Supports PDF and Word files" on all viewports, same 3.6s pace as the sticky bar.
-   Applies to every .des148-hero-note (header hero + the final CTA), each on its own interval (they start in sync at load). */
-(function(){
-  var notes = [].slice.call(document.querySelectorAll('.des148-hero-note'));
-  if (!notes.length) return;
-  if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  notes.forEach(function(note){
+  function paint(r){ r.set.forEach(function(el, k){ el.classList.toggle('is-on', k === r.i); }); }
+  function tick(){
+    rotators.forEach(function(r){
+      if (!r.active || r.set.length < 2) return;
+      r.i = (r.i + 1) % r.set.length;
+      paint(r);
+    });
+  }
+  function startClock(){
+    if (clock) { clearInterval(clock); clock = null; }
+    if (!reduce) clock = setInterval(tick, PERIOD);
+  }
+  /* Restart the shared clock and show every active rotator's first line — keeps them in phase and
+     guarantees a freshly-shown line gets a full interval before the first switch. */
+  function resync(){
+    rotators.forEach(function(r){ r.i = 0; if (r.active) paint(r); });
+    startClock();
+  }
+
+  /* Hero notes: header hero + final CTA — always active */
+  [].slice.call(document.querySelectorAll('.des148-hero-note')).forEach(function(note){
     var msgs = [].slice.call(note.querySelectorAll('.des148-hero-note-msg'));
-    if (msgs.length < 2) return;
-    var i = 0;
-    setInterval(function(){ i = (i + 1) % msgs.length; msgs.forEach(function(m, k){ m.classList.toggle('is-on', k === i); }); }, 3600);
+    if (msgs.length >= 2) rotators.push({ set: msgs, i: 0, active: true });
   });
+
+  /* Sticky bar: viewport-dependent set, active only while the bar is visible */
+  var copy = document.querySelector('.des148-stickycta-copy');
+  if (copy) {
+    var title = copy.querySelector('.des148-stickycta-title');
+    var value = copy.querySelector('.des148-stickycta-msg-value');
+    var formats = copy.querySelector('.des148-stickycta-msg-formats');
+    var all = [title, value, formats].filter(Boolean);
+    var mq = window.matchMedia ? matchMedia('(max-width: 768px)') : null;
+    if (value) {
+      var sticky = { set: [], i: 0, active: false };
+      var buildSet = function(){
+        all.forEach(function(el){ el.classList.remove('is-on'); });
+        sticky.set = ((mq && mq.matches) ? [value, formats] : [title, value]).filter(Boolean);
+        sticky.i = 0; paint(sticky);
+      };
+      buildSet();
+      rotators.push(sticky);
+      if (mq) {
+        var onMq = function(){ buildSet(); if (sticky.active) resync(); };
+        mq.addEventListener ? mq.addEventListener('change', onMq) : mq.addListener(onMq);
+      }
+      /* called by the sticky show/hide logic (des148UpdateSticky) whenever the bar toggles */
+      window.des148StickyRotator = function(visible){
+        if (visible === sticky.active) return;         /* ignore repeated same-state calls (scroll fires often) */
+        sticky.active = visible;
+        if (visible) resync();                          /* appear -> fresh full dwell, back in phase */
+        else { sticky.i = 0; paint(sticky); }           /* hide  -> reset so it reappears on its first line */
+      };
+      var bar = document.getElementById('des148-stickycta');
+      if (bar && bar.classList.contains('is-visible')) window.des148StickyRotator(true);   /* already visible at init */
+    }
+  }
+
+  startClock();
 })();
 
 /* Scroll reveal — content eases in as it enters the viewport (nav & footer stay static) */
