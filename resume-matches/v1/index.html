@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Find jobs that match your resume | JobLeads</title>
+<meta name="description" content="Upload your resume and let JobLeads find jobs that match your skills and experience, including roles you would never find by searching keywords one at a time.">
+<meta property="og:title" content="Find jobs that match your resume | JobLeads">
+<meta property="og:description" content="Resume matching reads your whole resume and finds jobs that fit, even when the title is different. Free. See your matches before you apply.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="JobLeads">
+<meta property="og:locale" content="en_US">
+<!-- SEO/GEO: canonical, og:url and hreflang alternates come from Nuxt (useHead + i18n) in production; the URL below is a
+     placeholder to confirm. og:image / twitter:image use the local 1200x630 card in assets/ (make it an absolute URL in production). -->
+<link rel="canonical" href="https://www.jobleads.com/resume-matches">
+<!-- Prototype deploy: keep out of search indexes. For production, set this back to "index, follow". -->
+<meta name="robots" content="noindex, nofollow">
+<meta property="og:url" content="https://www.jobleads.com/resume-matches">
+<meta property="og:image" content="https://trungdungle-jobleads.github.io/lp/resume-matches/v1/assets/og-resume-matches.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:alt" content="Find jobs that match your resume — JobLeads">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Find jobs that match your resume | JobLeads">
+<meta name="twitter:description" content="Resume matching reads your whole resume and finds jobs that fit, even when the title is different. Free. See your matches before you apply.">
+<meta name="twitter:image" content="https://trungdungle-jobleads.github.io/lp/resume-matches/v1/assets/og-resume-matches.png">
+
+<!-- Organization + WebSite schema (GEO). In production these are usually site-wide from the Nuxt app layout, not per page. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    { "@type": "Organization", "name": "JobLeads", "url": "https://www.jobleads.com/", "logo": "https://www.jobleads.com/assets/jobleads-logo-dark.svg" },
+    { "@type": "WebSite", "name": "JobLeads", "url": "https://www.jobleads.com/" }
+  ]
+}
+</script>
+
+<!-- DES-148 · Resume Matches landing page · responsive website (desktop + mobile).
+     ALL classes are namespaced under des148- (incl. buttons, accordion, footer, nav, icons) for style isolation.
+     Spacing convention: 4pt token scale only; gap (not margin) between siblings; padding for internal space.
+
+     HANDOFF — target stack: Nuxt 3 / Vue 3 (SSR), same as jobleads.com.
+       - [REUSE] header/nav + footer map to existing JobLeads components; the des148- markup here is a prototype stand-in.
+       - [NEW]   section banners tagged [NEW] are to be built; repeated markup -> Vue component + v-for (hints inline).
+       - Behavior reference: script.js (scroll reveals, counters, header version controller, upload modal) -> Vue composables.
+       - Prototype-only, drop in production: V1/V2/V3 header switcher, bundled fonts/ + serve.js.
+       - Icons: external SVG files in assets/icons/ (<name>-<hex>.svg, colour baked in) embedded via <img>; no icon font, no CDN.
+                Exception: the animated hero (V1/V2/V3) + how-it-works resume docs stay inline SVG because CSS/JS animate their internals.
+       - Design tokens are CSS custom properties in style.css -> map to the JobLeads theme tokens. -->
+
+<link rel="stylesheet" href="style.css">
+
+<script>
+/* Prototype: always enable the reveal system so the intro/header (and page) motion is visible when reviewing —
+   even if the OS "reduce motion" setting is on. For a production build, re-gate this with prefers-reduced-motion. */
+document.documentElement.classList.add('des148-rvl');
+</script>
+
+</head>
+<body>
+
+<!-- ════════ HEADER · [REUSE] existing JobLeads header/nav component — prototype stand-in ════════ -->
+<header class="des148-header">
+  <div class="des148-container">
+    <nav class="des148-nav" aria-label="Main navigation">
+      <a class="des148-nav-logo" href="#" aria-label="JobLeads home"><img src="assets/jobleads-logo-dark.svg" alt="JobLeads"></a>
+      <ul class="des148-nav-links">
+        <li class="des148-nav-item">
+          <button class="des148-nav-link is-selected has-caret" type="button" aria-haspopup="true" aria-expanded="false"><span class="des148-nav-label"><span class="des148-nav-text">Jobs</span></span><img class="des148-navchev" src="assets/icons/chevron-down-100f0e.svg" alt="" aria-hidden="true"></button>
+          <div class="des148-dropdown" role="menu">
+            <a class="des148-dropitem" href="#" role="menuitem">All jobs</a>
+            <a class="des148-dropitem" href="#" role="menuitem">Remote jobs</a>
+          </div>
+        </li>
+        <li class="des148-nav-item"><a class="des148-nav-link" href="#"><span class="des148-nav-label"><span class="des148-nav-text">Headhunters</span></span></a></li>
+        <li class="des148-nav-item">
+          <button class="des148-nav-link has-caret" type="button" aria-haspopup="true" aria-expanded="false"><span class="des148-nav-label"><span class="des148-nav-text">Resume</span></span><img class="des148-navchev" src="assets/icons/chevron-down-100f0e.svg" alt="" aria-hidden="true"></button>
+          <div class="des148-dropdown" role="menu">
+            <a class="des148-dropitem" href="#" role="menuitem">Resume Builder</a>
+            <a class="des148-dropitem" href="#" role="menuitem">Resume templates</a>
+            <a class="des148-dropitem" href="#" role="menuitem">Free resume review</a>
+          </div>
+        </li>
+        <li class="des148-nav-item"><a class="des148-nav-link" href="#"><span class="des148-nav-label"><span class="des148-nav-text">About Us</span></span></a></li>
+      </ul>
+      <div class="des148-nav-end">
+        <div class="des148-nav-item des148-lang">
+          <button class="des148-langbtn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Language"><img class="des148-globe" src="assets/icons/language-a03e3c.svg" alt="" aria-hidden="true"><span class="des148-lang-en">EN</span><img class="des148-langchev" src="assets/icons/chevron-down-272625.svg" alt="" aria-hidden="true"></button>
+          <div class="des148-dropdown des148-dropdown--right" role="menu">
+            <a class="des148-dropitem" href="#" role="menuitem">Deutsch</a>
+            <a class="des148-dropitem is-selected" href="#" role="menuitem" aria-current="true">English</a>
+            <a class="des148-dropitem" href="#" role="menuitem">Español</a>
+            <a class="des148-dropitem" href="#" role="menuitem">Français</a>
+            <a class="des148-dropitem" href="#" role="menuitem">Italiano</a>
+            <a class="des148-dropitem" href="#" role="menuitem">Português (Portugal)</a>
+            <a class="des148-dropitem" href="#" role="menuitem">Português (Brasil)</a>
+          </div>
+        </div>
+        <button class="des148-headcta des148-headcta-primary" type="button">Sign up</button>
+        <button class="des148-headcta des148-headcta-outline" type="button">Log in</button>
+        <button class="des148-naviconbtn" type="button" aria-label="Log in"><img class="des148-loginicon" src="assets/icons/login-100f0e.svg" alt="" aria-hidden="true"></button>
+        <button class="des148-burger" type="button" aria-label="menu" aria-expanded="false" onclick="toggleMenu()"><span></span><span></span><span></span><span></span><span></span><span></span></button>
+      </div>
+    </nav>
+  </div>
+  <div class="des148-mobile-menu" id="des148-mobile-menu">
+    <a href="#">Jobs</a>
+    <a href="#">Headhunters</a>
+    <a href="#">Resume</a>
+    <a href="#">About Us</a>
+    <a href="#">Log in</a>
+  </div>
+</header>
+
+<!-- Page content sits inside the main landmark below; header + footer stay outside it. Reuse-vs-new tags per section banner. -->
+<main>
+
+<!-- ════════ HERO · [NEW] · the floating V1/V2/V3 switcher is a prototype-only design tool (ship V3) ════════ -->
+<section class="des148-herobg" data-hv="3">
+  <!-- Header-version switcher, shown on hover near this section's right edge -->
+  <div class="des148-vswitch" role="group" aria-label="Header version">
+    <button class="des148-vswitch-btn" type="button" data-v="1">V1</button>
+    <button class="des148-vswitch-btn" type="button" data-v="2">V2</button>
+    <button class="des148-vswitch-btn is-active" type="button" data-v="3">V3</button>
+  </div>
+  <div class="des148-container">
+  <div class="des148-herocard">
+    <!-- V3 only: the whole card is a dropzone, revealed only while a file is dragged over it (see script.js) -->
+    <div class="des148-herodrop" aria-hidden="true">
+      <div class="des148-herodrop-inner">
+        <span class="des148-herodrop-ic"><span class="des148-ms" aria-hidden="true"><img src="assets/icons/upload_file-f56462.svg" alt=""></span></span>
+        <p class="des148-herodrop-title">Drop your resume to upload</p>
+        <div class="des148-herodrop-types">
+          <span class="des148-dz-chip"><span class="des148-ms" aria-hidden="true"><img src="assets/icons/picture_as_pdf-787673.svg" alt=""></span>PDF</span>
+          <span class="des148-dz-chip"><span class="des148-ms" aria-hidden="true"><img src="assets/icons/description-787673.svg" alt=""></span>Word</span>
+        </div>
+      </div>
+    </div>
+    <div class="des148-heropill" aria-hidden="true"><span class="des148-ms" aria-hidden="true"><img src="assets/icons/upload_file-ffffff.svg" alt=""></span>Drop your resume here</div>
+    <div class="des148-herocard-text">
+      <div class="des148-herohead">
+        <h1>Find jobs that match your <span class="des148-hl">resume</span></h1>
+        <p class="des148-hero-sub">Upload your resume and let our resume matcher find jobs based on your skills and experience, including roles you&#8217;d never find by searching keywords one at a time.</p>
+      </div>
+      <div class="des148-hero-actions">
+        <button class="des148-btn des148-btn-primary des148-btn-lg" type="button" onclick="pickResume()"><span class="des148-ms" aria-hidden="true"><img src="assets/icons/upload-ffffff.svg" alt=""></span>Upload my resume</button>
+        <span class="des148-hero-note"><span class="des148-hero-note-msg is-on"><span class="des148-freepill"><span class="des148-ms" aria-hidden="true"><img src="assets/icons/check-0b782d.svg" alt=""></span>Free</span>See your matches before you&nbsp;apply.</span><span class="des148-hero-note-msg">Supports <span class="des148-dz-chip"><span class="des148-ms" aria-hidden="true"><img src="assets/icons/picture_as_pdf-787673.svg" alt=""></span>PDF</span> <span class="des148-dz-chip"><span class="des148-ms" aria-hidden="true"><img src="assets/icons/description-787673.svg" alt=""></span>Word</span></span></span>
+      </div>
+      <div class="des148-trust">
+        <div class="des148-trust-item">
+          <div class="des148-avatars">
+            <img src="assets/avatar-1.webp" alt="" width="40" height="40" decoding="async">
+            <img src="assets/avatar-2.webp" alt="" width="40" height="40" decoding="async">
+            <img src="assets/avatar-3.webp" alt="" width="40" height="40" decoding="async">
+          </div>
+          <span class="des148-trust-text"><strong class="des148-trust-num"><span class="des148-trust-count" data-count="12000000">12,000,000</span>+</strong> professionals trust JobLeads</span>
+        </div>
+      </div>
+    </div>
+    <div class="des148-herocard-media">
+      <!-- Version 1: interactive dropzone + 3-step tracker -->
+      <div class="des148-hero-v1">
+        <div class="des148-dz" id="des148-dz" role="button" tabindex="0" aria-label="Upload your resume: drag and drop a PDF or Word file, or click to browse">
+          <div class="des148-dz-inner">
+            <span class="des148-dz-ic"><span class="des148-ms" aria-hidden="true"><img src="assets/icons/upload-f56462.svg" alt=""></span></span>
+            <p class="des148-dz-title">Upload your resume here</p>
+            <p class="des148-dz-sub">Drag &amp; drop, or <span class="des148-dz-link">click to browse</span></p>
+            <div class="des148-dz-types">
+              <span class="des148-dz-chip"><span class="des148-ms" aria-hidden="true"><img src="assets/icons/picture_as_pdf-787673.svg" alt=""></span>PDF</span>
+              <span class="des148-dz-chip"><span class="des148-ms" aria-hidden="true"><img src="assets/icons/description-787673.svg" alt=""></span>Word</span>
+            </div>
+          </div>
+          <ol class="des148-steps" aria-label="How it works: upload your resume, we review it, then you get ranked job matches">
+            <li class="des148-step"><span class="des148-step-dot">1</span><span class="des148-step-lbl">Upload resume</span></li>
+            <li class="des148-step"><span class="des148-step-dot">2</span><span class="des148-step-lbl">We analyze</span></li>
+            <li class="des148-step"><span class="des148-step-dot">3</span><span class="des148-step-lbl">Matched jobs</span></li>
+          </ol>
+        </div>
+      </div>
+      <!-- Version 2: dropzone + matched-jobs payoff (briefing + dropzone hybrid) -->
+      <div class="des148-hero-v2">
+        <div class="des148-v2grid">
+          <!-- Top field: interactive dropzone -->
+          <div class="des148-dz des148-dz--slim des148-v2-drop" id="des148-dz2" role="button" tabindex="0" aria-label="Upload your resume: drag and drop a PDF or Word file, or click to browse">
+            <div class="des148-dz-inner">
+              <span class="des148-dz-ic"><span class="des148-ms" aria-hidden="true"><img src="assets/icons/upload-f56462.svg" alt=""></span></span>
+              <p class="des148-dz-title">Upload your resume here</p>
+              <p class="des148-dz-sub">Drag &amp; drop, or <span class="des148-dz-link">click to browse</span></p>
+              <div class="des148-dz-types">
+                <span class="des148-dz-chip"><span class="des148-ms" aria-hidden="true"><img src="assets/icons/picture_as_pdf-787673.svg" alt=""></span>PDF</span>
+                <span class="des148-dz-chip"><span class="des148-ms" aria-hidden="true"><img src="assets/icons/description-787673.svg" alt=""></span>Word</span>
+              </div>
+            </div>
+          </div>
+          <!-- Bottom-left field: vertical steps (drive the stage) -->
+          <ol class="des148-v2-steps des148-vsteps" aria-label="How it works: upload, we review, matched jobs">
+            <li class="des148-vstep is-active"><span class="des148-vstep-num">1</span><span class="des148-vstep-lbl">Upload resume</span></li>
+            <li class="des148-vstep"><span class="des148-vstep-num">2</span><span class="des148-vstep-lbl">We analyze</span></li>
+            <li class="des148-vstep"><span class="des148-vstep-num">3</span><span class="des148-vstep-lbl">Matched jobs</span></li>
+          </ol>
+          <!-- Bottom-right field: stage, content changes with the active step -->
+          <div class="des148-v2-stage" aria-hidden="true">
+            <div class="des148-stage-reel">
+              <div class="des148-scene is-active" data-scene="0">
+                <div class="des148-doc">
+                  <div class="des148-docline" style="width:80%"></div>
+                  <div class="des148-docline" style="width:62%"></div>
+                  <div class="des148-docline" style="width:74%"></div>
+                  <div class="des148-docline" style="width:55%"></div>
+                  <div class="des148-docline" style="width:68%"></div>
+                  <div class="des148-docline" style="width:48%"></div>
+                  <div class="des148-up-badge"><span class="des148-ms" aria-hidden="true"><img src="assets/icons/arrow_upward-ffffff.svg" alt=""></span></div>
+                </div>
+              </div>
+              <div class="des148-scene" data-scene="1">
+                <div class="des148-doc">
+                  <div class="des148-docline" style="width:80%"></div>
+                  <div class="des148-docline" style="width:62%"></div>
+                  <div class="des148-docline" style="width:74%"></div>
+                  <div class="des148-docline" style="width:55%"></div>
+                  <div class="des148-docline" style="width:68%"></div>
+                  <div class="des148-docline" style="width:48%"></div>
+                  <div class="des148-scan"></div>
+                </div>
+                <div class="des148-tags" aria-hidden="true">
+                  <span class="des148-tag" style="--d:0">Skills</span>
+                  <span class="des148-tag" style="--d:1">Experience</span>
+                </div>
+              </div>
+              <div class="des148-scene" data-scene="2">
+                <div class="des148-jobscroll">
+                  <div class="des148-jobtrack">
+                    <div class="des148-match"><span class="des148-match-pct">96%</span><span class="des148-match-body"><span class="des148-match-title">Senior Product Designer</span><span class="des148-match-meta">San Francisco &middot; Remote</span></span></div>
+                    <div class="des148-match"><span class="des148-match-pct">93%</span><span class="des148-match-body"><span class="des148-match-title">UX Team Lead</span><span class="des148-match-meta">New York &middot; Hybrid</span></span></div>
+                    <div class="des148-match"><span class="des148-match-pct">91%</span><span class="des148-match-body"><span class="des148-match-title">Product Design Manager</span><span class="des148-match-meta">Chicago &middot; Onsite</span></span></div>
+                    <div class="des148-match"><span class="des148-match-pct">90%</span><span class="des148-match-body"><span class="des148-match-title">Senior UX Designer</span><span class="des148-match-meta">Seattle &middot; Remote</span></span></div>
+                    <div class="des148-match"><span class="des148-match-pct">88%</span><span class="des148-match-body"><span class="des148-match-title">Design Systems Lead</span><span class="des148-match-meta">Austin &middot; Hybrid</span></span></div>
+                    <div class="des148-match"><span class="des148-match-pct">86%</span><span class="des148-match-body"><span class="des148-match-title">UX Researcher</span><span class="des148-match-meta">Boston &middot; Onsite</span></span></div>
+                    <div class="des148-match"><span class="des148-match-pct">84%</span><span class="des148-match-body"><span class="des148-match-title">Product Designer</span><span class="des148-match-meta">Denver &middot; Remote</span></span></div>
+                    <div class="des148-match"><span class="des148-match-pct">82%</span><span class="des148-match-body"><span class="des148-match-title">Interaction Designer</span><span class="des148-match-meta">Los Angeles &middot; Hybrid</span></span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Version 3: single red panel with an emerging resume -->
+      <div class="des148-hero-v3">
+        <div class="des148-v3panel">
+          <div class="des148-v3-step">
+            <span class="des148-v3-num">1</span>
+            <span class="des148-v3-steplbl">Upload resume</span>
+          </div>
+          <div class="des148-v3-doc" aria-hidden="true">
+            <svg class="des148-v3-svg" viewBox="0 0 390 875" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- document background: white -> beige (square top; the beige card + overflow round the corners) -->
+              <rect x="0" y="0" width="390" height="875" fill="url(#des148-v3-bg)"/>
+              <!-- upload badge (red circle, white icon) — bobs up and down -->
+              <g class="des148-v3-badge">
+                <rect x="297.829" y="22.1035" width="69.1621" height="69.1621" rx="34.5811" fill="#F56462"/>
+                <path d="M330.838 62.9718V50.1611L326.751 54.2479L324.551 51.9687L332.41 44.1094L340.269 51.9687L338.069 54.2479L333.982 50.1611V62.9718H330.838ZM322.979 69.2592C322.114 69.2592 321.374 68.9514 320.758 68.3358C320.143 67.7201 319.835 66.98 319.835 66.1155V61.3999H322.979V66.1155H341.841V61.3999H344.985V66.1155C344.985 66.98 344.677 67.7201 344.061 68.3358C343.446 68.9514 342.706 69.2592 341.841 69.2592H322.979Z" fill="white"/>
+              </g>
+              <!-- text lines: JobLeads black at 10%, fading to 0 toward the bottom (SVG gradient) -->
+              <g class="des148-v3-lines" fill="#100F0E" fill-opacity="0.1" mask="url(#des148-v3-linemask)">
+                <path d="M42.3613 50.4185C42.3613 46.2227 45.7627 42.8213 49.9585 42.8213H175.924C180.12 42.8213 183.521 46.2227 183.521 50.4185C183.521 54.6143 180.12 58.0156 175.924 58.0156H49.9585C45.7627 58.0156 42.3613 54.6143 42.3613 50.4185Z"/>
+                <path d="M42.3613 106.613C42.3613 102.417 45.7627 99.0156 49.9585 99.0156H290.232C294.428 99.0156 297.829 102.417 297.829 106.613C297.829 110.809 294.428 114.21 290.232 114.21H49.9585C45.7627 114.21 42.3613 110.809 42.3613 106.613Z"/>
+                <path d="M42.3613 138.807C42.3613 134.611 45.7627 131.21 49.9585 131.21H166.122C170.317 131.21 173.719 134.611 173.719 138.807C173.719 143.003 170.317 146.404 166.122 146.404H49.9585C45.7627 146.404 42.3613 143.003 42.3613 138.807Z"/>
+                <path d="M193.719 138.807C193.719 134.611 197.12 131.21 201.316 131.21H338.555C342.751 131.21 346.152 134.611 346.152 138.807C346.152 143.003 342.751 146.404 338.555 146.404H201.316C197.12 146.404 193.719 143.003 193.719 138.807Z"/>
+                <path d="M42.3613 171.001C42.3613 166.806 45.7627 163.404 49.9585 163.404H232.665C236.86 163.404 240.262 166.806 240.262 171.001C240.262 175.197 236.86 178.599 232.665 178.599H49.9585C45.7627 178.599 42.3613 175.197 42.3613 171.001Z"/>
+                <path d="M260.262 171.001C260.262 166.806 263.663 163.404 267.859 163.404H338.764C342.96 163.404 346.361 166.806 346.361 171.001C346.361 175.197 342.96 178.599 338.764 178.599H267.859C263.663 178.599 260.262 175.197 260.262 171.001Z"/>
+                <path d="M42.3613 203.196C42.3613 199 45.7627 195.599 49.9585 195.599H107.99C112.186 195.599 115.587 199 115.587 203.196C115.587 207.392 112.186 210.793 107.99 210.793H49.9585C45.7627 210.793 42.3613 207.392 42.3613 203.196Z"/>
+                <path d="M135.587 203.196C135.587 199 138.988 195.599 143.184 195.599H313.764C317.96 195.599 321.361 199 321.361 203.196C321.361 207.392 317.96 210.793 313.764 210.793H143.184C138.988 210.793 135.587 207.392 135.587 203.196Z"/>
+                <path d="M42.3613 235.39C42.3613 231.194 45.7627 227.793 49.9585 227.793H191.471C195.667 227.793 199.068 231.194 199.068 235.39C199.068 239.586 195.667 242.987 191.471 242.987H49.9585C45.7627 242.987 42.3613 239.586 42.3613 235.39Z"/>
+                <path d="M219.068 235.39C219.068 231.194 222.47 227.793 226.666 227.793H338.764C342.96 227.793 346.361 231.194 346.361 235.39C346.361 239.586 342.96 242.987 338.764 242.987H226.666C222.47 242.987 219.068 239.586 219.068 235.39Z"/>
+                <path d="M42.3613 267.584C42.3613 263.389 45.7627 259.987 49.9585 259.987H145.7C149.896 259.987 153.297 263.389 153.297 267.584C153.297 271.78 149.896 275.182 145.7 275.182H49.9585C45.7627 275.182 42.3613 271.78 42.3613 267.584Z"/>
+                <path d="M173.297 267.584C173.297 263.389 176.698 259.987 180.894 259.987H301.764C305.96 259.987 309.361 263.389 309.361 267.584C309.361 271.78 305.96 275.182 301.764 275.182H180.894C176.698 275.182 173.297 271.78 173.297 267.584Z"/>
+                <path d="M42.3613 299.779C42.3613 295.583 45.7627 292.182 49.9585 292.182H253.292C257.488 292.182 260.89 295.583 260.89 299.779C260.89 303.975 257.488 307.376 253.292 307.376H49.9585C45.7627 307.376 42.3613 303.975 42.3613 299.779Z"/>
+                <path d="M280.89 299.779C280.89 295.583 284.291 292.182 288.487 292.182H338.764C342.96 292.182 346.361 295.583 346.361 299.779C346.361 303.975 342.96 307.376 338.764 307.376H288.487C284.291 307.376 280.89 303.975 280.89 299.779Z"/>
+                <path d="M42.3613 355.973C42.3613 351.777 45.7627 348.376 49.9585 348.376H218.821C223.017 348.376 226.418 351.777 226.418 355.973C226.418 360.169 223.017 363.57 218.821 363.57H49.9585C45.7627 363.57 42.3613 360.169 42.3613 355.973Z"/>
+                <path d="M246.418 355.973C246.418 351.777 249.819 348.376 254.015 348.376H313.764C317.96 348.376 321.361 351.777 321.361 355.973C321.361 360.169 317.96 363.57 313.764 363.57H254.015C249.819 363.57 246.418 360.169 246.418 355.973Z"/>
+                <path d="M42.3613 388.167C42.3613 383.972 45.7627 380.57 49.9585 380.57H150.949C155.145 380.57 158.546 383.972 158.546 388.167C158.546 392.363 155.145 395.765 150.949 395.765H49.9585C45.7627 395.765 42.3613 392.363 42.3613 388.167Z"/>
+                <path d="M178.546 388.167C178.546 383.972 181.947 380.57 186.143 380.57H338.764C342.96 380.57 346.361 383.972 346.361 388.167C346.361 392.363 342.96 395.765 338.764 395.765H186.143C181.947 395.765 178.546 392.363 178.546 388.167Z"/>
+              </g>
+              <defs>
+                <linearGradient id="des148-v3-bg" x1="194.517" y1="0" x2="194.517" y2="874.896" gradientUnits="userSpaceOnUse">
+                  <stop offset="0.305942" stop-color="white"/>
+                  <stop offset="0.466457" stop-color="#F5F1EB"/>
+                </linearGradient>
+                <!-- top->bottom fade for the resume text lines, now applied as a MASK so the fill itself can be a
+                     solid colour that smoothly interpolates black -> CI red on the review sweep -->
+                <linearGradient id="des148-v3-linemaskgrad" x1="194.361" y1="42.8213" x2="194.361" y2="435.561" gradientUnits="userSpaceOnUse">
+                  <stop offset="0.502966" stop-color="white" stop-opacity="1"/>
+                  <stop offset="1" stop-color="white" stop-opacity="0"/>
+                </linearGradient>
+                <mask id="des148-v3-linemask" maskUnits="userSpaceOnUse" x="0" y="0" width="390" height="875">
+                  <rect x="0" y="0" width="390" height="875" fill="url(#des148-v3-linemaskgrad)"/>
+                </mask>
+              </defs>
+            </svg>
+          </div>
+          <div class="des148-v3-scanwrap" aria-hidden="true"><span class="des148-v3-scan"></span></div>
+          <div class="des148-v3-pills" aria-hidden="true">
+            <span class="des148-v3-pill" style="--d:0">Skills</span>
+            <span class="des148-v3-pill" style="--d:1">Experience</span>
+          </div>
+          <div class="des148-v3-cards" aria-hidden="true">
+            <div class="des148-v3-cardtrack">
+              <div class="des148-v3-job"><span class="des148-v3-job-pct">96%</span><span class="des148-v3-job-body"><span class="des148-v3-job-title">Senior Product Designer</span><span class="des148-v3-job-meta">San Francisco &middot; Remote</span></span></div>
+              <div class="des148-v3-job"><span class="des148-v3-job-pct">93%</span><span class="des148-v3-job-body"><span class="des148-v3-job-title">UX Team Lead</span><span class="des148-v3-job-meta">New York &middot; Hybrid</span></span></div>
+              <div class="des148-v3-job"><span class="des148-v3-job-pct">91%</span><span class="des148-v3-job-body"><span class="des148-v3-job-title">Product Design Manager</span><span class="des148-v3-job-meta">Chicago &middot; Onsite</span></span></div>
+              <div class="des148-v3-job"><span class="des148-v3-job-pct">90%</span><span class="des148-v3-job-body"><span class="des148-v3-job-title">Senior UX Designer</span><span class="des148-v3-job-meta">Seattle &middot; Remote</span></span></div>
+              <div class="des148-v3-job"><span class="des148-v3-job-pct">88%</span><span class="des148-v3-job-body"><span class="des148-v3-job-title">Design Systems Lead</span><span class="des148-v3-job-meta">Austin &middot; Hybrid</span></span></div>
+              <div class="des148-v3-job"><span class="des148-v3-job-pct">86%</span><span class="des148-v3-job-body"><span class="des148-v3-job-title">UX Researcher</span><span class="des148-v3-job-meta">Boston &middot; Onsite</span></span></div>
+              <div class="des148-v3-job"><span class="des148-v3-job-pct">84%</span><span class="des148-v3-job-body"><span class="des148-v3-job-title">Product Designer</span><span class="des148-v3-job-meta">Denver &middot; Remote</span></span></div>
+              <div class="des148-v3-job"><span class="des148-v3-job-pct">82%</span><span class="des148-v3-job-body"><span class="des148-v3-job-title">Interaction Designer</span><span class="des148-v3-job-meta">Los Angeles &middot; Hybrid</span></span></div>
+              <div class="des148-v3-job"><span class="des148-v3-job-pct">80%</span><span class="des148-v3-job-body"><span class="des148-v3-job-title">UX Writer</span><span class="des148-v3-job-meta">Portland &middot; Onsite</span></span></div>
+              <div class="des148-v3-job"><span class="des148-v3-job-pct">79%</span><span class="des148-v3-job-body"><span class="des148-v3-job-title">Service Designer</span><span class="des148-v3-job-meta">Atlanta &middot; Remote</span></span></div>
+              <div class="des148-v3-job"><span class="des148-v3-job-pct">77%</span><span class="des148-v3-job-body"><span class="des148-v3-job-title">Design Lead</span><span class="des148-v3-job-meta">Nashville &middot; Hybrid</span></span></div>
+              <div class="des148-v3-job"><span class="des148-v3-job-pct">76%</span><span class="des148-v3-job-body"><span class="des148-v3-job-title">UX Engineer</span><span class="des148-v3-job-meta">Minneapolis &middot; Onsite</span></span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ TESTIMONIALS · [NEW] · review card x6 -> ReviewCard component (v-for) ════════ -->
+<section class="des148-section des148-section--beige">
+  <div class="des148-container des148-reviews">
+    <div class="des148-reviews-header">
+      <h2 class="des148-h2 des148-reviews-title">What job seekers say</h2>
+      <div class="des148-reviews-tp">
+        <div class="des148-tp-top">
+          <span class="des148-tp-logo"><img src="assets/trustpilot-star.svg" alt=""><span class="des148-tp-name">Trustpilot</span></span>
+          <span class="des148-tp-rating" role="img" aria-label="4.5 out of 5 stars">
+            <img src="assets/trustpilot-star-full.svg" alt="">
+            <img src="assets/trustpilot-star-full.svg" alt="">
+            <img src="assets/trustpilot-star-full.svg" alt="">
+            <img src="assets/trustpilot-star-full.svg" alt="">
+            <span class="des148-tp-half"><img src="assets/trustpilot-star-empty.svg" alt=""><img class="des148-tp-half-fill" src="assets/trustpilot-star-full.svg" alt=""></span>
+          </span>
+        </div>
+        <div class="des148-tp-text">Rated &#8220;Excellent&#8221; based on 21,076 reviews</div>
+      </div>
+    </div>
+    <div class="des148-reviews-grid">
+      <article class="des148-review">
+        <div class="des148-review-top">
+          <div class="des148-review-person">
+            <span class="des148-review-avatar">SB</span>
+            <div class="des148-review-id"><span class="des148-review-name">Shako B.</span></div>
+          </div>
+          <div class="des148-review-source"><img src="assets/trustpilot-star.svg" alt=""><span>Trustpilot</span></div>
+        </div>
+        <div class="des148-review-stars" role="img" aria-label="5 out of 5 stars"><img src="assets/trustpilot-star-full.svg" alt=""><img src="assets/trustpilot-star-full.svg" alt=""><img src="assets/trustpilot-star-full.svg" alt=""><img src="assets/trustpilot-star-full.svg" alt=""><img src="assets/trustpilot-star-full.svg" alt=""></div>
+        <p class="des148-review-q">&#8220;The service was easy to use and professional. I found useful job opportunities and the platform was simple to navigate.&#8221;</p>
+      </article>
+      <article class="des148-review">
+        <div class="des148-review-top">
+          <div class="des148-review-person">
+            <span class="des148-review-avatar">MD</span>
+            <div class="des148-review-id"><span class="des148-review-name">Marcus D.</span></div>
+          </div>
+          <div class="des148-review-source"><img src="assets/trustpilot-star.svg" alt=""><span>Trustpilot</span></div>
+        </div>
+        <div class="des148-review-stars" role="img" aria-label="5 out of 5 stars"><img src="assets/trustpilot-star-full.svg" alt=""><img src="assets/trustpilot-star-full.svg" alt=""><img src="assets/trustpilot-star-full.svg" alt=""><img src="assets/trustpilot-star-full.svg" alt=""><img src="assets/trustpilot-star-full.svg" alt=""></div>
+        <p class="des148-review-q">&#8220;Ability to view job matches in fields I never considered&#8230; a great AI-based tool that can get you to an interview.&#8221;</p>
+      </article>
+      <article class="des148-review">
+        <div class="des148-review-top">
+          <div class="des148-review-person">
+            <span class="des148-review-avatar">TP</span>
+            <div class="des148-review-id"><span class="des148-review-name">Trever P.</span></div>
+          </div>
+          <div class="des148-review-source"><img src="assets/trustpilot-star.svg" alt=""><span>Trustpilot</span></div>
+        </div>
+        <div class="des148-review-stars" role="img" aria-label="5 out of 5 stars"><img src="assets/trustpilot-star-full.svg" alt=""><img src="assets/trustpilot-star-full.svg" alt=""><img src="assets/trustpilot-star-full.svg" alt=""><img src="assets/trustpilot-star-full.svg" alt=""><img src="assets/trustpilot-star-full.svg" alt=""></div>
+        <p class="des148-review-q">&#8220;How many jobs out there I never found because I wasn&#8217;t utilizing them&#8230; my journey has gotten a little more opportunistic now.&#8221;</p>
+      </article>
+      <article class="des148-review is-extra">
+        <div class="des148-review-top">
+          <div class="des148-review-person">
+            <span class="des148-review-avatar">PS</span>
+            <div class="des148-review-id"><span class="des148-review-name">Priya S.</span></div>
+          </div>
+          <div class="des148-review-source"><img src="assets/trustpilot-star.svg" alt=""><span>Trustpilot</span></div>
+        </div>
+        <div class="des148-review-stars" role="img" aria-label="5 out of 5 stars"><img src="assets/trustpilot-star-full.svg" alt=""><img src="assets/trustpilot-star-full.svg" alt=""><img src="assets/trustpilot-star-full.svg" alt=""><img src="assets/trustpilot-star-full.svg" alt=""><img src="assets/trustpilot-star-full.svg" alt=""></div>
+        <p class="des148-review-q">&#8220;I uploaded my resume and within minutes saw roles I&#8217;d never have thought to search for. 2 interviews already.&#8221;</p>
+      </article>
+      <article class="des148-review is-extra">
+        <div class="des148-review-top">
+          <div class="des148-review-person">
+            <span class="des148-review-avatar">DK</span>
+            <div class="des148-review-id"><span class="des148-review-name">Daniel K.</span></div>
+          </div>
+          <div class="des148-review-source"><img src="assets/trustpilot-star.svg" alt=""><span>Trustpilot</span></div>
+        </div>
+        <div class="des148-review-stars" role="img" aria-label="5 out of 5 stars"><img src="assets/trustpilot-star-full.svg" alt=""><img src="assets/trustpilot-star-full.svg" alt=""><img src="assets/trustpilot-star-full.svg" alt=""><img src="assets/trustpilot-star-full.svg" alt=""><img src="assets/trustpilot-star-full.svg" alt=""></div>
+        <p class="des148-review-q">&#8220;The matches actually fit my experience, not just my job title. It saved me hours of scrolling.&#8221;</p>
+      </article>
+      <article class="des148-review is-extra">
+        <div class="des148-review-top">
+          <div class="des148-review-person">
+            <span class="des148-review-avatar">ER</span>
+            <div class="des148-review-id"><span class="des148-review-name">Elena R.</span></div>
+          </div>
+          <div class="des148-review-source"><img src="assets/trustpilot-star.svg" alt=""><span>Trustpilot</span></div>
+        </div>
+        <div class="des148-review-stars" role="img" aria-label="5 out of 5 stars"><img src="assets/trustpilot-star-full.svg" alt=""><img src="assets/trustpilot-star-full.svg" alt=""><img src="assets/trustpilot-star-full.svg" alt=""><img src="assets/trustpilot-star-full.svg" alt=""><img src="assets/trustpilot-star-full.svg" alt=""></div>
+        <p class="des148-review-q">&#8220;It surfaced roles in adjacent fields that matched my skills. That&#8217;s where I got hired.&#8221;</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ LOGOS · [NEW] · animated gradient marquee; logos = assets/logo-*.svg ════════ -->
+<section class="des148-logos">
+  <div class="des148-container">
+    <div class="des148-logos-title">We bring top talent to top companies</div>
+    <div class="des148-logos-marquee">
+      <div class="des148-logos-track">
+        <img class="des148-logo" src="assets/logo-nike.svg" width="85" height="30" alt="Nike" decoding="async">
+        <img class="des148-logo" src="assets/logo-amazon.svg" width="102" height="30" alt="Amazon" decoding="async">
+        <img class="des148-logo" src="assets/logo-apple.svg" width="26" height="30" alt="Apple" decoding="async">
+        <img class="des148-logo" src="assets/logo-visa.svg" width="94" height="30" alt="Visa" decoding="async">
+        <img class="des148-logo" src="assets/logo-netflix.svg" width="113" height="30" alt="Netflix" decoding="async">
+        <img class="des148-logo" src="assets/logo-paypal.svg" width="115" height="30" alt="Paypal" decoding="async">
+        <img class="des148-logo" src="assets/logo-microsoft.svg" width="143" height="30" alt="Microsoft" decoding="async">
+        <img class="des148-logo" src="assets/logo-nike.svg" width="85" height="30" alt="" aria-hidden="true" decoding="async">
+        <img class="des148-logo" src="assets/logo-amazon.svg" width="102" height="30" alt="" aria-hidden="true" decoding="async">
+        <img class="des148-logo" src="assets/logo-apple.svg" width="26" height="30" alt="" aria-hidden="true" decoding="async">
+        <img class="des148-logo" src="assets/logo-visa.svg" width="94" height="30" alt="" aria-hidden="true" decoding="async">
+        <img class="des148-logo" src="assets/logo-netflix.svg" width="113" height="30" alt="" aria-hidden="true" decoding="async">
+        <img class="des148-logo" src="assets/logo-paypal.svg" width="115" height="30" alt="" aria-hidden="true" decoding="async">
+        <img class="des148-logo" src="assets/logo-microsoft.svg" width="143" height="30" alt="" aria-hidden="true" decoding="async">
+        <!-- third copy: keeps the marquee seamless on wide screens (one copy is narrower than the visible strip) -->
+        <img class="des148-logo" src="assets/logo-nike.svg" width="85" height="30" alt="" aria-hidden="true" decoding="async">
+        <img class="des148-logo" src="assets/logo-amazon.svg" width="102" height="30" alt="" aria-hidden="true" decoding="async">
+        <img class="des148-logo" src="assets/logo-apple.svg" width="26" height="30" alt="" aria-hidden="true" decoding="async">
+        <img class="des148-logo" src="assets/logo-visa.svg" width="94" height="30" alt="" aria-hidden="true" decoding="async">
+        <img class="des148-logo" src="assets/logo-netflix.svg" width="113" height="30" alt="" aria-hidden="true" decoding="async">
+        <img class="des148-logo" src="assets/logo-paypal.svg" width="115" height="30" alt="" aria-hidden="true" decoding="async">
+        <img class="des148-logo" src="assets/logo-microsoft.svg" width="143" height="30" alt="" aria-hidden="true" decoding="async">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ THE PROBLEM · [NEW] · progress bars + % count-up in script.js ════════ -->
+<section class="des148-section des148-section--beige">
+  <div class="des148-container">
+    <div class="des148-two">
+      <div class="des148-stack is-tight">
+        <span class="des148-eyebrow">The problem</span>
+        <h2 class="des148-h2">Searching by keyword hides the jobs that fit your resume</h2>
+        <p class="des148-lead">Type a job title and you only see jobs that use your exact words. Roles with different titles, your transferable skills, the hidden market: all missed. The right job is often the one you did not know to search for, and that is exactly what a resume match surfaces.</p>
+      </div>
+      <div class="des148-problemwin">
+        <span class="des148-pw-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+        <div class="des148-pw-search des148-pw-rvl">
+          <span class="des148-pw-searchicon"><span class="des148-ms" aria-hidden="true"><img src="assets/icons/search-ffffff.svg" alt=""></span></span>
+          <span class="des148-pw-searchtext"><span class="des148-pw-typed">Product manager</span><span class="des148-pw-caret" aria-hidden="true"></span></span>
+        </div>
+        <div class="des148-pw-group">
+          <div class="des148-pw-label des148-pw-rvl">What you see</div>
+          <div class="des148-pw-jobs">
+            <div class="des148-pw-job des148-pw-rvl">
+              <span class="des148-pw-jobtitle">Product Manager</span>
+              <span class="des148-pw-jobmeta">New York &middot; Onsite</span>
+              <div class="des148-pw-bar"><i style="--pw-fill:56%"><span class="des148-pw-fit"><span class="des148-pw-fit-word">Fit&nbsp;</span><span class="des148-pw-fit-num">56%</span></span></i></div>
+            </div>
+            <div class="des148-pw-job des148-pw-rvl">
+              <span class="des148-pw-jobtitle">Product Manager, B2B</span>
+              <span class="des148-pw-jobmeta">San Francisco &middot; Hybrid</span>
+              <div class="des148-pw-bar"><i style="--pw-fill:52%"><span class="des148-pw-fit"><span class="des148-pw-fit-word">Fit&nbsp;</span><span class="des148-pw-fit-num">52%</span></span></i></div>
+            </div>
+          </div>
+        </div>
+        <div class="des148-pw-group">
+          <div class="des148-pw-label is-hidden des148-pw-rvl">
+            <img class="des148-pw-mark" src="assets/icons/pw-mark-f56462.svg" alt="" aria-hidden="true">
+            Hidden from you
+          </div>
+          <div class="des148-pw-jobs">
+            <div class="des148-pw-job is-hi des148-pw-rvl">
+              <span class="des148-pw-jobtitle">Head of Product</span>
+              <span class="des148-pw-jobmeta">Austin &middot; Remote</span>
+              <div class="des148-pw-bar"><i style="--pw-fill:93%"><span class="des148-pw-fit"><span class="des148-pw-fit-word">Fit&nbsp;</span><span class="des148-pw-fit-num">93%</span></span></i></div>
+            </div>
+            <div class="des148-pw-job is-hi des148-pw-rvl">
+              <span class="des148-pw-jobtitle">Group Product Lead</span>
+              <span class="des148-pw-jobmeta">Seattle &middot; Hybrid</span>
+              <div class="des148-pw-bar"><i style="--pw-fill:89%"><span class="des148-pw-fit"><span class="des148-pw-fit-word">Fit&nbsp;</span><span class="des148-pw-fit-num">89%</span></span></i></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ HOW IT WORKS · [NEW] · resume SVG stays inline (stateful) + job cards; scroll-reveal in script.js ════════ -->
+<section class="des148-section des148-section--white">
+  <div class="des148-container des148-stack is-loose">
+    <div class="des148-stack is-tight is-center">
+      <span class="des148-eyebrow">How it works</span>
+      <h2 class="des148-h2" style="max-width:24ch">How resume matching works, and why each job fits</h2>
+    </div>
+
+    <div class="des148-tl">
+      <div class="des148-tl-step">
+        <div class="des148-tl-card">
+          <span class="des148-tl-ic"><span class="des148-ms" aria-hidden="true"><img src="assets/icons/upload-f56462.svg" alt=""></span></span>
+          <div class="des148-tl-body">
+            <span class="des148-tl-title">Upload your resume</span>
+            <p class="des148-tl-desc">PDF or Word, once.</p>
+          </div>
+        </div>
+        <span class="des148-tl-node"></span>
+        <div class="des148-tl-num">01</div>
+      </div>
+      <div class="des148-tl-step">
+        <div class="des148-tl-card">
+          <span class="des148-tl-ic"><span class="des148-ms" aria-hidden="true"><img src="assets/icons/manage_search-100f0e.svg" alt=""></span></span>
+          <div class="des148-tl-body">
+            <span class="des148-tl-title">We read your profile</span>
+            <p class="des148-tl-desc">Your real skills and experience, not just keywords.</p>
+          </div>
+        </div>
+        <span class="des148-tl-node"></span>
+        <div class="des148-tl-num">02</div>
+      </div>
+      <div class="des148-tl-step">
+        <div class="des148-tl-card">
+          <span class="des148-tl-ic"><span class="des148-ms" aria-hidden="true"><img src="assets/icons/target-e8ff63.svg" alt=""></span></span>
+          <div class="des148-tl-body">
+            <span class="des148-tl-title">Get jobs ranked by fit</span>
+            <p class="des148-tl-desc">Each match explained against your resume.</p>
+          </div>
+        </div>
+        <span class="des148-tl-node"></span>
+        <div class="des148-tl-num">03</div>
+      </div>
+    </div>
+
+    <div class="des148-tl-final">
+    <div class="des148-two des148-two--vtop">
+      <div class="des148-hiw-visual">
+        <div class="des148-hiw-doc" aria-hidden="true">
+          <!-- Static decorative resume doc — externalized to assets/hiw-resume-doc.svg (no CSS/JS animation on its internals).
+               object-fit:cover + object-position:top in CSS reproduces the inline preserveAspectRatio="xMidYMin slice". -->
+          <img class="des148-hiw-svg" src="assets/hiw-resume-doc.svg" alt="" decoding="async">
+        </div>
+        <div class="des148-hiw-cards">
+          <div class="des148-hiw-job"><span class="des148-hiw-job-pct">96%</span><span class="des148-hiw-job-body"><span class="des148-hiw-job-title">Senior Product Designer</span><span class="des148-hiw-job-meta">San Francisco &middot; Remote</span></span></div>
+          <div class="des148-hiw-job"><span class="des148-hiw-job-pct">93%</span><span class="des148-hiw-job-body"><span class="des148-hiw-job-title">UX Team Lead</span><span class="des148-hiw-job-meta">New York &middot; Hybrid</span></span></div>
+          <div class="des148-hiw-job"><span class="des148-hiw-job-pct">91%</span><span class="des148-hiw-job-body"><span class="des148-hiw-job-title">Product Design Manager</span><span class="des148-hiw-job-meta">Chicago &middot; Onsite</span></span></div>
+        </div>
+      </div>
+      <div class="des148-stack">
+        <p class="des148-lead">Every match shows the skills and experience it is based on, so you trust the jobs that fit your resume.</p>
+        <div class="des148-callout">
+          <div class="des148-lbl">Why it beats manual keyword search</div>
+          <div class="des148-ln">Manual keyword search matches the words you type. Resume matching reads your whole resume (skills, experience, seniority) and finds jobs that fit, even when the title is different.</div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ WHY OUR MATCHES ARE BETTER · [NEW] · tile -> MatchTile (v-for); count-down in script.js ════════ -->
+<section class="des148-section des148-section--yellowfade">
+  <div class="des148-container des148-stack is-loose">
+    <div class="des148-why-head">
+      <div class="des148-why-text des148-stack is-tight">
+        <span class="des148-eyebrow">Why our matches are better</span>
+        <h2 class="des148-h2">Smarter job matching across more jobs</h2>
+        <p class="des148-lead">We scan 40,000+ sources every day and bring them into one place. More jobs to match against means better matches, and the right jobs, not just more of them.</p>
+      </div>
+      <div class="des148-why-imgwrap">
+        <img class="des148-why-img" src="assets/illustration-31.svg" alt="" width="400" height="400" loading="lazy" decoding="async">
+      </div>
+    </div>
+    <div class="des148-tiles">
+      <div class="des148-tile"><div class="des148-big">40k+</div><div class="des148-fact">sources scanned daily</div></div>
+      <div class="des148-tile"><div class="des148-big" data-from="20">1</div><div class="des148-fact">place, not 20 tabs</div></div>
+      <div class="des148-tile"><div class="des148-big" data-from="20">0</div><div class="des148-fact">paid-promotion boosting</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ YOUR RESUME AS A POWER TOOL · [NEW] ════════ -->
+<section class="des148-section des148-section--white">
+  <div class="des148-container">
+    <div class="des148-two des148-two--stretch">
+      <div class="des148-powerimg">
+        <img src="assets/your-resume.webp" alt="Someone relaxing at home, checking their job matches on their phone" width="1200" height="1200" loading="lazy" decoding="async">
+        <div class="des148-powerimg-cap">Jobs that really suit me</div>
+      </div>
+      <div class="des148-stack">
+        <div class="des148-stack is-tight">
+          <span class="des148-eyebrow">Your resume</span>
+          <h2 class="des148-h2">Your resume becomes a job matcher</h2>
+          <p class="des148-lead">Your resume does two jobs: it finds jobs that actually fit, and it helps you apply as the obvious candidate.</p>
+        </div>
+        <div class="des148-cards">
+          <div class="des148-card">
+            <h3><img class="des148-card-ic" src="assets/icons/card-arrow-f56462.svg" alt="" aria-hidden="true">Match my resume to jobs</h3>
+            <p>Your resume job matcher becomes a live feed of roles that fit your skills and experience.</p>
+          </div>
+          <div class="des148-card">
+            <h3><img class="des148-card-ic" src="assets/icons/card-arrow-f56462.svg" alt="" aria-hidden="true">Match my resume to a job description</h3>
+            <p>See how your resume matches a role and what to sharpen before you apply.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ FAQ · [NEW] · accordion item -> FaqItem (v-for); JSON-LD below mirrors these Q&As ════════ -->
+<section class="des148-section des148-section--beige">
+  <div class="des148-container">
+    <div class="des148-faq">
+      <div class="des148-faq-head">
+        <span class="des148-eyebrow">Frequently asked questions</span>
+        <h2 class="des148-h2" style="max-width:none">Resume matching, answered</h2>
+      </div>
+      <div class="des148-faq-list">
+        <div class="des148-acc" data-toggle>
+          <button type="button" class="des148-acc-row"><h3 class="des148-acc-title">How does JobLeads match jobs to my resume?</h3><span class="des148-ms des148-acc-chevron" aria-hidden="true"><img src="assets/icons/add-f56462.svg" alt=""></span></button>
+          <div class="des148-acc-body">You upload your resume once, and JobLeads reads your skills, experience, and seniority, then matches you against jobs gathered from 40,000+ sources. Instead of relying on the words you type into a search bar, it uses your whole resume to surface roles that fit, and shows you the skills and experience behind every match.</div>
+        </div>
+        <div class="des148-acc" data-toggle>
+          <button type="button" class="des148-acc-row"><h3 class="des148-acc-title">How do I find jobs based on my resume for free?</h3><span class="des148-ms des148-acc-chevron" aria-hidden="true"><img src="assets/icons/add-f56462.svg" alt=""></span></button>
+          <div class="des148-acc-body">Upload your resume in PDF or Word, and you can see the jobs that match it before you apply. Add your resume once and your matches appear in seconds.</div>
+        </div>
+        <div class="des148-acc" data-toggle>
+          <button type="button" class="des148-acc-row"><h3 class="des148-acc-title">What is AI job matching, and how is it different from keyword search?</h3><span class="des148-ms des148-acc-chevron" aria-hidden="true"><img src="assets/icons/add-f56462.svg" alt=""></span></button>
+          <div class="des148-acc-body">AI job matching uses your full resume as the search, not a single keyword. Manual keyword search only returns jobs that contain the exact words you type, so roles with a different title or wording stay hidden. Resume matching reads your skills and experience and finds jobs that fit you, including ones you would never think to search for.</div>
+        </div>
+        <div class="des148-acc" data-toggle>
+          <button type="button" class="des148-acc-row"><h3 class="des148-acc-title">Can I match my resume to a specific job description?</h3><span class="des148-ms des148-acc-chevron" aria-hidden="true"><img src="assets/icons/add-f56462.svg" alt=""></span></button>
+          <div class="des148-acc-body">Yes. As well as finding jobs that fit your resume, you can see how well your resume matches a specific role and what to sharpen before you apply, so you come across as the obvious candidate.</div>
+        </div>
+        <div class="des148-acc" data-toggle>
+          <button type="button" class="des148-acc-row"><h3 class="des148-acc-title">What if my resume is out of date?</h3><span class="des148-ms des148-acc-chevron" aria-hidden="true"><img src="assets/icons/add-f56462.svg" alt=""></span></button>
+          <div class="des148-acc-body">It still works. Upload what you have and JobLeads matches you based on it. You can also get a free resume review to tighten it first, which usually improves both your matches and how you come across to recruiters.</div>
+        </div>
+        <div class="des148-acc" data-toggle>
+          <button type="button" class="des148-acc-row"><h3 class="des148-acc-title">Will my resume stay private when I upload it?</h3><span class="des148-ms des148-acc-chevron" aria-hidden="true"><img src="assets/icons/add-f56462.svg" alt=""></span></button>
+          <div class="des148-acc-body">Your resume is used to find your matches and is not posted publicly. You stay in control of what you share and with whom.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ FINAL CTA · [NEW] ════════ -->
+<section class="des148-section">
+  <div class="des148-container">
+    <div class="des148-final">
+      <div class="des148-textgroup">
+        <h2 class="des148-h2">Find jobs based on your resume now</h2>
+        <p class="des148-lead">Upload your resume and see the jobs that fit you in seconds.</p>
+      </div>
+      <div class="des148-final-actions">
+        <button class="des148-btn des148-btn-primary des148-btn-lg" type="button" onclick="pickResume()"><span class="des148-ms" aria-hidden="true"><img src="assets/icons/upload-ffffff.svg" alt=""></span>Upload my resume</button>
+        <span class="des148-hero-note"><span class="des148-hero-note-msg is-on"><span class="des148-freepill"><span class="des148-ms" aria-hidden="true"><img src="assets/icons/check-ffffff.svg" alt=""></span>Free</span>See your matches before you&nbsp;apply.</span><span class="des148-hero-note-msg">Supports <span class="des148-dz-chip"><span class="des148-ms" aria-hidden="true"><img src="assets/icons/picture_as_pdf-787673.svg" alt=""></span>PDF</span> <span class="des148-dz-chip"><span class="des148-ms" aria-hidden="true"><img src="assets/icons/description-787673.svg" alt=""></span>Word</span></span></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ════════ FOOTER · [REUSE] existing JobLeads footer component — prototype stand-in ════════ -->
+<div class="des148-footwrap">
+  <div class="des148-container">
+    <footer class="des148-footer">
+      <img class="des148-ftr-logo" src="assets/jobleads-logo-light.svg" alt="JobLeads">
+      <div class="des148-ftr-top">
+        <p class="des148-ftr-tagline">Empowering<br>job seekers</p>
+        <div class="des148-ftr-sections">
+          <div class="des148-ftr-col">
+            <h4 class="des148-ftr-heading">Tools</h4>
+            <ul class="des148-ftr-links">
+              <li><a href="#">Jobs</a></li>
+              <li><a href="#">Resume review</a></li>
+              <li><a href="#">Headhunters</a></li>
+              <li><a href="#">Browse jobs</a></li>
+            </ul>
+          </div>
+          <div class="des148-ftr-col">
+            <h4 class="des148-ftr-heading">Company</h4>
+            <ul class="des148-ftr-links">
+              <li><a href="#">About us</a></li>
+              <li><a href="#">Careers at JobLeads</a></li>
+              <li><a href="#">Site notice</a></li>
+              <li><a href="#">Press</a></li>
+              <li><a href="#">Reviews</a></li>
+            </ul>
+          </div>
+          <div class="des148-ftr-col">
+            <h4 class="des148-ftr-heading">Support</h4>
+            <ul class="des148-ftr-links">
+              <li><a href="#">Help</a></li>
+              <li><a href="#">Cancel membership</a></li>
+              <li><a href="#">Partner integration</a></li>
+              <li><a href="#">ATS Partners</a></li>
+            </ul>
+          </div>
+          <div class="des148-ftr-col">
+            <h4 class="des148-ftr-heading">Social</h4>
+            <ul class="des148-ftr-links">
+              <li><a href="#">JobLeads Blog</a></li>
+              <li><a href="#">YouTube</a></li>
+              <li><a href="#">LinkedIn</a></li>
+              <li><a href="#">Instagram</a></li>
+              <li><a href="#">Facebook</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="des148-ftr-legal">
+        <div class="des148-ftr-legal-links">
+          <a href="#">Cookies</a>
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Use</a>
+          <a href="#">Countries</a>
+        </div>
+        <p class="des148-ftr-copy">&#169; JobLeads 2007 - 2026 | All rights reserved</p>
+      </div>
+    </footer>
+  </div>
+</div>
+
+<!-- ════════ UPLOAD MODAL · [NEW] · multi-step flow; state/handlers in script.js -> Vue reactive state ════════ -->
+<div class="des148-modal" id="des148-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Upload your resume">
+  <div class="des148-modal-scrim" onclick="closeModal()"></div>
+  <div class="des148-modal-card" id="des148-modalcard" data-step="upload">
+    <button class="des148-modal-close" type="button" aria-label="Close" onclick="closeModal()"><span class="des148-ms" aria-hidden="true"><img src="assets/icons/close-100f0e.svg" alt=""></span></button>
+
+    <!-- Step: upload (file + consent + start matching) -->
+    <div class="des148-mstep" data-mstep="upload">
+      <h2 class="des148-modal-title">Upload your resume</h2>
+      <div class="des148-filechip">
+        <span class="des148-filechip-name" id="des148-filename">resume.docx</span>
+        <button class="des148-filechip-x" type="button" aria-label="Remove file" onclick="closeModal()"><span class="des148-ms" aria-hidden="true"><img src="assets/icons/close-787673.svg" alt=""></span></button>
+      </div>
+      <label class="des148-consent">
+        <input type="checkbox" id="des148-consent-cb" onchange="onConsentChange()">
+        <span class="des148-consent-txt">By uploading the resume, you hereby consent to the data being further processed in accordance with our <a href="#" onclick="return false">Privacy Policy</a>. This also applies to the engagement of third-party providers (OpenAI, Google...) <a href="#" class="des148-showmore" onclick="return false">Show more</a></span>
+      </label>
+      <button class="des148-btn des148-btn-primary des148-cta-block" id="des148-startbtn" type="button" onclick="startMatching()" disabled>
+        <span class="des148-cta-label">Start matching</span>
+        <span class="des148-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+      </button>
+      <p class="des148-modal-note">This may take up to 30 seconds</p>
+    </div>
+
+    <!-- Step: matching complete -->
+    <div class="des148-mstep" data-mstep="complete" hidden>
+      <div class="des148-complete"><img src="assets/check-Illustration.svg" alt="" width="112" height="112"></div>
+      <h2 class="des148-modal-title">Matching complete</h2>
+      <p class="des148-modal-sub">Your job matches are now personalized based on your latest skills and experience.</p>
+      <button class="des148-btn des148-btn-primary des148-cta-block" type="button" onclick="viewMatches()">View job matches</button>
+    </div>
+
+    <!-- Step: log in (shown when not signed in) -->
+    <div class="des148-mstep" data-mstep="login" hidden>
+      <h2 class="des148-modal-title">Log in and view job matches</h2>
+      <div class="des148-social">
+        <button type="button" class="des148-social-btn" onclick="return false"><img class="des148-social-ic" src="assets/social-google.svg" width="18" height="18" alt="" aria-hidden="true">Sign in with Google</button>
+        <button type="button" class="des148-social-btn" onclick="return false"><img class="des148-social-ic" src="assets/social-linkedin.svg" width="18" height="18" alt="" aria-hidden="true">Sign in with LinkedIn</button>
+        <button type="button" class="des148-social-btn" onclick="return false"><img class="des148-social-ic" src="assets/social-facebook.svg" width="18" height="18" alt="" aria-hidden="true">Sign in with Facebook</button>
+        <button type="button" class="des148-social-btn" onclick="return false"><img class="des148-social-ic" src="assets/social-microsoft.svg" width="18" height="18" alt="" aria-hidden="true">Sign in with Microsoft</button>
+      </div>
+      <div class="des148-or"><span>or</span></div>
+      <div class="des148-field"><span class="des148-ms" aria-hidden="true"><img src="assets/icons/mail-787673.svg" alt=""></span><input type="email" placeholder="Email" aria-label="Email"></div>
+      <div class="des148-field"><span class="des148-ms" aria-hidden="true"><img src="assets/icons/lock-787673.svg" alt=""></span><input type="password" placeholder="Password" aria-label="Password" id="des148-pw"><button type="button" class="des148-eye" aria-label="Show password" onclick="togglePw()"><span class="des148-ms" aria-hidden="true"><img src="assets/icons/visibility-787673.svg" alt=""></span></button></div>
+      <div class="des148-loginrow">
+        <label class="des148-consent des148-consent--sm"><input type="checkbox"><span>Stay logged in</span></label>
+        <a href="#" class="des148-link-c" onclick="return false">Forgot password?</a>
+      </div>
+      <button class="des148-btn des148-btn-primary des148-cta-block" type="button" onclick="return false">Log in</button>
+      <p class="des148-modal-note">Not a member? <a href="#" class="des148-link-c" onclick="return false">Sign up for free</a></p>
+    </div>
+  </div>
+</div>
+<input type="file" id="des148-file" accept=".pdf,.doc,.docx" hidden>
+
+
+<!-- FAQ structured data — GEO asset -->
+<!-- ════════ STICKY CTA · [NEW] ════════ -->
+<div class="des148-stickycta" id="des148-stickycta" aria-hidden="true">
+  <div class="des148-container des148-stickycta-inner">
+    <div class="des148-stickycta-copy">
+      <span class="des148-stickycta-slide des148-stickycta-title is-on">Find jobs that match your resume</span>
+      <span class="des148-stickycta-slide des148-stickycta-msg des148-stickycta-msg-value"><span class="des148-freepill"><span class="des148-ms" aria-hidden="true"><img src="assets/icons/check-0b782d.svg" alt=""></span>Free</span><span class="des148-stickycta-msgtext">See your matches before you&nbsp;apply.</span></span>
+      <span class="des148-stickycta-slide des148-stickycta-msg des148-stickycta-msg-formats"><span class="des148-fmt-txt">Supports PDF and Word files</span><span class="des148-fmt-pills">Supports <span class="des148-dz-chip"><span class="des148-ms" aria-hidden="true"><img src="assets/icons/picture_as_pdf-787673.svg" alt=""></span>PDF</span> <span class="des148-dz-chip"><span class="des148-ms" aria-hidden="true"><img src="assets/icons/description-787673.svg" alt=""></span>Word</span></span></span>
+    </div>
+    <div class="des148-stickycta-actions">
+      <span class="des148-stickycta-types">
+        <span class="des148-fmtlabel">Supported<br>files</span>
+        <span class="des148-dz-chip"><span class="des148-ms" aria-hidden="true"><img src="assets/icons/picture_as_pdf-787673.svg" alt=""></span>PDF</span>
+        <span class="des148-dz-chip"><span class="des148-ms" aria-hidden="true"><img src="assets/icons/description-787673.svg" alt=""></span>Word</span>
+      </span>
+      <button class="des148-btn des148-btn-primary des148-btn-lg" type="button" onclick="pickResume()"><span class="des148-ms" aria-hidden="true"><img src="assets/icons/upload-ffffff.svg" alt=""></span>Upload my resume</button>
+    </div>
+  </div>
+</div>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "How does JobLeads match jobs to my resume?", "acceptedAnswer": { "@type": "Answer", "text": "You upload your resume once, and JobLeads reads your skills, experience, and seniority, then matches you against jobs gathered from 40,000+ sources. It uses your whole resume to surface roles that fit, and shows you the skills and experience behind every match." } },
+    { "@type": "Question", "name": "How do I find jobs based on my resume for free?", "acceptedAnswer": { "@type": "Answer", "text": "Upload your resume in PDF or Word, and you can see the jobs that match it before you apply. Add your resume once and your matches appear in seconds." } },
+    { "@type": "Question", "name": "What is AI job matching, and how is it different from keyword search?", "acceptedAnswer": { "@type": "Answer", "text": "AI job matching uses your full resume as the search, not a single keyword. Manual keyword search only returns jobs that contain the exact words you type, so roles with a different title stay hidden. Resume matching reads your skills and experience and finds jobs that fit you." } },
+    { "@type": "Question", "name": "Can I match my resume to a specific job description?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. As well as finding jobs that fit your resume, you can see how well your resume matches a specific role and what to sharpen before you apply." } },
+    { "@type": "Question", "name": "What if my resume is out of date?", "acceptedAnswer": { "@type": "Answer", "text": "It still works. Upload what you have and JobLeads matches you based on it. You can also get a free resume review to tighten it first." } },
+    { "@type": "Question", "name": "Will my resume stay private when I upload it?", "acceptedAnswer": { "@type": "Answer", "text": "Your resume is used to find your matches and is not posted publicly. You stay in control of what you share and with whom." } }
+  ]
+}
+</script>
+
+<script src="script.js" defer></script>
+</body>
+</html>

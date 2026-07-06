@@ -1,0 +1,1519 @@
+/* =====================================================================
+   style.css — all styles for the DES-148 Resume Matches page.
+   Merged from: colors_and_type.css + fonts-local.css + the page's
+   former inline <style> block. Font files live in ./fonts, no CDN.
+   ===================================================================== */
+
+/* =============== Design tokens + base =============== */
+/* =========================================================================
+   JobLeads Aurora Design System — Tokens
+   Source of truth: jobleads-ds-tokens-reference.json (v2.0)
+   Three-tier hierarchy: Brand → Alias → Mapped.
+   Always reference Mapped (or semantic --color-*) tokens in components.
+   Light mode only.
+   ========================================================================= */
+
+/* ---------- Fonts ------------------------------------------------------- */
+/* Right Grotesk Medium — the exact webfont jobleads.com ships (right-grotesk-medium.woff2). */
+@font-face {
+  font-family: "Right Grotesk";
+  src: url("fonts/right-grotesk-medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+/* Inter is bundled locally too (see the @font-face further down and the fonts/ folder).
+   No Google Fonts / CDN — fully offline. */
+:root {
+  /* =====================================================================
+     1. BRAND TOKENS — raw hue ramps. Do not reference directly in code.
+     ===================================================================== */
+
+  /* Grey (warm neutral) */
+  --grey-5:   #100F0E;
+  --grey-10:  #1C1B1A;
+  --grey-20:  #272625;
+  --grey-30:  #31302E;
+  --grey-40:  #484745;
+  --grey-50:  #787673;
+  --grey-60:  #92908C;
+  --grey-70:  #AEABA6;
+  --grey-80:  #C9C6C1;
+  --grey-90:  #E6E2DC;
+  --grey-95:  #F5F1EB;
+  --grey-99:  #FBF9F7;
+  --grey-100: #FFFFFF;
+
+  /* Flamingo (primary) */
+  --flamingo-10: #441716;
+  --flamingo-20: #561E1D;
+  --flamingo-30: #7A2D2D;
+  --flamingo-40: #A03E3C;
+  --flamingo-50: #C5504E;
+  --flamingo-60: #F56462;
+  --flamingo-70: #FA8C86;
+  --flamingo-80: #FFB3AE;
+  --flamingo-90: #FCD1D0;
+  --flamingo-95: #FEDBD7;
+  --flamingo-99: #FFEDEB;
+
+  /* Volt (secondary) */
+  --volt-10: #23280A;
+  --volt-20: #2E330D;
+  --volt-30: #434A18;
+  --volt-40: #5A6321;
+  --volt-50: #657028;
+  --volt-60: #8A9839;
+  --volt-70: #A3B445;
+  --volt-80: #BDD04E;
+  --volt-90: #D8EE5C;
+  --volt-95: #E8FF63;
+  --volt-99: #F1FFA1;
+
+  /* Green */
+  --green-10: #063C16;
+  --green-15: #085A22;
+  --green-30: #0B782D;
+  --green-40: #0E9638;
+  --green-50: #35AA59;
+  --green-60: #5CBE7A;
+  --green-70: #83D39C;
+  --green-80: #96DDAC;
+  --green-90: #AAE7BD;
+  --green-95: #BDF1CD;
+  --green-99: #D1FBDE;
+
+  /* Red */
+  --red-10: #4E0109;
+  --red-15: #74010D;
+  --red-30: #9B0212;
+  --red-40: #C20216;
+  --red-50: #CE293A;
+  --red-60: #DA505E;
+  --red-70: #E67783;
+  --red-80: #EC8A95;
+  --red-90: #F29EA7;
+  --red-95: #F2CCCD;
+  --red-99: #FDEBEB;
+
+  /* Yellow */
+  --yellow-10: #4A3308;
+  --yellow-15: #674608;
+  --yellow-30: #8B5F0D;
+  --yellow-40: #AE7812;
+  --yellow-50: #D29117;
+  --yellow-60: #F6AA1C;
+  --yellow-70: #F8B943;
+  --yellow-80: #F9C76A;
+  --yellow-90: #FBD692;
+  --yellow-95: #FCE4B9;
+  --yellow-99: #FEF3E0;
+
+  /* Blue (focus + info) */
+  --blue-10: #02174A;
+  --blue-20: #002063;
+  --blue-30: #012979;
+  --blue-40: #003DAB;
+  --blue-50: #1252DA;
+  --blue-60: #035EF9;
+  --blue-70: #508EFE;
+  --blue-80: #7CABFE;
+  --blue-90: #A7C8FE;
+  --blue-95: #D3E4FF;
+  --blue-99: #E8F2FF;
+
+  /* Focus ring — always blue, never brand */
+  --brand-focus: #2361C5;
+
+  /* Legacy --brand-* aliases (kept for back-compat with existing components) */
+  --brand-primary-10: var(--flamingo-10); --brand-primary-20: var(--flamingo-20);
+  --brand-primary-30: var(--flamingo-30); --brand-primary-40: var(--flamingo-40);
+  --brand-primary-50: var(--flamingo-50); --brand-primary-60: var(--flamingo-60);
+  --brand-primary-70: var(--flamingo-70); --brand-primary-80: var(--flamingo-80);
+  --brand-primary-90: var(--flamingo-90); --brand-primary-95: var(--flamingo-95);
+  --brand-primary-99: var(--flamingo-99);
+
+  --brand-secondary-10: var(--volt-10); --brand-secondary-20: var(--volt-20);
+  --brand-secondary-30: var(--volt-30); --brand-secondary-40: var(--volt-40);
+  --brand-secondary-50: var(--volt-50); --brand-secondary-60: var(--volt-60);
+  --brand-secondary-70: var(--volt-70); --brand-secondary-80: var(--volt-80);
+  --brand-secondary-90: var(--volt-90); --brand-secondary-95: var(--volt-95);
+  --brand-secondary-99: var(--volt-99);
+
+  --brand-neutral-black: var(--grey-5); --brand-neutral-10: var(--grey-10);
+  --brand-neutral-20: var(--grey-20); --brand-neutral-30: var(--grey-30);
+  --brand-neutral-40: var(--grey-40); --brand-neutral-50: var(--grey-50);
+  --brand-neutral-60: var(--grey-60); --brand-neutral-70: var(--grey-70);
+  --brand-neutral-80: var(--grey-80); --brand-neutral-85: var(--grey-90);
+  --brand-neutral-90: var(--grey-90); --brand-neutral-95: var(--grey-95);
+  --brand-neutral-99: var(--grey-99); --brand-neutral-white: var(--grey-100);
+
+  --brand-success-30: var(--green-15); --brand-success-40: var(--green-40);
+  --brand-success-60: var(--green-60); --brand-success-80: var(--green-80);
+  --brand-success-99: var(--green-99);
+
+  --brand-error-30: var(--red-30); --brand-error-40: var(--red-40);
+  --brand-error-60: var(--red-60); --brand-error-90: var(--red-90);
+  --brand-error-95: var(--red-95); --brand-error-99: var(--red-99);
+
+  --brand-warning-30: var(--yellow-30); --brand-warning-60: var(--yellow-60);
+  --brand-warning-90: var(--yellow-90); --brand-warning-99: var(--yellow-99);
+
+  /* =====================================================================
+     2. ALIAS TOKENS — semantic ramps. Use these or the Mapped layer.
+     ===================================================================== */
+
+  /* Neutral */
+  --alias-neutral-black:        #100F0E;
+  --alias-neutral-darkest:      #1C1B1A;
+  --alias-neutral-ultra-dark:   #272625;
+  --alias-neutral-darker:       #484745;
+  --alias-neutral-dark:         #787673;
+  --alias-neutral-default:      #92908C;
+  --alias-neutral-light:        #C9C6C1;
+  --alias-neutral-lighter:      #E6E2DC;
+  --alias-neutral-ultra-light:  #F5F1EB;
+  --alias-neutral-lightest:     #FBF9F7;
+  --alias-neutral-white:        #FFFFFF;
+
+  /* Primary (Flamingo) */
+  --alias-primary-darkest:      #441716;
+  --alias-primary-ultra-dark:   #561E1D;
+  --alias-primary-darker:       #7A2D2D;
+  --alias-primary-dark:         #A03E3C;
+  --alias-primary-default:      #C5504E;
+  --alias-primary-light:        #F56462;
+  --alias-primary-lighter:      #FA8C86;
+  --alias-primary-ultra-light:  #FEDBD7;
+  --alias-primary-lightest:     #FFEDEB;
+
+  /* Secondary (Volt) */
+  --alias-secondary-darkest:     #23280A;
+  --alias-secondary-ultra-dark:  #2E330D;
+  --alias-secondary-darker:      #434A18;
+  --alias-secondary-dark:        #657028;
+  --alias-secondary-default:     #8A9839;
+  --alias-secondary-light:       #BDD04E;
+  --alias-secondary-lighter:     #D8EE5C;
+  --alias-secondary-ultra-light: #E8FF63;
+  --alias-secondary-lightest:    #F1FFA1;
+
+  /* Success */
+  --alias-success-darkest:  #063C16;
+  --alias-success-darker:   #085A22;
+  --alias-success-dark:     #0B782D;
+  --alias-success-default:  #0E9638;
+  --alias-success-light:    #5CBE7A;
+  --alias-success-lighter:  #96DDAC;
+  --alias-success-lightest: #D1FBDE;
+
+  /* Error */
+  --alias-error-darkest:     #4E0109;
+  --alias-error-ultra-dark:  #74010D;
+  --alias-error-darker:      #9B0212;
+  --alias-error-dark:        #C20216;
+  --alias-error-default:     #CE293A;
+  --alias-error-light:       #DA505E;
+  --alias-error-lighter:     #EC8A95;
+  --alias-error-ultra-light: #F2CCCD;
+  --alias-error-lightest:    #FDEBEB;
+
+  /* Warning */
+  --alias-warning-darkest:  #4A3308;
+  --alias-warning-darker:   #8B5F0D;
+  --alias-warning-dark:     #D29117;
+  --alias-warning-default:  #F6AA1C;
+  --alias-warning-light:    #F9C76A;
+  --alias-warning-lighter:  #FCE4B9;
+  --alias-warning-lightest: #FEF3E0;
+
+  /* Info */
+  --alias-info-darkest:  #002063;
+  --alias-info-darker:   #012979;
+  --alias-info-dark:     #003DAB;
+  --alias-info-default:  #035EF9;
+  --alias-info-light:    #7CABFE;
+  --alias-info-lighter:  #A7C8FE;
+  --alias-info-lightest: #E8F2FF;
+
+  /* =====================================================================
+     3. MAPPED TOKENS — what components reference. Role-based.
+     ===================================================================== */
+
+  /* Icon */
+  --icon-white:           #FFFFFF;
+  --icon-subtle:          #787673;
+  --icon-default:         #484745;
+  --icon-strong:          #272625;
+  --icon-black:           #100F0E;
+  --icon-primary-action:  #A03E3C;
+  --icon-primary:         #F56462;
+  --icon-secondary:       #E8FF63;
+  --icon-error:           #C20216;
+  --icon-success:         #0B782D;
+  --icon-info:            #035EF9;
+  --icon-warning:         #8B5F0D;
+
+  /* Text */
+  /* TEXT COLOR RULE — ENFORCED
+     Text may only ever use one of these 10 tokens.
+     Never use a raw hex value or any other variable for text color.
+     --text-white           #FFFFFF   — on dark/inverse surfaces only
+     --text-subtle          #787673   — captions, helper text, placeholders
+     --text-default         #484745   — default body text
+     --text-strong          #272625   — emphasis, card titles
+     --text-black           #100F0E   — maximum contrast, headings
+     --text-primary-action  #A03E3C   — links, interactive labels
+     --text-success         #0B782D   — success messages
+     --text-error           #C20216   — error messages
+     --text-warning         #8B5F0D   — warning messages
+     --text-info            #012979   — info messages
+  */
+  --text-white:           #FFFFFF;
+  --text-subtle:          #787673;
+  --text-default:         #484745;
+  --text-strong:          #272625;
+  --text-black:           #100F0E;
+  --text-primary-action:  #A03E3C;
+  --text-success:         #0B782D;
+  --text-error:           #C20216;
+  --text-warning:         #8B5F0D;
+  --text-info:            #012979;
+
+  /* Surface */
+  --surface-white:           #FFFFFF;
+  --surface-subtle:          #F5F1EB;
+  --surface-default:         #E6E2DC;
+  --surface-strong:          #C9C6C1;
+  --surface-stronger:        #484745;
+  --surface-strongest:       #272625;
+  --surface-black:           #100F0E;
+  --surface-primary-strong:  #C5504E;
+  --surface-primary-default: #F56462;
+  --surface-primary-light:   #FA8C86;
+  --surface-primary-lighter: #FEDBD7;
+  --surface-secondary-strong:  #8A9839;
+  --surface-secondary-default: #E8FF63;
+  --surface-secondary-light:   #F1FFA1;
+  --surface-info-strong:    #035EF9;
+  --surface-info-default:   #7CABFE;
+  --surface-info-subtle:    #E8F2FF;
+  --surface-success-strong: #0E9638;
+  --surface-success-default:#5CBE7A;
+  --surface-success-subtle: #D1FBDE;
+  --surface-error-strong:   #C20216;
+  --surface-error-default:  #EC8A95;
+  --surface-error-subtle:   #FDEBEB;
+  --surface-warning-strong: #F6AA1C;
+  --surface-warning-default:#F9C76A;
+  --surface-warning-subtle: #FCE4B9;
+
+  /* Border */
+  --border-white:             #FFFFFF;
+  --border-subtle:            #E6E2DC;
+  --border-default:           #C9C6C1;
+  --border-dark:              #484745;
+  --border-black:             #100F0E;
+  --border-error:             #C20216;
+  --border-warning:           #F6AA1C;
+  --border-success:           #0E9638;
+  --border-primary-default:   #F56462;
+  --border-secondary-default: #E8FF63;
+
+  /* Component-specific (button, dropdown, fields, selection, toggle, switch,
+     pills, slider, chip) */
+  --button-surface-disabled:        #E6E2DC;
+  --button-surface-icon-disabled:   #484745;
+  --button-content-disabled:        #484745;
+  --button-cta-light-surface-icon:           #F56462;
+  --button-cta-light-surface-icon-disabled:  #92908C;
+  --button-cta-light-content-icon:           #FFFFFF;
+  --button-cta-light-content-icon-disabled:  #787673;
+
+  --dropdown-surface-default:  #FFFFFF;
+  --dropdown-surface-disabled: #E6E2DC;
+  --dropdown-border-default:   #92908C;
+  --dropdown-border-hover:     #484745;
+  --dropdown-border-disabled:  #C9C6C1;
+  --dropdown-content-default:  #484745;
+  --dropdown-content-hover:    #272625;
+  --dropdown-content-disabled: #484745;
+
+  --field-surface-default:  #FFFFFF;
+  --field-surface-disabled: #E6E2DC;
+  --field-border-default:   #92908C;
+  --field-border-hover:     #484745;
+  --field-border-error:     #C20216;
+  --field-border-disabled:  #C9C6C1;
+  --field-content-default:  #787673;
+  --field-content-hover:    #272625;
+  --field-content-label:    #484745;
+  --field-content-error:    #C20216;
+  --field-content-success:  #0B782D;
+  --field-content-disabled: #484745;
+
+  --selection-surface-disabled: #F5F1EB;
+  --selection-surface-default:  #FFFFFF;
+  --selection-surface-hover:    #272625;
+  --selection-surface-selected: #100F0E;
+  --selection-surface-error:    #FDEBEB;
+  --selection-border-default:   #92908C;
+  --selection-border-hover:     #484745;
+  --selection-border-selected:  #100F0E;
+  --selection-border-error:     #C20216;
+  --selection-content-selected: #100F0E;
+  --selection-content-checked:  #FFFFFF;
+  --selection-content-disabled: #787673;
+
+  --toggle-surface-inactive:     #E6E2DC;
+  --toggle-surface-active:       #5CBE7A;
+  --toggle-surface-active-hover: #0E9638;
+  --toggle-thumb-default:        #787673;
+  --toggle-thumb-hover:          #484745;
+  --toggle-thumb-active:         #FFFFFF;
+  --toggle-thumb-disabled:       #787673;
+
+  --switch-surface-track:    #E6E2DC;
+  --switch-surface-active:   #FFFFFF;
+  --switch-surface-inactive: #FFFFFF;
+  --switch-content-active:   #100F0E;
+  --switch-content-inactive: #484745;
+
+  --pill-surface-default:  #FFFFFF;
+  --pill-surface-active:   #F1FFA1;
+  --pill-border-default:   #C9C6C1;
+  --pill-border-selected:  #100F0E;
+  --pill-content-default:  #484745;
+  --pill-content-selected: #100F0E;
+
+  --slider-track-default:        #C9C6C1;
+  --slider-track-active:         #F56462;
+  --slider-track-disabled:       #484745;
+  --slider-thumb-default:        #FFFFFF;
+  --slider-thumb-border-default: #F56462;
+  --slider-thumb-border-disabled:#484745;
+  --slider-content-default:      #272625;
+  --slider-content-disabled:     #787673;
+
+  --chip-surface-default:  #F5F1EB;
+  --chip-surface-selected: #F1FFA1;
+  --chip-surface-cta:      #E8FF63;
+  --chip-surface-disabled: #C9C6C1;
+  --chip-content-default:  #484745;
+  --chip-content-selected: #100F0E;
+
+  /* =====================================================================
+     4. SEMANTIC --color-* aliases (kept for back-compat with prior code)
+     ===================================================================== */
+  --color-bg-page:           var(--surface-subtle);   /* #F5F1EB */
+  --color-bg-surface:        var(--surface-white);
+  --color-bg-surface-raised: var(--alias-neutral-lightest);
+  --color-bg-inverse:        var(--surface-black);    /* #100F0E */
+  --color-bg-disabled:       var(--surface-default);  /* #E6E2DC */
+  --color-bg-subtle:         var(--surface-default);
+
+  --color-bg-primary:         var(--surface-primary-default); /* Flamingo */
+  --color-bg-primary-hover:   var(--surface-primary-strong);
+  --color-bg-primary-pressed: var(--alias-primary-dark);
+  --color-bg-primary-soft:    var(--alias-primary-lightest);
+
+  --color-bg-secondary:         var(--surface-secondary-default); /* Volt */
+  --color-bg-secondary-hover:   var(--surface-secondary-light);
+  --color-bg-secondary-pressed: var(--alias-secondary-lighter);
+  --color-bg-secondary-soft:    var(--alias-secondary-lightest);
+
+  --color-fg-default:      var(--text-default);   /* #484745 */
+  --color-fg-strong:       var(--text-strong);    /* #272625 */
+  --color-fg-black:        var(--text-black);     /* #100F0E */
+  --color-fg-muted:        var(--text-subtle);    /* #787673 */
+  --color-fg-subtle:       var(--alias-neutral-default);
+  --color-fg-on-primary:   var(--text-white);
+  --color-fg-on-secondary: var(--text-black);
+  --color-fg-on-inverse:   var(--text-white);
+  --color-fg-disabled:     #484745;
+  --color-fg-link:         var(--text-primary-action);
+  --color-fg-link-hover:   var(--alias-primary-darker);
+
+  --color-border-default: var(--border-default);
+  --color-border-subtle:  var(--border-subtle);
+  --color-border-strong:  var(--border-dark);
+  --color-border-inverse: var(--border-black);
+
+  --color-fg-success:    var(--text-success);
+  --color-bg-success:    var(--surface-success-strong);
+  --color-bg-success-soft: var(--surface-success-subtle);
+  --color-fg-warning:    var(--text-warning);
+  --color-bg-warning:    var(--surface-warning-strong);
+  --color-bg-warning-soft: var(--surface-warning-subtle);
+  --color-fg-error:      var(--text-error);
+  --color-bg-error:      var(--surface-error-strong);
+  --color-bg-error-soft: var(--surface-error-subtle);
+
+  --color-focus-ring: var(--brand-focus);
+  --focus-ring: 0 0 0 2px var(--color-bg-page), 0 0 0 4px var(--color-focus-ring);
+
+  /* =====================================================================
+     5. TYPOGRAPHY (desktop scale; mobile overrides applied via @media)
+     ===================================================================== */
+  --font-display: "Right Grotesk", "Inter", sans-serif;
+  --font-heading: "Right Grotesk", "Inter", sans-serif;
+  --font-body:    "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono:    ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+
+  /* Headings — Right Grotesk Medium 500. rem (1rem = 16px) */
+  --font-h1-size: 4rem;     --font-h1-line: 4.875rem;
+  --font-h2-size: 3.5rem;   --font-h2-line: 4.25rem;
+  --font-h3-size: 2.5rem;   --font-h3-line: 3rem;
+  --font-h4-size: 2rem;     --font-h4-line: 2.375rem;
+  --font-h5-size: 1.5rem;   --font-h5-line: 2.25rem;
+  --font-h6-size: 1.25rem;  --font-h6-line: 1.75rem;
+  --font-h7-size: 1.125rem; --font-h7-line: 1.5rem;
+  --font-h8-size: 1rem;     --font-h8-line: 1.5rem;
+
+  /* Body — Inter (Regular 400, Medium 500) */
+  --font-body-lg-size:  1.25rem;  --font-body-lg-line:  1.875rem;
+  --font-body-md-size:  1.125rem; --font-body-md-line:  1.75rem;
+  --font-body-sm-size:  1rem;     --font-body-sm-line:  1.5rem;  /* default UI */
+  --font-body-xs-size:  0.875rem; --font-body-xs-line:  1.25rem;
+  --font-body-xxs-size: 0.75rem;  --font-body-xxs-line: 1.125rem;
+
+  /* Caption alias = body-xxs */
+  --font-caption-size: 0.75rem;  --font-caption-line: 1.125rem;
+
+  /* Buttons */
+  --font-btn-lg: 1.5rem;
+  --font-btn-md: 1.25rem;
+  --font-btn-sm: 1rem;
+
+  --font-weight-heading: 500;
+  --font-weight-body-regular: 400;
+  --font-weight-body-medium:  500;
+
+  /* =====================================================================
+     6. SPACING — semantic xxxs..xxxl (4pt grid)
+     ===================================================================== */
+  --space-xxxs: 0.25rem;
+  --space-xxs:  0.5rem;
+  --space-xs:   0.75rem;
+  --space-sm:   1rem;
+  --space-md:   1.5rem;
+  --space-lg:   2rem;
+  --space-xl:   3rem;
+  --space-xxl:  4rem;
+  --space-xxxl: 5rem;
+
+  /* Numeric aliases (legacy, kept for back-compat) */
+  --space-0:  0;
+  --space-1:  0.25rem;
+  --space-2:  0.5rem;
+  --space-3:  0.75rem;
+  --space-4:  1rem;
+  --space-5:  1.25rem;
+  --space-6:  1.5rem;
+  --space-8:  2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+
+  /* =====================================================================
+     7. RADII
+     ===================================================================== */
+  --radius-none: 0;
+  --radius-xxxs: 0.125rem;
+  --radius-xxs:  0.25rem;
+  --radius-xs:   0.375rem;  /* default for inputs / cards (buttons use --radius-round) */
+  --radius-sm:   0.5rem;
+  --radius-md:   0.75rem;
+  --radius-lg:   1rem;
+  --radius-xl:   1.25rem;
+  --radius-xxl:  2rem;
+  --radius-round:9999px;
+  --radius-pill: 9999px;
+  /* Numeric/legacy aliases */
+  --radius-2xl: 1rem;
+  --radius-3xl: 2rem;
+
+  /* =====================================================================
+     8. BORDER WIDTH
+     ===================================================================== */
+  --border-width-none: 0; /* @kind spacing */
+  --border-width-sm:   1px;
+  --border-width-md:   2px;
+  --border-width-lg:   4px;
+
+  /* =====================================================================
+     9. ELEVATION
+     ===================================================================== */
+  --shadow-xs: 0 1px 2px rgba(0,0,0,0.15);
+  --shadow-sm: 0 3px 5px rgba(0,0,0,0.15);
+  --shadow-md: 0 8px 16px rgba(0,0,0,0.16);
+  --shadow-lg: 0 8px 20px rgba(0,0,0,0.10), 0 12px 24px rgba(0,0,0,0.10);
+  --shadow-xl: 0 12px 24px rgba(0,0,0,0.10), 0 20px 30px rgba(0,0,0,0.10);
+
+  /* =====================================================================
+     10. MOTION
+     ===================================================================== */
+  --motion-fast: 120ms; /* @kind other */
+  --motion-base: 200ms; /* @kind other */
+  --motion-slow: 320ms; /* @kind other */
+  --easing-standard:    cubic-bezier(0.2, 0, 0, 1); /* @kind other */
+  --easing-emphasized:  cubic-bezier(0.3, 0, 0, 1); /* @kind other */
+
+  /* =====================================================================
+     11. LAYOUT
+     ===================================================================== */
+  --layout-min-device:    360px;
+  --layout-mobile-margin: 16px;
+  --chip-max-width:       320px;
+  --pill-max-width:       432px;
+  --badge-max-width:      320px;
+  --icon-default-size:    24px;
+  --icon-max-size:        32px;
+
+  /* =====================================================================
+     12. ACCESSIBILITY
+     ===================================================================== */
+  --focus-ring-color:       #2361C5;
+  --focus-ring-width:       2px;
+  --focus-ring-offset:      2px;
+  --disabled-surface:       #E6E2DC;
+  --disabled-text-on-surface: #484745;
+  --disabled-text-no-surface: #787673;
+}
+
+/* =========================================================================
+   Mobile typography overrides
+   ========================================================================= */
+/* MOBILE HEADING SCALE — ENFORCED
+   All headings H1–H8 render at reduced sizes on mobile (max-width 768px).
+   The CSS custom properties below override the desktop values automatically.
+   Always use --font-h*-size and --font-h*-line variables in components —
+   never hardcode heading sizes — so mobile scaling is inherited for free.
+*/
+@media (max-width: 768px) {
+  :root {
+    --font-h1-size: 3rem;     --font-h1-line: 3.5rem;
+    --font-h2-size: 2.5rem;   --font-h2-line: 3rem;
+    --font-h3-size: 2rem;     --font-h3-line: 2.375rem;
+    --font-h4-size: 1.5rem;   --font-h4-line: 1.875rem;
+    --font-h5-size: 1.25rem;  --font-h5-line: 1.75rem;
+    --font-h6-size: 1.125rem; --font-h6-line: 1.75rem;
+    --font-h7-size: 1rem;     --font-h7-line: 1.5rem;
+    --font-h8-size: 1rem;     --font-h8-line: 1.5rem;
+  }
+}
+
+/* =========================================================================
+   SEMANTIC ELEMENT STYLES
+   ========================================================================= */
+
+html, body {
+  background: var(--color-bg-page);
+  color: var(--color-fg-default);
+  font-family: var(--font-body);
+  font-size: var(--font-body-sm-size);
+  line-height: var(--font-body-sm-line);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: var(--font-weight-heading);
+  color: var(--color-fg-strong);
+  margin: 0;
+  letter-spacing: normal;
+}
+
+h1 { font-size: var(--font-h1-size); line-height: var(--font-h1-line); }
+h2 { font-size: var(--font-h2-size); line-height: var(--font-h2-line); }
+h3 { font-size: var(--font-h3-size); line-height: var(--font-h3-line); }
+h4 { font-size: var(--font-h4-size); line-height: var(--font-h4-line); }
+h5 { font-size: var(--font-h5-size); line-height: var(--font-h5-line); }
+h6 { font-size: var(--font-h6-size); line-height: var(--font-h6-line); }
+
+p { margin: 0; text-wrap: pretty; }
+
+a {
+  color: var(--color-fg-link);
+  text-decoration: none;
+  transition: color var(--motion-fast) var(--easing-standard);
+}
+/* No global link-hover underline/recolor — matches jobleads.com (links style hover per-component). */
+
+*:focus-visible {
+  outline: var(--focus-ring-width) solid var(--focus-ring-color);
+  outline-offset: var(--focus-ring-offset);
+  border-radius: var(--radius-xxs);
+}
+
+/* =============== Local fonts =============== */
+/* Inter variable font, bundled locally (from Google) so the page needs no CDN and works offline. */
+@font-face { font-family: "Inter"; font-weight: 100 900; font-style: normal; font-display: swap; src: url("fonts/inter.woff2") format("woff2"); }
+
+
+/* =============== Page styles =============== */
+/* ════════ RESET (prototype baseline — production inherits the app's global reset) ════════ */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; font-family: var(--font-body); color: var(--text-default); background: var(--surface-subtle); -webkit-font-smoothing: antialiased; }
+h1,h2,h3,h4,h5,h6 { margin: 0; }
+p { margin: 0; }
+img, svg { display: block; max-width: 100%; }
+button { font-family: inherit; cursor: pointer; }
+a { text-decoration: none; }
+/* Icons: external Material Symbols SVG files (assets/icons/<name>-<hex>.svg) with the colour baked in, embedded via <img>. Works in every browser (no CSS mask, no currentColor). The em-sized box keeps every existing font-size rule controlling the icon size. */
+.des148-ms { display: inline-block; width: 1em; height: 1em; flex: none; vertical-align: middle; }
+.des148-ms img { display: block; width: 100%; height: 100%; }
+
+/* ════════ LAYOUT PRIMITIVES ════════ */
+.des148-container { max-width: 90rem; margin: 0 auto; padding: 0 3.5rem; }
+.des148-section { padding: 5rem 0; }
+.des148-section--white { background: var(--surface-white); }
+.des148-section--beige { background: var(--surface-subtle); }
+
+.des148-section--yellowfade { background: linear-gradient(to bottom, var(--surface-secondary-default), var(--surface-white)); }
+.des148-two { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+.des148-two--vtop { align-items: start; }
+.des148-two--stretch { align-items: stretch; }
+
+/* ════════ SCROLL REVEAL (nav & footer stay static) ════════ */
+.des148-rvl .des148-herocard h1, .des148-rvl .des148-hero-sub, .des148-rvl .des148-hero-actions .des148-btn, .des148-rvl .des148-hero-note, .des148-rvl .des148-trust, .des148-rvl .des148-hero-v1, .des148-rvl .des148-hero-v3, .des148-rvl .des148-reviews-header > *, .des148-rvl .des148-review, .des148-rvl .des148-logos-title, .des148-rvl .des148-logos-marquee, .des148-rvl .des148-stack.is-tight > *, .des148-rvl .des148-stack.is-center > *, .des148-rvl .des148-faq-head > *, .des148-rvl .des148-problemwin, .des148-rvl .des148-pw-dots, .des148-rvl .des148-pw-rvl, .des148-rvl .des148-powerimg, .des148-rvl .des148-card, .des148-rvl .des148-hiw-doc, .des148-rvl .des148-hiw-job, .des148-rvl .des148-tl-final .des148-lead, .des148-rvl .des148-tl-final .des148-callout, .des148-rvl .des148-tile, .des148-rvl .des148-acc, .des148-rvl .des148-final, .des148-rvl .des148-final .des148-h2, .des148-rvl .des148-final .des148-lead, .des148-rvl .des148-final .des148-btn { opacity: 0; transform: translateY(2rem); transition: opacity .8s cubic-bezier(.16,.6,.28,1), transform .8s cubic-bezier(.16,.6,.28,1); transition-delay: var(--rd, 0s); }
+.des148-rvl .des148-reveal-in { opacity: 1 !important; transform: none !important; }
+/* the reveal rule above replaces the buttons' transition with opacity/transform only; re-add the background-color hover transition for the reveal buttons */
+.des148-rvl .des148-hero-actions .des148-btn, .des148-rvl .des148-final .des148-btn { transition: opacity .8s cubic-bezier(.16,.6,.28,1), transform .8s cubic-bezier(.16,.6,.28,1), background-color .22s ease; }
+/* V2 header: the three rectangles fly in — from the left on desktop, from below on mobile */
+.des148-rvl .des148-v2-drop, .des148-rvl .des148-v2-steps, .des148-rvl .des148-v2-stage { opacity: 0; transform: translateX(-2.5rem); transition: opacity .7s cubic-bezier(.16,.6,.28,1), transform .7s cubic-bezier(.16,.6,.28,1); transition-delay: var(--rd, 0s); }
+@media (max-width: 768px) { .des148-rvl .des148-v2-drop, .des148-rvl .des148-v2-steps, .des148-rvl .des148-v2-stage { transform: translateY(2rem); } }
+
+/* Stacks — spacing via gap, never margins */
+.des148-stack { display: flex; flex-direction: column; gap: var(--space-md); }      /* 24 */
+.des148-stack.is-tight { gap: var(--space-sm); }                                      /* 16 */
+.des148-stack.is-loose { gap: var(--space-xl); }                                      /* 48 */
+.des148-stack.is-center { align-items: center; text-align: center; }
+.des148-stack.is-center .des148-eyebrow { align-self: center; }
+
+.des148-eyebrow { display: inline-flex; align-items: center; align-self: flex-start; padding: 0.25rem 0.75rem; border-radius: var(--radius-xs); background: var(--surface-black); color: var(--text-white); font-family: var(--font-body); font-weight: 500; font-size: var(--font-body-xs-size); line-height: 1.5; }
+.des148-h2 { font-size: 3.5rem; line-height: 4rem; color: var(--text-black); letter-spacing: normal; max-width: 16ch; }
+
+@media (min-width: 1024px) { .des148-h2 { font-size: 4rem; line-height: 4.375rem; } }
+.des148-lead { font-size: var(--font-body-md-size); line-height: var(--font-body-md-line); color: var(--text-default); max-width: 52ch; }
+
+
+/* ════════ BUTTONS ════════ */
+.des148-btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; height: 3rem; padding: 0 1.5rem; border-radius: var(--radius-round); font-family: var(--font-heading); font-weight: var(--font-weight-heading); font-size: 1.125rem; line-height: 1; letter-spacing: normal; cursor: pointer; border: none; width: auto; transition: background-color 0.22s ease, border-color 0.22s ease, color 0.22s ease; }   /* softer, medium-speed hover */
+.des148-btn .des148-ms { font-size: 20px; }
+.des148-btn-lg { height: 3.5rem; padding: 0 2rem; font-size: 1.25rem; }
+.des148-btn-primary { background: var(--surface-primary-default); color: var(--text-white); }
+.des148-btn-primary:hover { background: var(--surface-primary-strong); }
+
+
+
+/* ════════ HEADER / NAV (light — mirrors the jobleads.com app header) ════════ */
+.des148-header { position: relative; z-index: 50; background: var(--surface-subtle); }
+.des148-nav { display: flex; align-items: center; justify-content: space-between; gap: var(--space-lg); min-height: 4rem; }
+.des148-nav-logo img { width: 8.0625rem; height: 1rem; }
+.des148-nav-links { display: flex; align-items: center; gap: var(--space-lg); list-style: none; margin: 0; padding: 0; }
+.des148-nav-item { position: relative; }
+.des148-nav-link { position: relative; display: inline-flex; align-items: center; height: 4rem; padding: 0; color: var(--text-black); font-family: var(--font-heading); font-weight: var(--font-weight-heading); font-size: 1.125rem; line-height: 1.6875rem; background: none; border: 0; cursor: pointer; }
+.des148-nav-link.has-caret { padding-right: 1.5rem; }
+/* Inner text span is INLINE (like live's "relative pb-2"): padding-bottom doesn't shift the
+   text, it only anchors the absolute underline — so the text stays vertically centered. */
+.des148-nav-text { position: relative; padding-bottom: 0.5rem; }
+.des148-nav-text::after { content: ""; position: absolute; left: 50%; right: 50%; bottom: 0; height: 1px; background: var(--surface-primary-default); transition: left .3s ease-in, right .3s ease-in; }
+.des148-nav-item:hover .des148-nav-text::after, .des148-nav-item.is-open .des148-nav-text::after, .des148-nav-link.is-selected .des148-nav-text::after { left: 0.5rem; right: 0.5rem; }   /* underline: on hover (affordance), when its dropdown is open, and for the selected item */
+.des148-navchev { position: absolute; right: 0; top: 50%; width: 1.25rem; height: 1.25rem; transform: translateY(-50%); transition: transform .2s ease; }   /* colour baked into chevron-down-100f0e.svg */
+.des148-nav-item.is-open .des148-navchev { transform: translateY(-50%) rotate(180deg); }
+
+/* Nav dropdown menus */
+.des148-dropdown { position: absolute; top: 100%; left: 0; min-width: 14rem; background: var(--surface-white); border-radius: var(--radius-xs); padding: 0.25rem 0; opacity: 0; visibility: hidden; transform: translateY(0.25rem); transition: opacity .2s ease-in, transform .2s ease-in, visibility .2s; z-index: 60; }
+.des148-dropdown--right { left: auto; right: 0; }
+.des148-nav-item.is-open > .des148-dropdown { opacity: 1; visibility: visible; transform: translateY(0); }   /* opens on click (JS toggles .is-open), like jobleads.com — not on hover */
+.des148-dropitem { display: block; padding: 0.5rem 1rem; font: 400 0.875rem/1.3125rem var(--font-body); color: var(--text-strong); white-space: nowrap; transition: background-color .3s ease-in; }
+.des148-dropitem:hover { background: var(--surface-subtle); }
+.des148-dropitem.is-selected { color: var(--text-primary-action); }
+
+/* Right-side controls */
+.des148-nav-end { display: flex; gap: var(--space-sm); align-items: center; }
+.des148-lang { display: flex; align-items: center; }
+.des148-langbtn { display: inline-flex; align-items: center; gap: 0.25rem; border: 0; padding: 0; background: transparent; color: var(--text-strong); font: 400 1rem/1.5rem var(--font-body); cursor: pointer; }
+.des148-lang-en { color: var(--text-black); }
+.des148-globe { width: 1.375rem; height: 1.375rem; flex: none; }   /* colour baked into language-a03e3c.svg */
+.des148-langchev { width: 1.25rem; height: 1.25rem; flex: none; transition: transform .2s ease; }   /* colour baked into chevron-down-272625.svg */
+.des148-lang.is-open .des148-langchev { transform: rotate(180deg); }
+.des148-headcta { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.375rem 1rem; border-radius: var(--radius-round); font-family: var(--font-heading); font-weight: var(--font-weight-heading); font-size: 1rem; line-height: 1.5; letter-spacing: normal; white-space: nowrap; cursor: pointer; border: 0; transition: background-color .22s ease, color .22s ease, border-color .22s ease; }
+.des148-headcta .des148-ms { font-size: 18px; }
+.des148-headcta-primary { background: var(--surface-primary-default); color: var(--text-white); }
+.des148-headcta-primary:hover { background: var(--surface-primary-strong); }
+.des148-headcta-outline { background: var(--surface-white); color: var(--text-black); border: 1px solid var(--border-black); }
+.des148-headcta-outline:hover { background: var(--surface-black); color: var(--text-white); }
+/* Mobile login icon button (circular outline) — like jobleads.com mobile bar */
+.des148-naviconbtn { display: none; align-items: center; justify-content: center; width: 2.5rem; height: 2.5rem; border-radius: var(--radius-round); border: 1px solid var(--border-black); background: var(--surface-white); color: var(--text-black); cursor: pointer; flex: none; transition: background-color .3s ease-in, color .3s ease-in; }
+.des148-naviconbtn:hover { background: var(--surface-black); color: var(--text-white); }
+.des148-naviconbtn .des148-loginicon { width: 1.375rem; height: 1.375rem; }   /* colour baked into login-100f0e.svg */
+/* icon is baked black; on hover the button inverts to a black fill, so flip the icon to white (was currentColor) */
+.des148-naviconbtn:hover .des148-loginicon { filter: brightness(0) invert(1); }
+/* Mobile burger — 6 spans = 3 bars, animates to X (replicates live .burger-menu) */
+.des148-burger { display: none; position: relative; width: 24px; height: 18px; padding: 0; background: none; border: 0; cursor: pointer; flex: none; }
+.des148-burger span { position: absolute; display: block; height: 3px; width: 50%; background: var(--text-black); transition: .25s ease-in-out; }
+.des148-burger span:nth-child(odd) { left: 0; border-radius: 3px 0 0 3px; }
+.des148-burger span:nth-child(2n) { left: 50%; border-radius: 0 3px 3px 0; }
+.des148-burger span:nth-child(1), .des148-burger span:nth-child(2) { top: 0; }
+.des148-burger span:nth-child(3), .des148-burger span:nth-child(4) { top: 7px; }
+.des148-burger span:nth-child(5), .des148-burger span:nth-child(6) { top: 14px; }
+.des148-burger.is-open span:nth-child(1), .des148-burger.is-open span:nth-child(6) { transform: rotate(45deg); }
+.des148-burger.is-open span:nth-child(2), .des148-burger.is-open span:nth-child(5) { transform: rotate(-45deg); }
+.des148-burger.is-open span:nth-child(1) { left: 1px; top: 2px; }
+.des148-burger.is-open span:nth-child(2) { left: calc(50% - 1px); top: 2px; }
+.des148-burger.is-open span:nth-child(3) { left: -50%; opacity: 0; }
+.des148-burger.is-open span:nth-child(4) { left: 100%; opacity: 0; }
+.des148-burger.is-open span:nth-child(5) { left: 1px; top: 12px; }
+.des148-burger.is-open span:nth-child(6) { left: calc(50% - 1px); top: 12px; }
+.des148-mobile-menu { display: none; background: var(--surface-subtle); border-top: 1px solid var(--border-default); padding: 0.5rem 0 1rem; }
+.des148-mobile-menu.is-open { display: block; }
+.des148-mobile-menu a { display: block; color: var(--text-black); font-family: var(--font-heading); font-weight: 500; font-size: 1.125rem; padding: 0.75rem 1.5rem; transition: background-color .3s ease-in; }
+.des148-mobile-menu a:hover { background: var(--surface-default); }
+
+
+/* ════════ HERO (mirrors the jobleads.com "marketing-hero": gradient bg + white card) ════════ */
+.des148-herobg { position: relative; padding: 3.5rem 0 5rem; background:
+  linear-gradient(209deg, #f5646200 79.17%, #f56462 99.97%),
+  linear-gradient(153deg, #f5646200 78.96%, #f56462 100.03%),
+  linear-gradient(181deg, #f5f1eb 4.39%, #ffbdbb 99.52%); }
+.des148-herocard { display: flex; align-items: stretch; gap: 3.75rem; background: var(--surface-white); border-radius: var(--radius-xxl); overflow: hidden; }
+.des148-herocard-text { flex: 1; display: flex; flex-direction: column; gap: var(--space-md); padding: 3.75rem 0 3.75rem 3.75rem; }
+.des148-herocard-media { flex: 1; padding: 1.5rem 1.5rem 1.5rem 0; display: flex; flex-direction: column; gap: 1rem; position: relative; z-index: 1; }   /* keep the animated media (and its cards) below the hint pill */
+.des148-herocard-media .des148-dz { flex: 1; height: auto; min-height: 16rem; }
+
+/* V3 whole-card dropzone — hidden until a file is dragged over the hero card */
+.des148-herocard { position: relative; isolation: isolate; }   /* own stacking context so the hint pill can sit above the animated media */
+.des148-herocard-text, .des148-herocard-media { transition: opacity .28s ease; }
+.des148-herobg[data-hv="3"] .des148-herocard.is-dropping .des148-herocard-text,
+.des148-herobg[data-hv="3"] .des148-herocard.is-dropping .des148-herocard-media { opacity: 0; pointer-events: none; }   /* everything else softly fades out */
+.des148-herodrop { position: absolute; inset: 1.5rem; z-index: 5; display: flex; align-items: center; justify-content: center; text-align: center; border: 2px dashed var(--surface-primary-default); border-radius: var(--radius-xl); background: #FEF4F4; opacity: 0; pointer-events: none; transition: opacity .28s ease; }   /* inset matches the visual's 1.5rem gap to the card edge */
+.des148-herobg[data-hv="3"] .des148-herocard.is-dropping .des148-herodrop { opacity: 1; }
+.des148-herodrop-inner { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; }
+.des148-herodrop-ic { width: 4rem; height: 4rem; border-radius: 50%; background: var(--surface-white); display: flex; align-items: center; justify-content: center; }
+.des148-herodrop-ic .des148-ms { font-size: 34px; }
+.des148-herodrop-title { font-family: var(--font-heading); font-weight: var(--font-weight-heading); font-size: var(--font-h6-size); line-height: var(--font-h6-line); color: var(--text-black); }
+.des148-herodrop-types { display: flex; gap: 0.5rem; margin-top: 0.25rem; }
+/* cursor-following hint pill (mouse only; JS toggles .is-hint and sets left/top) */
+.des148-heropill { position: absolute; z-index: 6; left: 0; top: 0; display: inline-flex; align-items: center; gap: 0.375rem; padding: 0.4375rem 0.875rem; border-radius: var(--radius-round); background: var(--surface-black); color: var(--text-white); font: 600 0.875rem/1 var(--font-body); white-space: nowrap; pointer-events: none; opacity: 0; transform: translateY(0.25rem) scale(0.98); transition: opacity .28s ease, transform .18s ease; }
+.des148-heropill .des148-ms { font-size: 18px; }
+.des148-herocard.is-hint .des148-heropill { opacity: 1; transform: translateY(0) scale(1); }
+.des148-herocard.is-pilloff .des148-heropill { opacity: 0; }   /* softly fade out when it scrolls off-screen */
+/* V3 desktop: the whole card is clickable to upload (the pill signals it) */
+.des148-herobg[data-hv="3"] .des148-herocard { cursor: pointer; }
+.des148-herohead { display: flex; flex-direction: column; gap: var(--space-xs); }
+.des148-herocard h1 { font-size: var(--font-h1-size); line-height: 1.2; color: var(--text-black); letter-spacing: normal; }
+.des148-hl { background: var(--surface-secondary-default); color: var(--text-black); border-radius: var(--radius-xxs); padding: 0 0.375rem; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+.des148-hero-sub { font-size: var(--font-body-lg-size); line-height: var(--font-body-lg-line); color: var(--text-default); max-width: 46ch; }
+.des148-hero-actions { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-sm); }
+.des148-hero-note { display: inline-grid; }
+.des148-hero-note-msg { grid-area: 1 / 1; display: inline-flex; align-items: center; gap: 0.5rem; font-size: var(--font-body-sm-size); color: var(--text-default); opacity: 0; transition: opacity .5s ease; }
+.des148-hero-note-msg.is-on { opacity: 1; transition-delay: .5s; }   /* crossfade: incoming waits for the outgoing to fade out */
+.des148-freepill { display: inline-flex; align-items: center; gap: 0.375rem; padding: 0.3125rem 0.75rem; border-radius: var(--radius-round); background: var(--surface-success-subtle); color: var(--text-success); font-family: var(--font-body); font-weight: 600; font-size: var(--font-body-xs-size); line-height: 1; }
+.des148-final .des148-freepill { background: var(--green-50); color: var(--text-white); }   /* CTA "Find jobs based on your resume now": DS --green-50 (#35AA59) fill, white text + icon */
+.des148-freepill .des148-ms { font-size: 18px; }
+.des148-trust { display: flex; flex-wrap: wrap; gap: var(--space-sm); align-self: stretch; margin-top: auto; }
+.des148-trust-item { flex: 0 1 auto; display: flex; align-items: center; gap: var(--space-sm); background: var(--surface-subtle); border-radius: var(--radius-lg); padding: var(--space-sm) var(--space-md); }
+.des148-avatars { display: flex; flex: none; }
+.des148-avatars img { width: 2.25rem; height: 2.25rem; border-radius: var(--radius-round); border: 2px solid var(--surface-white); object-fit: cover; background: var(--surface-default); }
+.des148-avatars img + img { margin-left: -0.625rem; }
+.des148-trust-text { font-weight: 500; font-size: var(--font-body-xs-size); line-height: var(--font-body-xs-line); color: var(--text-strong); }
+.des148-trust-num { font-weight: 700; }   /* "12,000,000+" in bold */
+.des148-trust-count { font-variant-numeric: tabular-nums; }   /* steady digit widths while counting up */
+
+/* Trustpilot badge (line 1: logo + 4.5-star strip; line 2: review text) — both left-aligned */
+
+.des148-tp-top { display: flex; align-items: center; gap: 0.625rem; flex-wrap: wrap; }
+.des148-tp-logo { display: inline-flex; align-items: center; gap: 0.3125rem; }
+.des148-tp-logo img { width: 1.125rem; height: 1.125rem; display: block; }
+.des148-tp-name { font-family: var(--font-heading); font-weight: var(--font-weight-heading); font-size: 1.0625rem; line-height: 1; color: var(--text-black); letter-spacing: -0.02em; }
+.des148-tp-rating { display: inline-flex; align-items: center; gap: 0.125rem; }
+.des148-tp-rating > img { width: 1.0625rem; height: 1.0625rem; display: block; }
+.des148-tp-half { position: relative; display: block; width: 1.0625rem; height: 1.0625rem; flex: none; }
+.des148-tp-half img { position: absolute; inset: 0; width: 1.0625rem; height: 1.0625rem; }
+.des148-tp-half .des148-tp-half-fill { -webkit-clip-path: inset(0 50% 0 0); clip-path: inset(0 50% 0 0); }
+.des148-tp-text { font-weight: 500; font-size: var(--font-body-xxs-size); line-height: var(--font-body-xxs-line); color: var(--text-black); }
+
+/* ════════ HERO UPLOAD DROPZONE ════════ */
+.des148-dz { position: relative; height: 23.75rem; display: flex; flex-direction: column; text-align: center; padding: 2rem; background: var(--surface-subtle); border: 2px dashed var(--border-default); border-radius: var(--radius-xl); cursor: pointer; transition: border-color .3s ease-in, background-color .3s ease-in; }
+.des148-dz:hover, .des148-dz:focus-visible { border-color: var(--surface-primary-default); background: rgba(245, 100, 98, 0.1); outline: none; }
+.des148-dz.is-dragover { border-color: var(--surface-primary-default); border-style: solid; background: rgba(245, 100, 98, 0.2); }
+.des148-dz-inner { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.375rem; pointer-events: none; }
+.des148-dz-ic { width: 4rem; height: 4rem; border-radius: 50%; background: var(--surface-white); display: flex; align-items: center; justify-content: center; margin-bottom: 0.25rem; animation: des148-float 3.5s ease-in-out infinite; }
+.des148-dz.is-dragover .des148-dz-ic { animation: none; transform: scale(1.06); }
+.des148-dz-ic .des148-ms { font-size: 34px; }
+.des148-dz-title { font-family: var(--font-heading); font-weight: var(--font-weight-heading); font-size: var(--font-h6-size); line-height: var(--font-h6-line); color: var(--text-black); }
+.des148-dz-sub { font: 400 1rem/1.5rem var(--font-body); color: var(--text-default); }
+.des148-dz-link { color: var(--text-primary-action); font-weight: 600; text-decoration: underline; }
+.des148-dz-types { display: flex; gap: 0.5rem; margin-top: 0.25rem; }
+.des148-dz-chip { display: inline-flex; align-items: center; gap: 0.25rem; font: 600 0.8125rem/1 var(--font-body); color: var(--text-subtle); background: var(--surface-white); border: 1px solid var(--border-subtle); border-radius: var(--radius-round); padding: 0.375rem 0.625rem; }
+.des148-dz-chip .des148-ms { font-size: 16px; }
+@keyframes des148-float { 0%, 100% { transform: translateY(-3px); } 50% { transform: translateY(3px); } }
+@media (prefers-reduced-motion: reduce) { .des148-dz-ic { animation: none; } }
+/* 3-step tracker inside the dropzone, pinned to the bottom (subtle, advances 1 -> 2 -> 3 on a loop) */
+.des148-steps { list-style: none; display: flex; align-items: flex-start; justify-content: space-between; gap: 0; margin: 1.5rem 0 0; padding: 0 0.5rem; width: 100%; flex: none; pointer-events: none; }
+.des148-step { position: relative; flex: 1; display: flex; flex-direction: column; align-items: center; gap: 0.5rem; text-align: center; }
+.des148-step:not(:first-child)::before { content: ""; position: absolute; top: 0.875rem; left: calc(-50% + 1.375rem); right: calc(50% + 1.375rem); height: 2px; background: linear-gradient(to right, var(--surface-primary-default) 50%, rgba(120, 118, 115, 0.3) 50%); background-size: 200% 100%; background-position: 100% 0; z-index: 0; -webkit-mask-image: linear-gradient(to right, transparent 0, #000 20%, #000 80%, transparent 100%); mask-image: linear-gradient(to right, transparent 0, #000 20%, #000 80%, transparent 100%); }
+.des148-step-dot { position: relative; z-index: 1; width: 1.875rem; height: 1.875rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; font: 700 0.8125rem/1 var(--font-body); background: var(--surface-white); color: var(--text-subtle); }
+.des148-step-lbl { font: 400 0.8125rem/1.125rem var(--font-body); color: rgba(120, 118, 115, 0.6); transition: color .3s ease; }
+.des148-step.is-on .des148-step-dot { background: var(--surface-primary-default); color: var(--text-white); transition: background-color .3s ease, color .3s ease; }
+.des148-step:not(:first-child).is-on .des148-step-dot { transition-delay: .9s; }
+.des148-step.is-on .des148-step-lbl { color: var(--text-black); }
+.des148-step:not(:first-child).is-on .des148-step-lbl { transition-delay: .9s; }
+/* ===== Header version switch (V1 / V2) ===== */
+.des148-hero-v1, .des148-hero-v2, .des148-hero-v3 { flex: 1; display: flex; flex-direction: column; min-height: 0; }
+/* show only the active version's media, hide the others */
+.des148-herobg[data-hv="1"] .des148-hero-v2, .des148-herobg[data-hv="1"] .des148-hero-v3,
+.des148-herobg[data-hv="2"] .des148-hero-v1, .des148-herobg[data-hv="2"] .des148-hero-v3,
+.des148-herobg[data-hv="3"] .des148-hero-v1, .des148-herobg[data-hv="3"] .des148-hero-v2 { display: none; }
+/* V2 layout: drop area (top, from mid of the steps box to the right), steps bottom-left, stage bottom-right */
+.des148-v2grid { flex: 1; min-height: 0; display: grid; grid-template-columns: 0.5fr 0.5fr 2.2fr; grid-template-rows: 1.1fr 1fr; gap: 1.5rem; }
+.des148-v2-drop { grid-column: 1 / -1; grid-row: 1; }
+.des148-v2-steps { grid-column: 1 / 3; grid-row: 2; }
+.des148-v2-stage { grid-column: 3; grid-row: 2; position: relative; overflow: hidden; }
+.des148-v2-steps, .des148-v2-stage { background: var(--surface-subtle); border-radius: var(--radius-xl); }
+/* V2 drop area (top field) — plain beige field, no dashed border */
+.des148-herocard-media .des148-hero-v2 .des148-dz { flex: 0 0 auto; height: auto; min-height: 0; padding: 1.5rem; border: none; }
+.des148-dz--slim .des148-dz-inner { flex: 1; gap: 0.375rem; padding: 1rem; border: 2px dashed var(--border-default); border-radius: var(--radius-sm); transition: border-color .3s ease-in; }
+.des148-v2-drop:hover .des148-dz-inner, .des148-v2-drop:focus-visible .des148-dz-inner { border-color: var(--surface-primary-default); }
+.des148-dz--slim .des148-dz-ic { width: 3rem; height: 3rem; margin-bottom: 0.125rem; }
+.des148-dz--slim .des148-dz-ic .des148-ms { font-size: 26px; }
+/* Steps as buttons (bottom-left field): the active button turns fully red, no connecting line */
+.des148-vsteps { list-style: none; margin: 0; padding: 0.75rem; height: 100%; display: flex; flex-direction: column; gap: 0.75rem; }
+.des148-vstep { flex: 1; display: flex; align-items: center; gap: 0.5rem; padding: 0.625rem 0.75rem; border-radius: var(--radius-sm); background: var(--surface-white); transition: background-color .35s ease; }
+.des148-vstep-num { flex: none; width: 1.5rem; height: 1.5rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; font: 700 0.75rem/1 var(--font-body); background: var(--surface-subtle); color: var(--text-default); transition: background-color .35s ease, color .35s ease; }
+.des148-vstep-lbl { font: 600 0.8125rem/1.125rem var(--font-body); color: var(--text-default); transition: color .35s ease; }
+.des148-vstep.is-active { background: var(--surface-primary-default); }
+.des148-vstep.is-active .des148-vstep-num { background: var(--surface-white); color: var(--surface-primary-default); }
+.des148-vstep.is-active .des148-vstep-lbl { color: var(--text-white); }
+/* Stage (bottom-right field): scenes slide upward on every transition (loop), with a soft top/bottom fade */
+.des148-stage-reel { position: absolute; inset: 0; -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 12%, #000 88%, transparent 100%); mask-image: linear-gradient(to bottom, transparent 0, #000 12%, #000 88%, transparent 100%); }
+.des148-scene { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.5rem; padding: 1rem; transform: translateY(100%); transition: transform .6s cubic-bezier(.5,0,.2,1); }
+.des148-scene.is-active { transform: translateY(0); }
+.des148-scene .des148-doc { width: 8.5rem; height: 10.5rem; border: none; }
+/* review scene: recolour the highlighted (extracted) lines from yellow to red */
+/* review scene: red pills (same size/shape as the match % pill) rise one after another to show
+   the resume being reviewed and its skills / experience extracted */
+.des148-tags { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); display: grid; justify-items: center; align-items: center; z-index: 3; pointer-events: none; }
+.des148-tag { grid-area: 1 / 1; min-width: 2.75rem; height: 1.625rem; padding: 0 0.625rem; border-radius: var(--radius-round); background: var(--surface-primary-default); color: var(--text-white); font: 700 0.75rem/1.625rem var(--font-body); text-align: center; white-space: nowrap; opacity: 0; }
+.des148-scene[data-scene="1"].is-active .des148-tag { animation: des148-tagrise 1.3s linear both, des148-tagfade 1.3s ease-in-out both; animation-delay: calc(var(--d, 0) * 1.3s); }
+@keyframes des148-tagrise { from { transform: translateY(0.9rem); } to { transform: translateY(-1.1rem); } }
+@keyframes des148-tagfade { 0% { opacity: 0; } 20% { opacity: 1; } 72% { opacity: 1; } 100% { opacity: 0; } }
+/* matched-jobs scene: continuous upward scroll of borderless job cards.
+   The whole group fades opacity 0 -> 1 as it slides up from below (and 1 -> 0 as it slides out),
+   so the fade is coupled to the slide — symmetric on entry and exit. */
+.des148-scene[data-scene="2"] { padding: 0; opacity: 0; transition: transform .6s cubic-bezier(.5,0,.2,1), opacity .55s ease; }
+.des148-scene[data-scene="2"].is-active { opacity: 1; }
+.des148-jobscroll { position: absolute; inset: 0; }
+.des148-jobtrack { display: flex; flex-direction: column; gap: 0.5rem; padding: 0.5rem 0.75rem; animation: des148-jobscroll 20s linear infinite; }
+@keyframes des148-jobscroll { from { transform: translateY(0); } to { transform: translateY(-50%); } }
+.des148-match { display: flex; align-items: center; gap: 0.625rem; flex: none; background: var(--surface-white); border-radius: var(--radius-sm); padding: 0.625rem 0.75rem; transform: translateY(1.25rem); transition: transform .5s cubic-bezier(.16,.6,.28,1); }
+/* each card slides in staggered and docks into place; the group's opacity handles the fade */
+.des148-scene[data-scene="2"].is-active .des148-match { transform: none; }
+.des148-scene[data-scene="2"].is-active .des148-match:nth-child(1) { transition-delay: 0s; }
+.des148-scene[data-scene="2"].is-active .des148-match:nth-child(2) { transition-delay: .08s; }
+.des148-scene[data-scene="2"].is-active .des148-match:nth-child(3) { transition-delay: .16s; }
+.des148-scene[data-scene="2"].is-active .des148-match:nth-child(4) { transition-delay: .24s; }
+.des148-scene[data-scene="2"].is-active .des148-match:nth-child(5) { transition-delay: .32s; }
+.des148-scene[data-scene="2"].is-active .des148-match:nth-child(6) { transition-delay: .40s; }
+.des148-scene[data-scene="2"].is-active .des148-match:nth-child(n+7) { transition-delay: .48s; }
+.des148-match-pct { flex: none; min-width: 2.75rem; height: 1.625rem; padding: 0 0.5rem; border-radius: var(--radius-round); background: var(--surface-primary-default); color: var(--text-white); font: 700 0.75rem/1.625rem var(--font-body); text-align: center; }
+.des148-match-body { display: flex; flex-direction: column; gap: 0.0625rem; min-width: 0; }
+.des148-match-title { font: 600 0.8125rem/1.0625rem var(--font-body); color: var(--text-black); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.des148-match-meta { font: 400 0.6875rem/1 var(--font-body); color: var(--text-subtle); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+/* Upload badge + scan line for stage scenes */
+.des148-up-badge { position: absolute; top: 50%; right: 0; transform: translate(50%, -50%); width: 2.375rem; height: 2.375rem; border-radius: 50%; background: var(--surface-primary-default); color: var(--text-white); display: flex; align-items: center; justify-content: center; z-index: 2; animation: des148-badgebob 2.4s ease-in-out infinite; }
+/* the upload badge gently floats up and down (centring translate is kept inside the keyframes) */
+@keyframes des148-badgebob { 0%, 100% { transform: translate(50%, -50%) translateY(-0.1875rem); } 50% { transform: translate(50%, -50%) translateY(0.1875rem); } }
+/* let the upload badge sit fully on top of the resume, not clipped */
+.des148-scene[data-scene="0"] .des148-doc { overflow: visible; }
+.des148-up-badge .des148-ms { font-size: 22px; }
+.des148-scan { position: absolute; left: 0; right: 0; height: 3px; background: var(--surface-primary-default); box-shadow: 0 0 10px 1px rgba(245,100,98,.6); animation: des148-scan 1.8s ease-in-out infinite; }
+@keyframes des148-scan { 0%,100% { top: 6%; } 50% { top: 92%; } }
+@media (prefers-reduced-motion: reduce) { .des148-jobtrack { animation: none; } .des148-scene { transition: none; } .des148-up-badge { animation: none; } .des148-tag { animation: none; } .des148-v3-badge { animation: none; } }
+@media (max-width: 768px) {
+  .des148-v2grid { grid-template-columns: 1fr 1.6fr; grid-template-rows: auto auto; gap: 1rem; }
+  .des148-v2-drop { grid-column: 1 / -1; grid-row: 1; }
+  .des148-v2-steps { grid-column: 1; grid-row: 2; }
+  .des148-v2-stage { grid-column: 2; grid-row: 2; min-height: 12rem; }
+}
+/* Floating header-version switcher */
+.des148-vswitch { position: absolute; right: 1rem; top: 50%; transform: translateY(-50%); z-index: 40; display: flex; flex-direction: column; align-items: center; gap: 0.25rem; background: var(--surface-white); border-radius: var(--radius-round); box-shadow: var(--shadow-md); padding: 0.3125rem; opacity: 0; pointer-events: none; transition: opacity .25s ease; }
+.des148-vswitch.is-visible { opacity: 1; pointer-events: auto; }
+.des148-vswitch-btn { width: 2rem; height: 2rem; display: flex; align-items: center; justify-content: center; border: none; background: transparent; cursor: pointer; font: 600 0.75rem/1 var(--font-body); color: var(--text-default); border-radius: 50%; padding: 0; transition: background-color .3s ease-in, color .3s ease-in; }
+.des148-vswitch-btn.is-active { background: var(--surface-primary-default); color: var(--text-white); }
+@media (prefers-reduced-motion: reduce) { .des148-match { transition: none; } }
+.des148-step.is-on::before { background-position: 0 0; transition: background-position 1s ease; }
+
+/* ═══════ Header Version 3 — red panel with an emerging resume (step 1) ═══════ */
+.des148-hero-v3 { flex: 1; }
+/* side red frame scales with the panel width (relative units: rem + %, proportional as the screen shrinks);
+   caps at 6.5rem, which equals the fixed top gap when the content hits its 1440px max. top gap stays fixed at 6.5rem. */
+.des148-v3panel { --v3-inset: min(6.5rem, 17.6%); --v3-top: 6.5rem; position: relative; flex: 1; min-height: 22rem; overflow: hidden; border-radius: var(--radius-xl);
+  background: var(--surface-primary-default); }
+/* step headline — centered in the red band above the resume */
+.des148-v3-step { position: absolute; top: 0; left: 0; right: 0; height: var(--v3-top); z-index: 4; display: flex; align-items: center; justify-content: center; gap: 0.78125rem; }
+.des148-v3-num { width: 2.1875rem; height: 2.1875rem; flex: none; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; background: var(--surface-white); color: var(--surface-primary-default); font: 700 1.09375rem/1 var(--font-body); }
+.des148-v3-steplbl { font-family: var(--font-heading); font-weight: var(--font-weight-heading); font-size: 1.71875rem; line-height: 1; color: var(--text-white); }
+/* the resume: equal inset top/left/right, touches the bottom frame; white -> beige gradient */
+.des148-v3-doc { position: absolute; left: var(--v3-inset); right: var(--v3-inset); top: var(--v3-top); bottom: 0; z-index: 3; overflow: hidden;
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  background: var(--surface-subtle); box-shadow: 40px 60px 50px rgba(0,0,0,0.4); }
+/* resume interior (upload badge + text lines) — reproduced 1:1 from the source SVG, anchored to the top */
+.des148-v3-svg { position: absolute; top: 0; left: 0; width: 100%; height: auto; display: block; }
+/* ---- V3 motion ---- */
+/* the upload badge gently bobs up and down (SVG group, so it moves in user units) */
+.des148-v3-badge { animation: des148-v3badge 2.4s ease-in-out infinite; }
+@keyframes des148-v3badge { 0%, 100% { transform: translateY(-8px); } 50% { transform: translateY(8px); } }
+/* reveal: the headline (over the resume) slides in from the right FIRST, then the resume panel rises + fades
+   in just after — a clear "headline, then the rest" stagger after the panel's own reveal delay (--rd inherits) */
+.des148-rvl .des148-v3-doc { opacity: 0; transform: translateY(1.25rem); }
+.des148-rvl .des148-v3-step { opacity: 0; transform: translateX(2rem); }
+.des148-hero-v3.des148-reveal-in .des148-v3-step { opacity: 1; transform: translateX(0);
+  transition: opacity .7s cubic-bezier(.16,.6,.28,1), transform .7s cubic-bezier(.16,.6,.28,1); transition-delay: calc(var(--rd, 0s) + 0.12s); }
+.des148-hero-v3.des148-reveal-in .des148-v3-doc { opacity: 1; transform: translateY(0);
+  transition: opacity .75s cubic-bezier(.16,.6,.28,1), transform .75s cubic-bezier(.16,.6,.28,1); transition-delay: calc(var(--rd, 0s) + 0.5s); }
+
+/* ═══════ V3 slide 2 — "We review" ═══════ */
+/* on each slide change the current title runs out toward the left edge (fading), then the next one comes in from off the right edge (fading) — longer travel */
+@keyframes des148-v3titleout { from { opacity: 1; transform: translateX(0); } to { opacity: 0; transform: translateX(-5.5rem); } }
+@keyframes des148-v3titlein { from { opacity: 0; transform: translateX(5.5rem); } to { opacity: 1; transform: translateX(0); } }
+.des148-v3-step.is-exit { animation: des148-v3titleout .4s cubic-bezier(.4,0,1,1) both; }
+.des148-v3-step.is-enter { animation: des148-v3titlein .62s cubic-bezier(.16,.6,.28,1) both; }
+/* the upload badge belongs to step 1 only — keep it hidden through review AND the matched-jobs hand-off, so it
+   never briefly flashes back in while the resume fades out on the step 2 -> 3 transition */
+.des148-v3-badge { transition: opacity .4s ease; }
+.des148-v3panel.is-review .des148-v3-badge,
+.des148-v3panel.is-matched .des148-v3-badge,
+.des148-v3panel.is-matched-out .des148-v3-badge { opacity: 0; }
+/* yellow scan bar: from below the resume up to its top, pause, then back down */
+.des148-v3-scanwrap { position: absolute; left: 6%; right: 6%; top: var(--v3-top); bottom: 0; z-index: 4; pointer-events: none; }
+.des148-v3-scan { position: absolute; left: 0; right: 0; top: 100%; height: 1rem; border-radius: 999px; opacity: 0;
+  background: linear-gradient(90deg, rgba(232,255,99,0.00) 0%, #E8FF63 14%, #E8FF63 85%, rgba(232,255,99,0.00) 100%); }
+.des148-v3panel.is-review .des148-v3-scan { animation: des148-v3scan 1.6s ease-in-out both; }
+@keyframes des148-v3scan { 0% { top: 100%; opacity: 0; } 8% { opacity: 1; } 50% { top: 0%; opacity: 1; } 92% { top: 100%; opacity: 1; } 100% { top: 100%; opacity: 0; } }
+/* Skills / Experience pills float up one after another, once the sweep reaches the top (reuses the V2 tag motion) */
+.des148-v3-pills { position: absolute; left: 0; right: 0; top: 54%; z-index: 5; display: grid; justify-items: center; align-items: center; pointer-events: none; }
+.des148-v3-pill { grid-area: 1 / 1; min-width: 5rem; height: 2.75rem; padding: 0 1.25rem; border-radius: var(--radius-round); background: var(--surface-primary-default); color: var(--text-white); font: 500 1.125rem/2.75rem var(--font-heading); text-align: center; white-space: nowrap; opacity: 0; }
+/* desktop: pills as large as the "Upload my resume" button (56px) */
+@media (min-width: 961px) { .des148-v3-pill { height: 3.5rem; min-width: 6rem; padding: 0 1.5rem; font: 500 1.25rem/3.5rem var(--font-heading); } }
+/* appear only once the bar is on the way down, past 50% of the resume; stagger = duration so they never overlap */
+.des148-v3panel.is-review .des148-v3-pill { animation: des148-tagrise 1.1s linear both, des148-tagfade 1.1s ease-in-out both; animation-delay: calc(1.2s + var(--d, 0) * 1.1s); }
+/* as the scan bar descends, each resume line smoothly turns from black to CI red and gets denser (staggered top -> bottom) */
+.des148-v3panel.is-review .des148-v3-lines path { animation: des148-v3line .5s ease forwards; animation-delay: .85s; }
+.des148-v3panel.is-review .des148-v3-lines path:nth-child(2){animation-delay:.92s}
+.des148-v3panel.is-review .des148-v3-lines path:nth-child(3),.des148-v3panel.is-review .des148-v3-lines path:nth-child(4){animation-delay:.99s}
+.des148-v3panel.is-review .des148-v3-lines path:nth-child(5),.des148-v3panel.is-review .des148-v3-lines path:nth-child(6){animation-delay:1.06s}
+.des148-v3panel.is-review .des148-v3-lines path:nth-child(7),.des148-v3panel.is-review .des148-v3-lines path:nth-child(8){animation-delay:1.13s}
+.des148-v3panel.is-review .des148-v3-lines path:nth-child(9),.des148-v3panel.is-review .des148-v3-lines path:nth-child(10){animation-delay:1.20s}
+.des148-v3panel.is-review .des148-v3-lines path:nth-child(11),.des148-v3panel.is-review .des148-v3-lines path:nth-child(12){animation-delay:1.27s}
+.des148-v3panel.is-review .des148-v3-lines path:nth-child(13),.des148-v3panel.is-review .des148-v3-lines path:nth-child(14){animation-delay:1.34s}
+.des148-v3panel.is-review .des148-v3-lines path:nth-child(15),.des148-v3panel.is-review .des148-v3-lines path:nth-child(16){animation-delay:1.41s}
+.des148-v3panel.is-review .des148-v3-lines path:nth-child(17),.des148-v3panel.is-review .des148-v3-lines path:nth-child(18){animation-delay:1.48s}
+/* solid fill interpolates smoothly (black -> CI red); the top->bottom fade is handled by the mask, not the fill */
+@keyframes des148-v3line { from { fill: #100F0E; fill-opacity: 0.1; } to { fill: #F56462; fill-opacity: 0.2; } }
+/* keep the resume text red through the hand-off to the job cards — it fades out with the resume, never snapping back to black */
+.des148-v3panel.is-matched .des148-v3-lines path { fill: #F56462; fill-opacity: 0.2; }
+/* Upload slide entrance: the text lines fade in top -> bottom, one after another (gradient colour preserved) */
+.des148-v3panel.is-uploadin .des148-v3-lines path { animation: des148-v3linein .4s ease both; animation-delay: .4s; }
+.des148-v3panel.is-uploadin .des148-v3-lines path:nth-child(2){animation-delay:.45s}
+.des148-v3panel.is-uploadin .des148-v3-lines path:nth-child(3),.des148-v3panel.is-uploadin .des148-v3-lines path:nth-child(4){animation-delay:.50s}
+.des148-v3panel.is-uploadin .des148-v3-lines path:nth-child(5),.des148-v3panel.is-uploadin .des148-v3-lines path:nth-child(6){animation-delay:.55s}
+.des148-v3panel.is-uploadin .des148-v3-lines path:nth-child(7),.des148-v3panel.is-uploadin .des148-v3-lines path:nth-child(8){animation-delay:.60s}
+.des148-v3panel.is-uploadin .des148-v3-lines path:nth-child(9),.des148-v3panel.is-uploadin .des148-v3-lines path:nth-child(10){animation-delay:.65s}
+.des148-v3panel.is-uploadin .des148-v3-lines path:nth-child(11),.des148-v3panel.is-uploadin .des148-v3-lines path:nth-child(12){animation-delay:.70s}
+.des148-v3panel.is-uploadin .des148-v3-lines path:nth-child(13),.des148-v3panel.is-uploadin .des148-v3-lines path:nth-child(14){animation-delay:.75s}
+.des148-v3panel.is-uploadin .des148-v3-lines path:nth-child(15),.des148-v3panel.is-uploadin .des148-v3-lines path:nth-child(16){animation-delay:.80s}
+.des148-v3panel.is-uploadin .des148-v3-lines path:nth-child(17),.des148-v3panel.is-uploadin .des148-v3-lines path:nth-child(18){animation-delay:.85s}
+@keyframes des148-v3linein { from { opacity: 0; } to { opacity: 1; } }
+
+/* ═══════ V3 slide 3 — "Matched jobs" ═══════ */
+/* full-width stage: cards can travel in from far right (and out to the left) fully visible across the panel —
+   only the panel's own edges clip. top/bottom edges fade out. */
+.des148-v3-cards { position: absolute; left: 0; right: 0; top: calc(var(--v3-top) - 3px); bottom: 0; z-index: 6; overflow: hidden; opacity: 0; pointer-events: none;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 19%, #000 79%, transparent 100%);
+          mask-image: linear-gradient(to bottom, transparent 0, #000 19%, #000 79%, transparent 100%); }   /* larger, softer top/bottom fades (shadow offset kept shallow enough to survive the bottom fade) */
+.des148-v3panel.is-matched .des148-v3-cards, .des148-v3panel.is-matched-out .des148-v3-cards { opacity: 1; transition: opacity .4s ease; }
+/* the resume steps aside (fades out) so the incoming cards never overlap it */
+.des148-v3panel.is-matched .des148-v3-doc, .des148-v3panel.is-matched-out .des148-v3-doc { opacity: 0; transition: opacity .4s ease; }
+/* the card track rests in the resume's footprint (same inset = same width); cards translate out into the red frame */
+.des148-v3-cardtrack { position: absolute; top: 0; left: var(--v3-inset); right: var(--v3-inset); display: flex; flex-direction: column; gap: 0.75rem; padding: 0.75rem 0; }
+/* the whole stack drifts gently upward once the cards have docked (same idea as V2's job scroll) */
+.des148-v3panel.is-matched .des148-v3-cardtrack { animation: des148-v3cardscroll 6s linear both; animation-delay: 0s; }   /* the whole group drifts up from the very start, at the same time as the cards slide in */
+@keyframes des148-v3cardscroll { from { transform: translateY(0); } to { transform: translateY(-28%); } }
+/* card: white, match% pill + job title + location (content mirrors V2); shadow adopted from the resume — dark + soft */
+.des148-v3-job { --jx: 6rem; display: flex; align-items: center; gap: 0.875rem; flex: none; background: var(--surface-white); border-radius: var(--radius-sm); padding: 0.875rem 1rem; box-shadow: 38px 38px 50px rgba(0,0,0,0.4); opacity: 0; transform: translateX(var(--jx)); }
+.des148-v3-job-pct { flex: none; min-width: 3.625rem; height: 2.5rem; padding: 0 0.875rem; border-radius: var(--radius-round); background: var(--surface-primary-default); color: var(--text-white); font: var(--font-weight-heading) 1.0625rem/2.5rem var(--font-heading); text-align: center; }
+.des148-v3-job-body { display: flex; flex-direction: column; gap: 0.125rem; min-width: 0; }
+.des148-v3-job-title { font: var(--font-weight-heading) 1.0625rem/1.3 var(--font-heading); color: var(--text-black); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.des148-v3-job-meta { font: 400 0.875rem/1.2 var(--font-body); color: var(--text-subtle); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+@media (min-width: 961px) {
+  .des148-v3-job { padding: 1rem 1.125rem; gap: 1rem; }
+  .des148-v3-job-pct { min-width: 4.375rem; height: 2.75rem; font: var(--font-weight-heading) 1.1875rem/2.75rem var(--font-heading); }
+  .des148-v3-job-title { font: var(--font-weight-heading) 1.1875rem/1.3 var(--font-heading); }
+  .des148-v3-job-meta { font: 400 0.9375rem/1.2 var(--font-body); }
+}
+/* step 2 -> 3: each card eases in from far right, one after another (right -> left), fully visible across the panel */
+.des148-v3panel.is-matched .des148-v3-job { animation: des148-v3jobin .6s cubic-bezier(.16,.6,.28,1) both; }
+.des148-v3panel.is-matched .des148-v3-job:nth-child(1){ animation-delay: .18s; }
+.des148-v3panel.is-matched .des148-v3-job:nth-child(2){ animation-delay: .30s; }
+.des148-v3panel.is-matched .des148-v3-job:nth-child(3){ animation-delay: .42s; }
+.des148-v3panel.is-matched .des148-v3-job:nth-child(4){ animation-delay: .54s; }
+.des148-v3panel.is-matched .des148-v3-job:nth-child(5){ animation-delay: .66s; }
+.des148-v3panel.is-matched .des148-v3-job:nth-child(6){ animation-delay: .78s; }
+.des148-v3panel.is-matched .des148-v3-job:nth-child(n+7){ animation-delay: .90s; }
+@keyframes des148-v3jobin { from { opacity: 0; transform: translateX(var(--jx)); } to { opacity: 1; transform: translateX(0); } }
+/* leaving step 3: each card softly eases further out to the left and fades, one after another */
+.des148-v3panel.is-matched-out .des148-v3-job { animation: des148-v3jobout .5s cubic-bezier(.4,0,1,1) both; }
+.des148-v3panel.is-matched-out .des148-v3-job:nth-child(1){ animation-delay: 0s; }
+.des148-v3panel.is-matched-out .des148-v3-job:nth-child(2){ animation-delay: .06s; }
+.des148-v3panel.is-matched-out .des148-v3-job:nth-child(3){ animation-delay: .12s; }
+.des148-v3panel.is-matched-out .des148-v3-job:nth-child(4){ animation-delay: .18s; }
+.des148-v3panel.is-matched-out .des148-v3-job:nth-child(5){ animation-delay: .24s; }
+.des148-v3panel.is-matched-out .des148-v3-job:nth-child(6){ animation-delay: .30s; }
+.des148-v3panel.is-matched-out .des148-v3-job:nth-child(7){ animation-delay: .36s; }
+.des148-v3panel.is-matched-out .des148-v3-job:nth-child(8){ animation-delay: .42s; }
+.des148-v3panel.is-matched-out .des148-v3-job:nth-child(9){ animation-delay: .48s; }
+.des148-v3panel.is-matched-out .des148-v3-job:nth-child(10){ animation-delay: .54s; }
+.des148-v3panel.is-matched-out .des148-v3-job:nth-child(n+11){ animation-delay: .60s; }
+@keyframes des148-v3jobout { from { opacity: 1; transform: translateX(0); } to { opacity: 0; transform: translateX(calc(-1 * var(--jx) - 1rem)); } }
+/* loop restart: the resume returns from below, softly fading up (like on first load) */
+.des148-v3panel.is-cyclein .des148-v3-doc { animation: des148-v3docrise .6s cubic-bezier(.16,.6,.28,1) both; }
+@keyframes des148-v3docrise { from { opacity: 0; transform: translateY(1.25rem); } to { opacity: 1; transform: translateY(0); } }
+
+@media (prefers-reduced-motion: reduce) { .des148-v3-scan, .des148-v3panel.is-review .des148-v3-pill, .des148-v3panel.is-review .des148-v3-lines path, .des148-v3panel.is-uploadin .des148-v3-lines path, .des148-v3panel.is-matched .des148-v3-job, .des148-v3panel.is-matched-out .des148-v3-job, .des148-v3panel.is-matched .des148-v3-cardtrack, .des148-v3panel.is-cyclein .des148-v3-doc, .des148-v3-step.is-enter, .des148-v3-step.is-exit { animation: none; } .des148-v3panel.is-matched .des148-v3-job { opacity: 1; transform: none; } }
+
+/* ════════ BUILD FLAG (review aid, not part of the final page) ════════ */
+
+
+
+.des148-stickycta { position: fixed; left: 0; right: 0; bottom: 0; z-index: 90; background: var(--surface-white); border-top: 1px solid var(--border-subtle); transform: translateY(110%); transition: transform .35s cubic-bezier(.4,0,.2,1); }
+.des148-stickycta.is-visible { transform: translateY(0); }
+.des148-stickycta-inner { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; }
+.des148-stickycta .des148-stickycta-inner { padding-top: 0.875rem; padding-bottom: 0.875rem; }   /* scoped above .des148-container so its "padding: 0 X" can't zero the vertical padding */
+/* copy area is a crossfade rotator: it stacks its slides and shows one at a time.
+   Desktop: title <-> value line (left-anchored). Mobile: value line <-> formats (centered; the title slide is hidden). */
+.des148-stickycta-copy { display: grid; justify-items: start; align-items: center; flex: 0 1 auto; min-width: 0; }
+.des148-stickycta-slide { grid-area: 1 / 1; opacity: 0; transition: opacity .5s ease; }
+.des148-stickycta-slide.is-on { opacity: 1; transition-delay: .5s; }   /* incoming waits for the outgoing to fade out first */
+.des148-stickycta-title { font-family: var(--font-heading); font-weight: var(--font-weight-heading); font-size: 1.25rem; line-height: 1.3; color: var(--text-black); }
+.des148-stickycta-msg { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; font-size: var(--font-body-sm-size); color: var(--text-default); }
+.des148-fmt-pills { display: none; }   /* desktop shows the "Supports ..." text; mobile swaps to PDF/Word pills */
+/* supported formats — a subtle 2-line label plus circular icon+word badges next to the button on desktop; hidden on mobile */
+.des148-stickycta-actions { display: flex; align-items: center; gap: 0.75rem; flex: none; }
+.des148-stickycta-types { display: flex; align-items: center; gap: 0.625rem; position: relative; }
+/* the label sits (absolutely) just left of the badges and only fades in on hover over them */
+.des148-fmtlabel { position: absolute; right: 100%; top: 50%; transform: translateY(-50%); margin-right: 0.625rem; white-space: nowrap; font: 400 0.75rem/1.15 var(--font-body); color: var(--text-subtle); text-align: right; opacity: 0; transition: opacity .25s ease; pointer-events: none; }
+.des148-stickycta-types:hover .des148-fmtlabel { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .des148-stickycta { transition: none; } }
+
+/* ════════ TRUSTPILOT REVIEWS ════════ */
+.des148-reviews { display: flex; flex-direction: column; align-items: center; gap: var(--space-xl); }
+.des148-reviews-header { display: flex; flex-direction: column; align-items: center; gap: var(--space-sm); }
+.des148-reviews-title { margin: 0; text-align: center; max-width: none; }
+.des148-reviews-tp { display: flex; flex-direction: column; align-items: center; gap: var(--space-xxs); }
+.des148-reviews-tp .des148-tp-top { justify-content: center; }
+.des148-reviews-tp .des148-tp-text { text-align: center; }
+.des148-reviews-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-md); width: 100%; }
+.des148-review { background: var(--surface-white); border-radius: 1.25rem; padding: var(--space-md); display: flex; flex-direction: column; gap: var(--space-sm); height: 100%; }
+.des148-review-top { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--space-sm); }
+.des148-review-person { display: flex; align-items: center; gap: 0.75rem; }
+.des148-review-avatar { width: 2.5rem; height: 2.5rem; flex: none; border-radius: 50%; background: var(--surface-subtle); color: var(--text-strong); display: inline-flex; align-items: center; justify-content: center; font-family: var(--font-body); font-weight: 600; font-size: 0.875rem; }
+.des148-review-id { display: flex; flex-direction: column; }
+.des148-review-name { font-family: var(--font-body); font-weight: 500; font-size: var(--font-body-xs-size); line-height: 1.4; color: var(--text-black); }
+.des148-review-source { display: inline-flex; align-items: center; gap: 0.25rem; flex: none; }
+.des148-review-source img { width: 1.25rem; height: 1.25rem; display: block; }
+.des148-review-source span { font-family: var(--font-body); font-weight: 500; font-size: var(--font-body-xs-size); color: var(--text-black); }
+.des148-review-stars { display: flex; gap: 0.125rem; }
+.des148-review-stars img { width: 1.5rem; height: 1.5rem; display: block; }
+.des148-review-q { font-size: var(--font-body-sm-size); line-height: var(--font-body-sm-line); color: var(--text-default); font-style: italic; }
+
+/* ════════ LOGOS (animated gradient marquee) ════════ */
+@property --x-0{syntax:"<percentage>";inherits:false;initial-value:90%}
+@property --x-1{syntax:"<percentage>";inherits:false;initial-value:55%}
+@property --x-2{syntax:"<percentage>";inherits:false;initial-value:47%}
+@property --x-3{syntax:"<percentage>";inherits:false;initial-value:57%}
+@property --x-4{syntax:"<percentage>";inherits:false;initial-value:1%}
+@property --y-0{syntax:"<percentage>";inherits:false;initial-value:84%}
+@property --y-1{syntax:"<percentage>";inherits:false;initial-value:93%}
+@property --y-2{syntax:"<percentage>";inherits:false;initial-value:92%}
+@property --y-3{syntax:"<percentage>";inherits:false;initial-value:0%}
+@property --y-4{syntax:"<percentage>";inherits:false;initial-value:54%}
+@property --c-0{syntax:"<color>";inherits:false;initial-value:#ff4a47}
+@property --c-1{syntax:"<color>";inherits:false;initial-value:#e7ff61}
+@property --c-2{syntax:"<color>";inherits:false;initial-value:#fa8a85}
+@property --c-3{syntax:"<color>";inherits:false;initial-value:#f56361}
+@property --c-4{syntax:"<color>";inherits:false;initial-value:#f56361}
+@property --s-start-0{syntax:"<percentage>";inherits:false;initial-value:17%}
+@property --s-start-1{syntax:"<percentage>";inherits:false;initial-value:7%}
+@property --s-start-2{syntax:"<percentage>";inherits:false;initial-value:8%}
+@property --s-start-3{syntax:"<percentage>";inherits:false;initial-value:8%}
+@property --s-start-4{syntax:"<percentage>";inherits:false;initial-value:10%}
+@property --s-end-0{syntax:"<percentage>";inherits:false;initial-value:63%}
+@property --s-end-1{syntax:"<percentage>";inherits:false;initial-value:74%}
+@property --s-end-2{syntax:"<percentage>";inherits:false;initial-value:63%}
+@property --s-end-3{syntax:"<percentage>";inherits:false;initial-value:88%}
+@property --s-end-4{syntax:"<percentage>";inherits:false;initial-value:68%}
+.des148-logos { position: relative; overflow: hidden; padding: 3.5rem 0; background-color: #f56361; background-image: radial-gradient(circle at var(--x-0) var(--y-0), var(--c-0) var(--s-start-0), transparent var(--s-end-0)), radial-gradient(circle at var(--x-1) var(--y-1), var(--c-1) var(--s-start-1), transparent var(--s-end-1)), radial-gradient(circle at var(--x-2) var(--y-2), var(--c-2) var(--s-start-2), transparent var(--s-end-2)), radial-gradient(circle at var(--x-3) var(--y-3), var(--c-3) var(--s-start-3), transparent var(--s-end-3)), radial-gradient(circle at var(--x-4) var(--y-4), var(--c-4) var(--s-start-4), transparent var(--s-end-4)); animation: des148-logos-bg 10s linear infinite alternate; }
+.des148-logos-title { margin: 0 0 2.5rem; text-align: center; color: var(--text-white); font-family: var(--font-heading); font-weight: var(--font-weight-heading); font-size: 1.5rem; line-height: 2.25rem; }
+.des148-logos-marquee { overflow: hidden; -webkit-mask-image: linear-gradient(to right, transparent 0, #000 10%, #000 90%, transparent 100%); mask-image: linear-gradient(to right, transparent 0, #000 10%, #000 90%, transparent 100%); }
+.des148-logos-track { display: flex; align-items: center; width: max-content; animation: des148-logos-scroll 30s linear infinite; }
+.des148-logos-track > svg, .des148-logos-track > img { height: 1.875rem; width: auto; display: block; flex: none; margin-right: 5rem; }   /* gap via margin (incl. after the last logo of each copy) so the loop is seamless */
+@keyframes des148-logos-scroll { from { transform: translateX(0); } to { transform: translateX(calc(-100% / 3)); } }   /* 3 copies; shift by exactly one copy */
+@keyframes des148-logos-bg {
+  0% { --s-start-0:17%; --s-end-0:63%; --x-0:90%; --y-0:84%; --c-0:#ff4a47; --s-start-1:7%; --s-end-1:74%; --y-1:93%; --c-1:#e7ff61; --x-1:55%; --y-2:92%; --x-2:47%; --s-start-2:8%; --s-end-2:63%; --c-2:#ef9fd2; --y-3:0%; --c-3:#f56361; --s-start-3:8%; --s-end-3:88%; --x-3:57%; --y-4:54%; --s-start-4:10%; --s-end-4:68%; --x-4:1%; --c-4:#f56361; }
+  100% { --s-start-0:5%; --s-end-0:57%; --x-0:97%; --y-0:83%; --c-0:#f8e8f5; --s-start-1:15%; --s-end-1:88%; --y-1:84%; --c-1:#fa8a85; --x-1:52%; --y-2:5%; --x-2:80%; --s-start-2:5%; --s-end-2:84%; --c-2:#f9d7da; --y-3:23%; --c-3:#eb4256; --s-start-3:10%; --s-end-3:72%; --x-3:5%; --y-4:32%; --s-start-4:16%; --s-end-4:60%; --x-4:79%; --c-4:#ffb3ad; }
+}
+@media (min-width: 1024px) { .des148-logos { padding: 5rem 0; } }
+@media (max-width: 768px) { .des148-logos { padding: 3rem 0; } .des148-logos-title { font-size: 1.25rem; line-height: 1.875rem; } }
+@media (prefers-reduced-motion: reduce) { .des148-logos { animation: none; } .des148-logos-track { animation: none; } }
+
+/* ════════ PROBLEM DIAGRAM — keyword-search "browser window" ════════ */
+.des148-problemwin { position: relative; border: 2px solid var(--surface-primary-default); border-radius: var(--radius-xl); padding: 2rem 2rem 2.25rem; display: flex; flex-direction: column; gap: 1.375rem; }
+/* mac-style window dots (decorative only) */
+.des148-pw-dots { display: flex; gap: 0.5rem; margin: -0.75rem 0 0 -0.75rem; }
+.des148-pw-dots i { width: 0.8125rem; height: 0.8125rem; border-radius: 50%; background: rgba(245,100,98,0.55); }
+/* search bar: black pill, red circular search icon, keyword text */
+.des148-pw-search { display: flex; align-items: center; gap: 0.75rem; background: var(--text-black); border-radius: var(--radius-round); padding: 0.5rem 1.375rem 0.5rem 0.5rem; }
+.des148-pw-searchicon { flex: none; width: 2.5rem; height: 2.5rem; border-radius: 50%; background: var(--surface-primary-default); display: inline-flex; align-items: center; justify-content: center; color: var(--text-white); }
+.des148-pw-searchicon .des148-ms { font-size: 22px; }
+.des148-pw-searchtext { font: var(--font-weight-heading) 1.375rem/1 var(--font-heading); color: var(--text-white); }
+.des148-pw-caret { display: inline-block; width: 0.125rem; height: 1.1em; margin-left: 0.12em; background: currentColor; vertical-align: middle; }   /* typing cursor */
+.des148-pw-caret.is-blinking { animation: des148-caret-blink 1.05s linear 5; }   /* blink exactly 5 times */
+.des148-pw-caret.is-out { opacity: 0; transition: opacity .6s ease; }   /* soft fade-out after blinking */
+@keyframes des148-caret-blink { 0%, 50% { opacity: 1; } 50.01%, 100% { opacity: 0; } }
+/* group labels: "What you see" (dark) / "Hidden from you" (red, with the logo mark) */
+.des148-pw-group { display: flex; flex-direction: column; gap: 0.75rem; }
+.des148-pw-label { display: flex; align-items: center; gap: 0.5rem; font: var(--font-weight-heading) 1.125rem/1.4 var(--font-heading); color: var(--text-black); }
+.des148-pw-label.is-hidden { color: var(--text-black); font-size: 1.625rem; line-height: 1; }
+.des148-pw-mark { flex: none; height: calc(0.68em + 1px); width: auto; }   /* colour baked into pw-mark-f56462.svg */
+/* job cards, two per row, each with a fit score + fit bar */
+.des148-pw-jobs { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.des148-pw-job { display: flex; flex-direction: column; gap: 0.4375rem; background: var(--surface-white); border-radius: var(--radius-md); padding: 1.125rem 1.25rem; min-width: 0; }   /* let the grid cell shrink so the title/meta can ellipsize */
+.des148-pw-jobtitle { font: var(--font-weight-heading) 1.0625rem/1.3 var(--font-heading); color: var(--text-black); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.des148-pw-jobmeta { font: 400 0.875rem/1.2 var(--font-body); color: var(--text-subtle); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+/* progress bar: taller pill, the fit % lives inside the fill and rides its right edge; the fill animates from a small pill out to its width when the card reveals */
+.des148-pw-bar { position: relative; height: 1.75rem; border-radius: 999px; background: var(--surface-default); overflow: hidden; margin-top: 0.375rem; }
+.des148-pw-bar i { display: flex; align-items: center; justify-content: flex-end; height: 100%; width: 3.5rem; min-width: 3.5rem; border-radius: 999px; background: #8A867F; transition: width 1.6s cubic-bezier(.65,0,.35,1); transition-delay: calc(var(--rd, 0s) + 0.3s); }
+.des148-rvl .des148-pw-job.des148-reveal-in .des148-pw-bar i { width: var(--pw-fill, 3.5rem); }
+.des148-pw-fit { padding: 0 0.75rem; font: var(--font-weight-heading) 0.9375rem/1 var(--font-heading); color: var(--text-white); white-space: nowrap; }
+.des148-pw-job.is-hi .des148-pw-bar i { background: var(--surface-primary-default); }
+@media (min-width: 961px) { .des148-problemwin { padding: 2.75rem 2.75rem 3rem; gap: 1.625rem; } .des148-pw-dots { margin: -1.5rem 0 0 -1.5rem; } }
+@media (max-width: 600px) { .des148-pw-jobs { grid-template-columns: 1fr; } .des148-problemwin { padding: 1.25rem 1.25rem 1.5rem; } .des148-pw-searchtext { font-size: 1.125rem; } .des148-pw-dots { margin: 0; }
+  /* once the cards stack (one per line), show only the first "What you see" card; "Hidden from you" cards (.is-hi) all stay */
+  .des148-pw-job:not(.is-hi):nth-child(n+2) { display: none; } }
+
+/* ════════ HOW IT WORKS — TIMELINE ════════ */
+.des148-tl { position: relative; display: flex; flex-direction: column; gap: 2.5rem; padding: 0.5rem 0; }
+.des148-tl::before { content: ""; position: absolute; z-index: 0; top: 0; bottom: 0; left: 50%; width: 2px; transform: translateX(-50%); background: var(--surface-subtle); -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 8%, #000 92%, transparent 100%); mask-image: linear-gradient(to bottom, transparent 0, #000 8%, #000 92%, transparent 100%); }
+.des148-rvl .des148-tl::before { transform: translateX(-50%) scaleY(0); transform-origin: top center; transition: transform .8s cubic-bezier(.22,.61,.36,1); }
+.des148-rvl .des148-tl.des148-reveal-in::before { transform: translateX(-50%) scaleY(1); }
+/* red progress overlay on the same line — fills from the top down to the screen-centre point as you scroll (--tl-fill set in script.js) */
+.des148-tl::after { content: ""; position: absolute; z-index: 0; top: 0; bottom: 0; left: 50%; width: 2px; transform: translateX(-50%); background: var(--surface-primary-default); -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 8%, #000 92%, transparent 100%); mask-image: linear-gradient(to bottom, transparent 0, #000 8%, #000 92%, transparent 100%); -webkit-clip-path: inset(0 0 calc(100% - var(--tl-fill, 0px)) 0); clip-path: inset(0 0 calc(100% - var(--tl-fill, 0px)) 0); }
+/* --tl-fill is updated on .des148-tl every scroll frame to drive ::after. It inherits, so re-declare it constant on the steps: this stops the per-frame change from invalidating each step's subtree (the mask icons), which otherwise flicker while scrolling. */
+.des148-tl-step { --tl-fill: 0px; }
+.des148-rvl .des148-tl-node { opacity: 0; transform: scale(0); transition: opacity .35s ease, transform .45s cubic-bezier(.34,1.56,.64,1); transition-delay: var(--rd, 0s); }
+.des148-rvl .des148-tl-node.des148-reveal-in { opacity: 1; transform: none; }
+/* boxes + numbers slide in from their own side (card left/right, number opposite). --tl-dist = slide distance, --tl-x = signed direction so the reveal-in rule can just clear the transform. No overflow clipping, so the distance is kept small enough to never overflow the viewport (see the narrow-desktop override). */
+.des148-rvl .des148-tl { --tl-dist: 3rem; }
+.des148-rvl .des148-tl-card { --tl-x: calc(-1 * var(--tl-dist)); opacity: 0; transform: translateX(var(--tl-x)); transition: opacity .9s ease, transform .9s cubic-bezier(.22,.61,.36,1); transition-delay: var(--rd, 0s); }
+.des148-rvl .des148-tl-num { --tl-x: var(--tl-dist); opacity: 0; transform: translateX(var(--tl-x)); transition: opacity .9s ease, transform .9s cubic-bezier(.22,.61,.36,1); transition-delay: var(--rd, 0s); }
+.des148-rvl .des148-tl-step:nth-child(even) .des148-tl-card { --tl-x: var(--tl-dist); }   /* even row: card is on the right -> from the right */
+.des148-rvl .des148-tl-step:nth-child(even) .des148-tl-num { --tl-x: calc(-1 * var(--tl-dist)); }   /* even row: number is on the left -> from the left */
+.des148-rvl .des148-tl-card.des148-reveal-in, .des148-rvl .des148-tl-num.des148-reveal-in { opacity: 1; transform: none; }
+.des148-tl-step { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; column-gap: 2.75rem; }
+.des148-tl-step > * { grid-row: 1; }
+.des148-tl-card { grid-column: 1; justify-self: stretch; border-radius: var(--radius-xl); padding: 3rem; display: flex; flex-direction: row; align-items: center; gap: 1.75rem; color: var(--text-white); }
+.des148-tl-body { display: flex; flex-direction: column; gap: 0.75rem; min-width: 0; }
+.des148-tl-ic { flex: none; width: 5.5rem; height: 5.5rem; border-radius: 50%; background: var(--surface-white); display: flex; align-items: center; justify-content: center; }
+.des148-tl-ic .des148-ms { font-size: 48px; }
+.des148-tl-title { margin: 0; font-family: var(--font-heading); font-weight: var(--font-weight-heading); font-size: 2.125rem; line-height: 2.5rem; color: inherit; }
+.des148-tl-desc { margin: 0; font-size: var(--font-body-sm-size); line-height: var(--font-body-sm-line); color: inherit; }
+.des148-tl-node { grid-column: 2; z-index: 2; flex: none; width: 1.875rem; height: 1.875rem; border-radius: 50%; background: var(--surface-white); border: 3px solid var(--surface-primary-default); box-shadow: 0 0 0 7px var(--surface-white); display: flex; align-items: center; justify-content: center; }
+.des148-tl-node::after { content: ""; width: 0.75rem; height: 0.75rem; border-radius: 50%; background: var(--surface-primary-default); }
+.des148-tl-num { grid-column: 3; justify-self: start; font-family: var(--font-heading); font-weight: var(--font-weight-heading); font-size: 7rem; line-height: 1; color: var(--alias-neutral-lighter); }
+.des148-tl-step:nth-child(even) .des148-tl-card { grid-column: 3; }
+.des148-tl-step:nth-child(even) .des148-tl-num { grid-column: 1; justify-self: end; }
+.des148-tl-step:nth-child(1) .des148-tl-card { background: var(--flamingo-60); }
+.des148-tl-step:nth-child(1) .des148-tl-ic { color: var(--flamingo-60); }
+.des148-tl-step:nth-child(2) .des148-tl-card { background: var(--surface-black); }
+.des148-tl-step:nth-child(2) .des148-tl-ic { color: var(--surface-black); }
+.des148-tl-step:nth-child(3) .des148-tl-card { background: var(--surface-secondary-default); color: var(--text-black); }
+.des148-tl-step:nth-child(3) .des148-tl-ic { background: var(--surface-black); color: var(--surface-secondary-default); }
+.des148-tl-final { background: var(--surface-subtle); border-radius: var(--radius-xxl); padding: 3rem; margin-top: 0.5rem; }
+.des148-tl-final .des148-two--vtop { align-items: stretch; gap: 3rem; }
+
+.des148-tl-final .des148-callout { padding: 3rem; }
+/* How it works — final box, left visual: the header resume (red-tinted lines, no shadow, flush with the box's bottom edge) with cascading job cards */
+.des148-hiw-visual { position: relative; align-self: stretch; min-height: 20rem; }
+/* resume is anchored top + bottom (like the header) so it always starts at the same top point and can't overflow the box, no matter the width; the tall SVG is cover-cropped at the bottom */
+/* the bottom always fades out to transparent so the resume melts softly into the beige box — never a hard edge, at any resolution */
+.des148-hiw-doc { position: absolute; left: 0; top: 8%; bottom: 0; width: 60%; border-radius: var(--radius-md); overflow: hidden; background: var(--surface-white); -webkit-mask-image: linear-gradient(to bottom, #000 60%, transparent 100%); mask-image: linear-gradient(to bottom, #000 60%, transparent 100%); }
+.des148-hiw-doc .des148-hiw-svg { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+.des148-hiw-cards { position: absolute; top: 0; left: 30%; right: 3%; display: flex; flex-direction: column; gap: 0.875rem; }
+.des148-hiw-job { display: flex; align-items: center; gap: 1rem; background: var(--surface-white); border-radius: var(--radius-md); padding: 0.9375rem 1.125rem; box-shadow: -1.25rem 1.5rem 2.5rem rgba(16,15,14,0.16); }
+.des148-hiw-job-pct { flex: none; min-width: 5.25rem; height: 3.25rem; padding: 0 1.25rem; border-radius: var(--radius-round); background: var(--surface-primary-default); color: var(--text-white); font: var(--font-weight-heading) 1.375rem/3.25rem var(--font-heading); text-align: center; }
+.des148-hiw-job-body { display: flex; flex-direction: column; gap: 0.125rem; min-width: 0; }
+.des148-hiw-job-title { font: var(--font-weight-heading) 1.1875rem/1.3 var(--font-heading); color: var(--text-black); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.des148-hiw-job-meta { font: 400 0.9375rem/1.3 var(--font-body); color: var(--text-subtle); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+/* desktop 2-col only: let the resume bleed through the bottom padding so it sits flush with the beige box's bottom edge */
+@media (min-width: 961px) { .des148-tl-final { overflow: hidden; } .des148-hiw-doc { bottom: -3rem; } }
+@media (max-width: 768px) { .des148-hiw-visual { min-height: 19rem; } .des148-hiw-doc { width: 62%; } .des148-hiw-cards { left: 26%; right: 0; } }
+
+/* ════════ MECHANISM MOCK ════════ */
+
+
+
+
+
+
+
+
+
+
+
+/* Document + match-row primitives (shared by the mechanism illustration) */
+.des148-doc { position: relative; width: 7.5rem; height: 9.375rem; background: var(--surface-white); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 1rem 0.75rem; overflow: hidden; display: flex; flex-direction: column; gap: 0.5rem; }
+.des148-doc::before { content: ""; display: block; height: 1rem; width: 4rem; background: var(--surface-primary-default); border-radius: 0.25rem; }
+.des148-docline { height: 0.4375rem; border-radius: 0.25rem; background: var(--surface-default); }
+
+
+
+.des148-callout { background: var(--surface-primary-default); color: var(--text-white); border-radius: var(--radius-lg); padding: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem; }
+.des148-callout .des148-lbl { font-family: var(--font-heading); font-weight: var(--font-weight-heading); font-size: 2.125rem; line-height: 2.5rem; }
+.des148-callout .des148-ln { font-size: var(--font-body-md-size); line-height: var(--font-body-md-line); }
+
+/* Why-our-matches head — text on the left, illustration on the right spanning the text block's height (top of the eyebrow to the bottom of the lead). On mobile it stacks above the text (see media query). */
+.des148-why-head { display: flex; align-items: stretch; justify-content: space-between; gap: 2rem; }
+.des148-why-text { flex: 0 1 44rem; min-width: 0; }
+.des148-why-imgwrap { position: relative; flex: 0 0 auto; width: clamp(12rem, 20vw, 18rem); }   /* empty box that stretches to the text height; the image fills it */
+.des148-why-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; object-position: top right; }
+/* reveal: the illustration slides in from the right to its end position once the section scrolls into view (staggered after the eyebrow/headline/lead). The generic .des148-reveal-in rule clears opacity + transform. Distance stays within the container padding so it never overflows. */
+.des148-rvl .des148-why-img { opacity: 0; transform: translateX(3rem); transition: opacity .9s ease, transform .9s cubic-bezier(.22,.61,.36,1); transition-delay: var(--rd, 0s); }   /* same reveal speed/easing as the How-it-works step boxes */
+@media (max-width: 960px) { .des148-rvl .des148-why-img { transform: translateX(1.25rem); } }   /* tighter padding here → smaller slide */
+
+/* ════════ NUMBER TILES ════════ */
+.des148-tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+.des148-tile { background: var(--surface-black); border-radius: var(--radius-xl); padding: 3rem; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 0.75rem; }
+.des148-tile .des148-big { font-family: var(--font-heading); font-weight: 500; font-size: 5rem; line-height: 1; color: var(--surface-secondary-default); }
+.des148-tile .des148-fact { font-size: var(--font-body-md-size); color: var(--surface-white); }
+
+/* ════════ POWER-TOOL CARDS ════════ */
+.des148-cards { display: flex; flex-direction: column; gap: 1rem; }
+.des148-card { background: var(--surface-subtle); border-radius: var(--radius-lg); padding: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem; }
+.des148-card h3 { font: var(--font-weight-heading) 1.5rem/2rem var(--font-heading); color: var(--text-black); display: flex; align-items: center; gap: var(--space-xs); }
+.des148-card-ic { width: 1.75rem; height: auto; flex: none; }   /* colour baked into card-arrow-f56462.svg */
+.des148-card p { font-size: var(--font-body-sm-size); line-height: var(--font-body-sm-line); color: var(--text-default); }
+.des148-card a { color: var(--text-primary-action); font-weight: 600; }
+.des148-card a:hover { text-decoration: underline; }
+/* image fills its column's full height (matches the text beside it); object-fit cover crops instead of distorting */
+.des148-powerimg { border-radius: var(--radius-xl); overflow: hidden; position: relative; }
+.des148-powerimg img { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; }
+
+/* frosted-glass caption pill over the image: white 90% (bottom-right) -> 100% (top-left) gradient, image shows through blurred */
+.des148-powerimg-cap { position: absolute; left: 1.25rem; bottom: 1.25rem; max-width: calc(100% - 2.5rem); padding: 0.875rem 1.5rem; border-radius: var(--radius-round); background: linear-gradient(to top left, rgba(255,255,255,0.7), rgba(255,255,255,1)); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); font: var(--font-weight-heading) 1.375rem/1.3 var(--font-heading); color: var(--text-black); box-shadow: 0 0.5rem 1.5rem rgba(16,15,14,0.08); }
+@media (min-width: 961px) { .des148-powerimg-cap { left: 2rem; bottom: 2rem; } }
+/* the caption pill softly drops in from above (once the image has settled). The generic .des148-reveal-in clears opacity + transform. */
+.des148-rvl .des148-powerimg-cap { opacity: 0; transform: translateY(-1.25rem); transition: opacity .8s cubic-bezier(.16,.6,.28,1), transform .8s cubic-bezier(.16,.6,.28,1); transition-delay: var(--rd, 0s); }
+
+/* ════════ FAQ ════════ */
+.des148-faq { max-width: 54.875rem; margin: 0 auto; display: flex; flex-direction: column; gap: 1.5rem; }
+.des148-faq-head { display: flex; flex-direction: column; align-items: center; gap: var(--space-sm); text-align: center; }
+.des148-faq-head .des148-eyebrow { align-self: center; }
+.des148-acc { width: 100%; background: transparent; border: 0; padding: 1rem 0; display: flex; flex-direction: column; transition: gap 0.3s ease-in; }
+.des148-acc-row { display: flex; align-items: center; gap: var(--space-sm); background: transparent; border: 0; padding: 0; cursor: pointer; text-align: left; width: 100%; color: var(--text-black); font-family: var(--font-heading); }
+.des148-acc-title { flex: 1; margin: 0; color: var(--text-black); font-family: var(--font-heading); font-weight: 500; font-size: 1.5rem; line-height: 2.25rem; }
+/* chevron colour is baked into the add/remove SVGs (JS swaps the <img> src on toggle — see script.js) */
+.des148-acc-chevron { font-size: 24px; flex: none; }
+.des148-acc-body { color: var(--text-default); font-family: var(--font-body); font-weight: 400; font-size: 1rem; line-height: 1.5rem; overflow: hidden; max-height: 0; opacity: 0; transition: max-height 0.34s cubic-bezier(.4,0,.2,1), opacity 0.26s ease, margin-top 0.34s cubic-bezier(.4,0,.2,1); margin-top: 0; will-change: max-height; }
+.des148-acc.is-open .des148-acc-body { opacity: 1; margin-top: var(--space-sm); }
+.des148-acc-row:focus-visible { outline: var(--focus-ring-width) solid var(--focus-ring-color); outline-offset: var(--focus-ring-offset); border-radius: var(--radius-xs); }
+
+/* ════════ FINAL CTA ════════ */
+.des148-final { background: var(--surface-secondary-default); border-radius: 1.25rem; padding: 4rem; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 2rem; }
+.des148-final-actions { display: flex; flex-direction: column; align-items: center; gap: var(--space-sm); }   /* button + crossfade note, tightly grouped and centered (same note component as the header hero) */
+.des148-final .des148-hero-note-msg { justify-content: center; text-align: left; }   /* pill + line stay centered as a block, but the line's own text is left-aligned (only visible once it wraps, e.g. on mobile) */
+.des148-textgroup { display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+.des148-final .des148-h2 { max-width: 20ch; }
+
+/* ════════ FOOTER ════════ */
+.des148-footwrap { background: var(--surface-subtle); padding-bottom: 1.5rem; }
+.des148-footer { background: var(--surface-black); color: var(--surface-white); border-radius: 1.25rem; padding: 3.5rem; }
+.des148-ftr-logo { width: 8.0625rem; height: 1rem; display: block; }
+.des148-ftr-top { display: flex; flex-wrap: wrap; gap: 2.5rem 3rem; align-items: flex-start; border-top: 1px solid rgba(255,255,255,.12); margin-top: 1.5rem; padding-top: 2rem; }
+.des148-ftr-tagline { flex: 0 1 16rem; margin: 0; font-family: var(--font-heading); font-weight: 500; font-size: 2rem; line-height: 2.4rem; color: var(--surface-white); }
+.des148-ftr-sections { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 2.5rem 1.75rem; flex: 1 1 24rem; min-width: 0; }
+.des148-ftr-col { min-width: 0; display: flex; flex-direction: column; }
+.des148-ftr-heading { font-family: var(--font-heading); font-weight: 500; font-size: 1.375rem; line-height: 1.75rem; color: var(--surface-white); margin: 0 0 1.125rem; overflow-wrap: break-word; }
+/* below desktop: tagline moves onto its own row so the link columns get the full width */
+@media (max-width: 1024px) { .des148-ftr-tagline { flex-basis: 100%; } }
+.des148-ftr-links { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.75rem; }
+.des148-ftr-links a { font: 400 1rem/1.5rem var(--font-body); color: var(--surface-white); opacity: .8; transition: opacity .3s ease-in; }
+.des148-ftr-links a:hover { opacity: 1; }
+.des148-ftr-legal { display: flex; justify-content: space-between; align-items: center; gap: 1rem 2rem; flex-wrap: wrap; margin-top: 2.5rem; }
+.des148-ftr-legal-links { display: flex; gap: 2rem; flex-wrap: wrap; }
+.des148-ftr-legal-links a { font: 400 1rem/1.5rem var(--font-body); color: var(--surface-white); opacity: .8; transition: opacity .3s ease-in; }
+.des148-ftr-legal-links a:hover { opacity: 1; }
+.des148-ftr-copy { margin: 0; font: 400 1rem/1.5rem var(--font-body); color: var(--surface-white); opacity: .8; }
+
+/* ════════ UPLOAD MODAL (centered desktop, bottom sheet mobile) ════════ */
+.des148-modal { position: fixed; inset: 0; z-index: 100; display: none; align-items: center; justify-content: center; }
+.des148-modal.is-open { display: flex; }
+/* one shared scrim for every modal step: same (stronger) blur everywhere, smooth fade in + out */
+.des148-modal-scrim { position: absolute; inset: 0; background: rgba(16,15,14,.63); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); animation: des148-scrim-in .28s ease both; }
+.des148-modal.is-closing .des148-modal-scrim { animation: des148-scrim-out .24s ease both; }
+@keyframes des148-scrim-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes des148-scrim-out { from { opacity: 1; } to { opacity: 0; } }
+.des148-modal-card { position: relative; background: var(--surface-white); width: 27.5rem; max-width: calc(100% - 2rem); border-radius: var(--radius-xl); padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem; animation: des148-pop .3s cubic-bezier(.2,.8,.2,1) both; }
+.des148-modal.is-closing .des148-modal-card { animation: des148-pop-out .22s cubic-bezier(.4,0,1,1) both; }
+@keyframes des148-pop { from { transform: translateY(16px) scale(.97); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes des148-pop-out { from { transform: none; opacity: 1; } to { transform: translateY(10px) scale(.97); opacity: 0; } }
+
+
+.des148-modal-close { position: absolute; top: 1rem; right: 1rem; width: 2.5rem; height: 2.5rem; border-radius: var(--radius-round); border: 0; background: transparent; color: var(--text-black); display: inline-flex; align-items: center; justify-content: center; }
+.des148-modal-close:hover { background: var(--surface-subtle); }
+
+.des148-modal-title { font-family: var(--font-heading); font-weight: 500; font-size: var(--font-h5-size); line-height: var(--font-h5-line); color: var(--text-black); }
+.des148-modal-sub { font-size: var(--font-body-sm-size); line-height: var(--font-body-sm-line); color: var(--text-default); }
+
+
+
+
+
+
+
+/* ===== Multi-step upload flow modal ===== */
+.des148-modal-card { max-height: calc(100vh - 2rem); overflow-y: auto; }
+.des148-mstep { display: flex; flex-direction: column; gap: 1rem; }
+.des148-mstep[hidden] { display: none; }
+.des148-mstep .des148-modal-title { text-align: left; padding-right: 2rem; }
+.des148-mstep[data-mstep="complete"] { align-items: center; text-align: center; gap: 0.75rem; }
+.des148-mstep[data-mstep="complete"] .des148-modal-title { text-align: center; padding-right: 0; }
+.des148-cta-block { position: relative; width: 100%; }
+/* file chip */
+.des148-filechip { display: inline-flex; align-items: center; gap: 0.25rem; align-self: flex-start; max-width: 100%; background: var(--surface-subtle); border: 1px solid var(--border-subtle); border-radius: var(--radius-round); padding: 0.375rem 0.375rem 0.375rem 0.875rem; }
+.des148-filechip-name { font: 500 0.875rem/1.25rem var(--font-body); color: var(--text-strong); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.des148-filechip-x { flex: none; width: 1.5rem; height: 1.5rem; border: 0; border-radius: 50%; background: transparent; color: var(--text-subtle); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; }
+.des148-filechip-x:hover { background: var(--surface-default); }
+.des148-filechip-x .des148-ms { font-size: 16px; }
+/* consent */
+.des148-consent { display: flex; align-items: flex-start; gap: 0.5rem; cursor: pointer; }
+.des148-consent input[type="checkbox"] { flex: none; width: 1.125rem; height: 1.125rem; margin: 0.0625rem 0 0; accent-color: var(--surface-primary-default); cursor: pointer; }
+.des148-consent-txt { font: 400 0.75rem/1.125rem var(--font-body); color: var(--text-subtle); }
+.des148-consent-txt a, .des148-showmore, .des148-link-c { color: var(--text-primary-action); text-decoration: underline; }
+.des148-showmore { display: inline-block; }
+.des148-modal-note { font: 400 0.8125rem/1.25rem var(--font-body); color: var(--text-subtle); text-align: center; }
+/* 3-dot loading animation on the CTA */
+.des148-dots { display: none; position: absolute; inset: 0; align-items: center; justify-content: center; gap: 0.4375rem; }
+.des148-cta-block.is-loading .des148-cta-label { visibility: hidden; }
+.des148-cta-block.is-loading .des148-dots { display: flex; }
+.des148-dots i { width: 0.5rem; height: 0.5rem; border-radius: 50%; background: var(--text-white); animation: des148-bounce 1s infinite ease-in-out; }
+.des148-dots i:nth-child(2) { animation-delay: .16s; }
+.des148-dots i:nth-child(3) { animation-delay: .32s; }
+@keyframes des148-bounce { 0%, 80%, 100% { transform: scale(.55); opacity: .5; } 40% { transform: scale(1); opacity: 1; } }
+/* matching complete check */
+.des148-complete { display: flex; justify-content: center; }
+.des148-complete img { width: 7rem; height: 7rem; }
+/* login step */
+.des148-social { display: flex; flex-direction: column; gap: 0.625rem; }
+.des148-social-btn { display: flex; align-items: center; justify-content: center; gap: 0.625rem; width: 100%; height: 3rem; border: 1px solid var(--border-default); border-radius: var(--radius-round); background: var(--surface-white); font: 600 0.9375rem/1 var(--font-body); color: var(--text-black); cursor: pointer; transition: background-color .2s ease-in; }
+.des148-social-btn:hover { background: var(--surface-subtle); }
+.des148-social-btn svg, .des148-social-btn img { flex: none; }
+.des148-or { display: flex; align-items: center; gap: 0.75rem; color: var(--text-subtle); font: 400 0.8125rem/1 var(--font-body); }
+.des148-or::before, .des148-or::after { content: ""; flex: 1; height: 1px; background: var(--border-subtle); }
+.des148-field { display: flex; align-items: center; gap: 0.625rem; height: 3rem; padding: 0 1rem; border: 1px solid var(--border-default); border-radius: var(--radius-round); background: var(--surface-white); transition: border-color .2s ease-in; }
+.des148-field:focus-within { border-color: var(--text-black); }
+.des148-field > .des148-ms { font-size: 20px; flex: none; }
+.des148-field input { flex: 1; min-width: 0; border: 0; outline: none; background: transparent; font: 400 0.9375rem/1 var(--font-body); color: var(--text-black); }
+.des148-eye { flex: none; border: 0; background: transparent; padding: 0; color: var(--text-subtle); cursor: pointer; display: inline-flex; }
+.des148-eye .des148-ms { font-size: 20px; }
+.des148-loginrow { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.des148-consent--sm { align-items: center; }
+.des148-consent--sm span { font: 400 0.8125rem/1 var(--font-body); color: var(--text-default); }
+.des148-link-c { font: 600 0.8125rem/1.25rem var(--font-body); color: var(--text-primary-action); text-decoration: underline; }
+
+/* ════════ RESPONSIVE ════════ */
+@media (max-width: 960px) {
+  .des148-container { padding: 0 1.5rem; }
+  .des148-rvl .des148-tl { --tl-dist: 1.25rem; }   /* tighter padding here -> shorter slide so the boxes never overflow the viewport (no clipping needed) */
+  .des148-herobg { padding: 2.5rem 0 3.5rem; }
+  .des148-two { grid-template-columns: 1fr; gap: 2rem; }
+  .des148-two--stretch .des148-powerimg { align-self: start; aspect-ratio: 1 / 1; }   /* stacked: give the (absolutely-filled) image a height of its own. align-self:start disables the grid stretch, otherwise Safari/iOS ignores aspect-ratio and collapses the image to 0 height (invisible on iPhone). */
+  .des148-herocard { flex-direction: column-reverse; align-items: stretch; gap: var(--space-md); }
+  .des148-herobg[data-hv="3"] .des148-herocard { cursor: default; }        /* mobile: the whole card is NOT clickable */
+  .des148-herobg[data-hv="3"] .des148-hero-v3 { cursor: pointer; }         /* mobile: only the V3 visual is tappable to upload */
+  .des148-herocard-text { padding: 0 1.5rem 1.5rem 1.5rem; }
+  .des148-herocard-media { padding: 1.5rem 1.5rem 0; }
+  .des148-herocard-media .des148-dz { flex: 0 0 auto; height: auto; min-height: 20rem; }
+  .des148-herocard-media .des148-hero-v3 { flex: 0 0 auto; }   /* mobile: don't vertically stretch, so the panel's square aspect can drive its height */
+  .des148-v3panel { --v3-top: 4.5rem; --v3-inset: 13.6%; flex: 0 0 auto; min-height: 0; aspect-ratio: 4 / 3; max-height: 28rem; }   /* stacked header: a compact 4:3 banner so it doesn't eat the fold on phones while showing enough of the resume; height still capped on wider tablets */
+  .des148-v3-doc { border-radius: var(--radius-sm) var(--radius-sm) 0 0; }   /* mobile: minimally smaller resume corners */
+  /* On the short mobile panel only the top of the resume SVG shows, so its built-in white->beige fade and text fade-out sit below the cut. This overlay recreates that beige run-off at the bottom so the resume + text fade out like on desktop instead of being hard-cut. */
+  .des148-v3-doc::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 50%; z-index: 1; pointer-events: none; background: linear-gradient(to bottom, transparent, var(--surface-subtle)); }
+  .des148-v3-num { width: 1.75rem; height: 1.75rem; font-size: 0.875rem; }   /* smaller headline on mobile */
+  .des148-v3-steplbl { font-size: 1.375rem; }
+  .des148-v3-step { gap: 0.625rem; }
+  /* job cards: tighter on the narrow stacked panel so pill + title fit better */
+  .des148-v3-cardtrack { gap: 0.5rem; padding: 0.5rem 0; }
+  .des148-v3-job { --jx: 3.5rem; gap: 0.625rem; padding: 0.625rem 0.75rem; border-radius: var(--radius-sm); box-shadow: 18px 26px 30px rgba(0,0,0,0.4); }   /* smaller resume-style shadow + shorter travel on the narrow panel */
+  .des148-v3-job-pct { min-width: 3rem; height: 2rem; padding: 0 0.625rem; font: var(--font-weight-heading) 0.8125rem/2rem var(--font-heading); }
+  .des148-v3-job-title { font: var(--font-weight-heading) 0.875rem/1.25 var(--font-heading); }
+  .des148-v3-job-meta { font: 400 0.6875rem/1.2 var(--font-body); }
+  .des148-trust-item { flex: 1 1 100%; }
+  .des148-nav-links { display: none; }
+  .des148-nav-end .des148-headcta-outline, .des148-nav-end .des148-langbtn { display: none; }
+  .des148-nav-end { gap: var(--space-xs); }
+  .des148-naviconbtn { display: inline-flex; }
+  .des148-burger { display: block; }
+}
+@media (max-width: 768px) {
+  .des148-section { padding: 3rem 0; }
+  .des148-final { padding: 2.5rem; }
+  .des148-container { padding: 0 1rem; }
+  .des148-herobg { padding: 1.5rem 0 3.5rem; }
+  .des148-reviews-grid { grid-template-columns: 1fr; }
+  .des148-review.is-extra { display: none; }
+  .des148-tiles { grid-template-columns: 1fr; gap: var(--space-md); }
+  .des148-why-head { flex-direction: column-reverse; justify-content: flex-start; gap: 1.5rem; }   /* illustration above the tag on mobile */
+  .des148-why-text { flex: 0 1 auto; }
+  .des148-why-imgwrap { position: static; width: auto; }
+  .des148-why-img { position: static; width: clamp(12rem, 72vw, 16.875rem); height: auto; display: block; transform: scaleX(-1); }   /* mobile: ~270px wide, left-aligned, mirrored (person faces right) */
+  .des148-rvl .des148-why-img { transform: scaleX(-1) translateY(1.5rem); }   /* mobile pre-reveal: mirrored + risen (vertical rise, no horizontal overflow) */
+  .des148-rvl .des148-why-img.des148-reveal-in { transform: scaleX(-1) !important; }   /* keep the mirror after the rise settles (overrides the generic reveal-in transform:none) */
+  .des148-tl::before, .des148-tl::after { left: 0.9375rem; }
+  .des148-tl-step { display: flex; align-items: center; gap: 1rem; }
+  .des148-tl-node { order: 0; grid-column: auto; margin-top: 0; }
+  .des148-tl-card, .des148-tl-step:nth-child(even) .des148-tl-card { order: 1; grid-column: auto; justify-self: auto; flex: 1; padding: 2rem; flex-direction: column; align-items: flex-start; gap: 1.25rem; }
+  .des148-tl-ic { width: 4rem; height: 4rem; }
+  .des148-tl-ic .des148-ms { font-size: 36px; }
+  .des148-tl-title { font-size: 1.625rem; line-height: 2rem; }
+  .des148-tl-num, .des148-tl-step:nth-child(even) .des148-tl-num { display: none; }
+  .des148-rvl .des148-tl-card { transform: translateY(1rem); }   /* mobile stacks the steps -> keep the simple from-below reveal */
+  .des148-tl-final { padding: 1.5rem; }
+  .des148-tl-final .des148-callout { padding: 1.5rem; }
+  .des148-stickycta-inner { flex-direction: column; align-items: stretch; gap: 0.5rem; }
+  .des148-stickycta .des148-stickycta-inner { padding-top: 0.625rem; padding-bottom: 0.625rem; }
+  .des148-stickycta-copy { justify-items: center; }   /* mobile: center the crossfade slides (value <-> formats); the title slide is hidden */
+  .des148-stickycta-title { display: none; }
+  .des148-stickycta-msgtext { text-align: left; }      /* wrapped lines stay left-aligned */
+  .des148-stickycta .des148-btn { width: 100%; justify-content: center; }
+  .des148-stickycta-types { display: none; }
+  .des148-fmt-txt { display: none; }
+  .des148-fmt-pills { display: inline-flex; align-items: center; gap: 0.4rem; }   /* mobile: PDF/Word as pills instead of the "Supports ..." text */
+  .des148-callout .des148-lbl { font-size: 1.625rem; line-height: 2rem; }
+  
+  .des148-footer { padding: 2rem; }
+  .des148-ftr-sections { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .des148-ftr-legal { flex-direction: column; align-items: flex-start; gap: 1rem; }
+  .des148-h2 { max-width: none; }
+}
+@media (max-width: 600px) {
+  .des148-modal { align-items: flex-end; }
+  .des148-modal-card { width: 100%; max-width: 100%; border-radius: var(--radius-lg) var(--radius-lg) 0 0; }
+  .des148-tile .des148-big { font-size: 4rem; }
+  .des148-hero-actions { flex-direction: column; align-items: flex-start; }
+}
