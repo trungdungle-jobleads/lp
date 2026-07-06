@@ -500,7 +500,8 @@ document.querySelectorAll('.des148-acc[data-toggle]').forEach(function(acc){
 });
 
 /* Sticky CTA bar — a persistent fallback upload action: it shows whenever NEITHER upload button
-   (the hero's nor the final CTA's) is FULLY visible on screen, and hides while the modal is open.
+   (the hero's nor the final CTA's) is FULLY visible on screen, and hides while the modal is open
+   or once the page is scrolled to its very bottom edge (so the bar clears the end of the page).
    A fully visible upload button makes the bar redundant (hidden); otherwise the bar is shown. */
 (function(){
   var bar = document.getElementById('des148-stickycta');
@@ -508,14 +509,31 @@ document.querySelectorAll('.des148-acc[data-toggle]').forEach(function(acc){
   var uploadBtn = document.querySelector('.des148-hero-actions .des148-btn');
   var finalBtn = document.querySelector('.des148-final .des148-btn');
   var modal = document.getElementById('des148-modal');
-  var heroFullyVisible = true, finalFullyVisible = false;   /* on load the hero's Upload button is fully in view */
+  var heroFullyVisible = true, finalFullyVisible = false, atBottom = false;   /* on load the hero's Upload button is fully in view; not yet at the page bottom */
   function update(){
     var modalOpen = modal && modal.classList.contains('is-open');
-    var show = !heroFullyVisible && !finalFullyVisible && !modalOpen;
+    var show = !heroFullyVisible && !finalFullyVisible && !atBottom && !modalOpen;
     bar.classList.toggle('is-visible', show);
     bar.setAttribute('aria-hidden', show ? 'false' : 'true');
   }
   window.des148UpdateSticky = update;
+  /* Hide the bar once the page is scrolled to its bottom EDGE — i.e. the end of the document reaches
+     the bar's own strip at the bottom of the viewport (bar height measured, so it works on desktop
+     and mobile). This is about hitting the page bottom, NOT merely the footer being on screen. */
+  var bottomTick = false;
+  var checkBottom = function(){
+    if (bottomTick) return;
+    bottomTick = true;
+    requestAnimationFrame(function(){
+      bottomTick = false;
+      var margin = bar.offsetHeight || 0;   /* clear the last (bar-height) strip so the page bottom isn't hidden behind the bar */
+      atBottom = (window.scrollY + window.innerHeight) >= (document.documentElement.scrollHeight - margin - 1);
+      update();
+    });
+  };
+  window.addEventListener('scroll', checkBottom, { passive: true });
+  window.addEventListener('resize', checkBottom);
+  checkBottom();
   if ('IntersectionObserver' in window) {
     /* "fully visible" = the whole button sits within the viewport (top and bottom both inside it).
        thresholds [0, 1] fire on the enters/leaves-viewport AND the fully<->partly-visible crossings. */
