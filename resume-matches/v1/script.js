@@ -110,11 +110,10 @@ function togglePw() {
   /* Restore the persisted version on load — set the attribute/button/is-shown now (before the reveal
      runs) so the page comes up directly in the saved version; the controllers below start the loop. */
   var savedV = null; try { savedV = localStorage.getItem('des148-hv'); } catch(e){}
-  if (savedV === '2' || savedV === '3') {
-    hero.setAttribute('data-hv', savedV);
-    [].slice.call(sw.querySelectorAll('.des148-vswitch-btn')).forEach(function(b){ b.classList.toggle('is-active', b.getAttribute('data-v') === savedV); });
-    if (savedV === '2' && v2) v2.classList.add('is-shown');
-  }
+  var initV = (savedV === '1' || savedV === '2' || savedV === '3') ? savedV : '2';   /* V2 is the standard/default version */
+  hero.setAttribute('data-hv', initV);
+  [].slice.call(sw.querySelectorAll('.des148-vswitch-btn')).forEach(function(b){ b.classList.toggle('is-active', b.getAttribute('data-v') === initV); });
+  if (initV === '2' && v2) v2.classList.add('is-shown');
 })();
 
 /* V3 only: the whole hero card is a dropzone, revealed only while a file is dragged over it.
@@ -679,7 +678,7 @@ document.querySelectorAll('.des148-acc[data-toggle]').forEach(function(acc){
       setRd(pwWin, 0.32);
       setRd(pwWin.querySelector('.des148-pw-dots'), 0.44);
       setRd(pwWin.querySelector('.des148-pw-search'), 0.54);
-      pwResults = [].slice.call(pwWin.querySelectorAll('.des148-pw-label.des148-pw-rvl, .des148-pw-job.des148-pw-rvl'));
+      pwResults = [].slice.call(pwWin.querySelectorAll('.des148-pw-label.des148-pw-rvl, .des148-pw-subchip.des148-pw-rvl, .des148-pw-job.des148-pw-rvl'));
       els = els.filter(function(el){ return pwResults.indexOf(el) === -1; });   /* keep the results out of the scroll observer; the typewriter reveals them */
     }
     /* How it works final box: resume first, then the job cards one by one, then the right half (lead + callout) */
@@ -744,6 +743,7 @@ document.querySelectorAll('.des148-acc[data-toggle]').forEach(function(acc){
     var startTileCount = function(tile){
       var el = tile.querySelector('.des148-big');
       if (!el || el.getAttribute('data-counted')) return;
+      if (!el.hasAttribute('data-animate')) return;   /* only the 40k+ tile animates; statement numbers (1, 100%, 0) stay static so they never show a false value mid-count */
       var m = el.textContent.trim().match(/^(\d+)(.*)$/);
       if (!m) return;
       var target = parseInt(m[1], 10), suffix = m[2];
@@ -948,4 +948,41 @@ document.querySelectorAll('.des148-acc[data-toggle]').forEach(function(acc){
   } catch (err) {
     html.classList.remove('des148-rvl');
   }
+})();
+
+/* Stat-tile info popovers — tap/click to open (works on touch, no hover dependency), close on
+   outside tap, Escape, or a second tap on the trigger. Only one open at a time. */
+(function(){
+  var infos = [].slice.call(document.querySelectorAll('.des148-tile-info'));
+  if (!infos.length) return;
+  var openBtn = null;
+  var popOf = function(btn){ return btn.parentElement.querySelector('.des148-tile-pop'); };
+  var close = function(){
+    if (!openBtn) return;
+    var pop = popOf(openBtn);
+    if (pop) { pop.classList.remove('is-open'); pop.hidden = true; }
+    openBtn.setAttribute('aria-expanded', 'false');
+    openBtn = null;
+  };
+  var open = function(btn){
+    close();
+    var pop = popOf(btn);
+    if (!pop) return;
+    pop.hidden = false;
+    /* force reflow so the transition runs from hidden */
+    void pop.offsetWidth;
+    pop.classList.add('is-open');
+    btn.setAttribute('aria-expanded', 'true');
+    openBtn = btn;
+  };
+  infos.forEach(function(btn){
+    btn.addEventListener('click', function(e){
+      e.stopPropagation();
+      if (openBtn === btn) close(); else open(btn);
+    });
+  });
+  document.addEventListener('click', function(e){
+    if (openBtn && !e.target.closest('.des148-tile-pop') && !e.target.closest('.des148-tile-info')) close();
+  });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') close(); });
 })();

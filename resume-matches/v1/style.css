@@ -122,6 +122,60 @@
   --blue-95: #D3E4FF;
   --blue-99: #E8F2FF;
 
+  /* -------------------------------------------------------------------
+     JobLeads LIVE design-system primitive names (--color-{role}-{tone},
+     from jl-design-system-live/tokens.css). Aliased onto the hue ramps
+     above, so both naming schemes resolve to identical values. */
+  --color-neutral-0: var(--grey-5);     --color-neutral-10: var(--grey-10);
+  --color-neutral-20: var(--grey-20);   --color-neutral-30: var(--grey-30);
+  --color-neutral-40: var(--grey-40);   --color-neutral-50: var(--grey-50);
+  --color-neutral-60: var(--grey-60);   --color-neutral-70: var(--grey-70);
+  --color-neutral-80: var(--grey-80);   --color-neutral-90: var(--grey-90);
+  --color-neutral-95: var(--grey-95);   --color-neutral-99: var(--grey-99);
+  --color-neutral-100: var(--grey-100);
+
+  --color-primary-10: var(--flamingo-10); --color-primary-20: var(--flamingo-20);
+  --color-primary-30: var(--flamingo-30); --color-primary-40: var(--flamingo-40);
+  --color-primary-50: var(--flamingo-50); --color-primary-60: var(--flamingo-60);
+  --color-primary-70: var(--flamingo-70); --color-primary-80: var(--flamingo-80);
+  --color-primary-90: var(--flamingo-90); --color-primary-95: var(--flamingo-95);
+  --color-primary-99: var(--flamingo-99); --color-primary-base: var(--flamingo-60);
+
+  --color-secondary-10: var(--volt-10);  --color-secondary-20: var(--volt-20);
+  --color-secondary-30: var(--volt-30);  --color-secondary-40: var(--volt-40);
+  --color-secondary-50: var(--volt-50);  --color-secondary-60: var(--volt-60);
+  --color-secondary-70: var(--volt-70);  --color-secondary-80: var(--volt-80);
+  --color-secondary-90: var(--volt-90);  --color-secondary-95: var(--volt-95);
+  --color-secondary-99: var(--volt-99);  --color-secondary-base: var(--volt-95);
+
+  --color-positive-10: var(--green-10);  --color-positive-20: var(--green-15);
+  --color-positive-30: var(--green-30);  --color-positive-40: var(--green-40);
+  --color-positive-50: var(--green-50);  --color-positive-60: var(--green-60);
+  --color-positive-70: var(--green-70);  --color-positive-80: var(--green-80);
+  --color-positive-90: var(--green-90);  --color-positive-95: var(--green-95);
+  --color-positive-99: var(--green-99);
+
+  --color-negative-10: var(--red-10);    --color-negative-20: var(--red-15);
+  --color-negative-30: var(--red-30);    --color-negative-40: var(--red-40);
+  --color-negative-50: var(--red-50);    --color-negative-60: var(--red-60);
+  --color-negative-70: var(--red-70);    --color-negative-80: var(--red-80);
+  --color-negative-90: var(--red-90);    --color-negative-95: var(--red-95);
+  --color-negative-99: var(--red-99);
+
+  --color-warning-10: var(--yellow-10);  --color-warning-20: var(--yellow-15);
+  --color-warning-30: var(--yellow-30);  --color-warning-40: var(--yellow-40);
+  --color-warning-50: var(--yellow-50);  --color-warning-60: var(--yellow-60);
+  --color-warning-70: var(--yellow-70);  --color-warning-80: var(--yellow-80);
+  --color-warning-90: var(--yellow-90);  --color-warning-95: var(--yellow-95);
+  --color-warning-99: var(--yellow-99);
+
+  --color-info-10: var(--blue-10);       --color-info-20: var(--blue-20);
+  --color-info-30: var(--blue-30);       --color-info-40: var(--blue-40);
+  --color-info-50: var(--blue-50);       --color-info-60: var(--blue-60);
+  --color-info-70: var(--blue-70);       --color-info-80: var(--blue-80);
+  --color-info-90: var(--blue-90);       --color-info-95: var(--blue-95);
+  --color-info-99: var(--blue-99);
+
   /* Focus ring — always blue, never brand */
   --brand-focus: #2361C5;
 
@@ -283,6 +337,10 @@
   /* Surface */
   --surface-white:           #FFFFFF;
   --surface-subtle:          #F5F1EB;
+  /* JobLeads live surface naming: page base is white, beige is "muted".
+     This marketing page deliberately sits on the beige "muted" surface. */
+  --surface-page:            var(--surface-white);   /* #FFFFFF (live default) */
+  --surface-muted:           var(--surface-subtle);  /* #F5F1EB (this page's base) */
   --surface-default:         #E6E2DC;
   --surface-strong:          #C9C6C1;
   --surface-stronger:        #484745;
@@ -405,7 +463,7 @@
   /* =====================================================================
      4. SEMANTIC --color-* aliases (kept for back-compat with prior code)
      ===================================================================== */
-  --color-bg-page:           var(--surface-subtle);   /* #F5F1EB */
+  --color-bg-page:           var(--surface-muted);    /* #F5F1EB (live --surface-muted) */
   --color-bg-surface:        var(--surface-white);
   --color-bg-surface-raised: var(--alias-neutral-lightest);
   --color-bg-inverse:        var(--surface-black);    /* #100F0E */
@@ -460,15 +518,16 @@
   --font-body:    "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --font-mono:    ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
 
-  /* Headings — Right Grotesk Medium 500. rem (1rem = 16px) */
-  --font-h1-size: 4rem;     --font-h1-line: 4.875rem;
-  --font-h2-size: 3.5rem;   --font-h2-line: 4.25rem;
-  --font-h3-size: 2.5rem;   --font-h3-line: 3rem;
-  --font-h4-size: 2rem;     --font-h4-line: 2.375rem;
-  --font-h5-size: 1.5rem;   --font-h5-line: 2.25rem;
-  --font-h6-size: 1.25rem;  --font-h6-line: 1.75rem;
-  --font-h7-size: 1.125rem; --font-h7-line: 1.5rem;
-  --font-h8-size: 1rem;     --font-h8-line: 1.5rem;
+  /* Headings — Right Grotesk Medium 500. rem (1rem = 16px).
+     Sizes = JobLeads live marketing scale --text-mh1..mh7 (desktop ≥1024); h8 = --text-heading-8. */
+  --font-h1-size: 5rem;      --font-h1-line: 5.5rem;    /* 80 / 88 */
+  --font-h2-size: 4rem;      --font-h2-line: 4.375rem;  /* 64 / 70 */
+  --font-h3-size: 3.5rem;    --font-h3-line: 4rem;      /* 56 / 64 */
+  --font-h4-size: 2.75rem;   --font-h4-line: 3rem;      /* 44 / 48 */
+  --font-h5-size: 2.375rem;  --font-h5-line: 2.75rem;   /* 38 / 44 */
+  --font-h6-size: 2rem;      --font-h6-line: 2.375rem;  /* 32 / 38 */
+  --font-h7-size: 1.5rem;    --font-h7-line: 2.25rem;   /* 24 / 36 */
+  --font-h8-size: 1rem;      --font-h8-line: 1.5rem;    /* 16 / 24 */
 
   /* Body — Inter (Regular 400, Medium 500) */
   --font-body-lg-size:  1.25rem;  --font-body-lg-line:  1.875rem;
@@ -479,6 +538,14 @@
 
   /* Caption alias = body-xxs */
   --font-caption-size: 0.75rem;  --font-caption-line: 1.125rem;
+
+  /* JobLeads live body scale --text-body-1..5 (150% line-height) — same sizes as --font-body-* above */
+  --text-body-1: 1.25rem;   /* 20px = body-lg */
+  --text-body-2: 1.125rem;  /* 18px = body-md */
+  --text-body-3: 1rem;      /* 16px = body-sm */
+  --text-body-4: 0.875rem;  /* 14px = body-xs */
+  --text-body-5: 0.75rem;   /* 12px = body-xxs */
+  --text-body-lh: 150%;
 
   /* Buttons */
   --font-btn-lg: 1.5rem;
@@ -517,22 +584,26 @@
   --space-20: 5rem;
 
   /* =====================================================================
-     7. RADII
+     7. RADII — JobLeads live scale (tokens.css): xs 2 · sm 4 · md 6 · lg 8 ·
+     xl 12 · 2xl 16 · 20 · 3xl 24 · 30 · 40 · pill · circle.
      ===================================================================== */
   --radius-none: 0;
-  --radius-xxxs: 0.125rem;
-  --radius-xxs:  0.25rem;
-  --radius-xs:   0.375rem;  /* default for inputs / cards (buttons use --radius-round) */
-  --radius-sm:   0.5rem;
-  --radius-md:   0.75rem;
-  --radius-lg:   1rem;
-  --radius-xl:   1.25rem;
-  --radius-xxl:  2rem;
+  --radius-xxxs: 0.125rem;  /* 2px  (LP-only, no live token) */
+  --radius-xxs:  0.25rem;   /* 4px  (LP-only, no live token) */
+  --radius-xs:   0.125rem;  /* 2px */
+  --radius-sm:   0.25rem;   /* 4px */
+  --radius-md:   0.375rem;  /* 6px  — inputs, small cards */
+  --radius-lg:   0.5rem;    /* 8px  — cards, menus */
+  --radius-xl:   0.75rem;   /* 12px */
+  --radius-2xl:  1rem;      /* 16px */
+  --radius-3xl:  1.5rem;    /* 24px */
+  --radius-xxl:  2rem;      /* 32px (LP-only, no live token) */
+  --radius-20:   20px;      /* large cards, footer block */
+  --radius-30:   30px;      /* hero media */
+  --radius-40:   40px;      /* oversized media */
   --radius-round:9999px;
   --radius-pill: 9999px;
-  /* Numeric/legacy aliases */
-  --radius-2xl: 1rem;
-  --radius-3xl: 2rem;
+  --radius-circle: 50%;
 
   /* =====================================================================
      8. BORDER WIDTH
@@ -543,22 +614,31 @@
   --border-width-lg:   4px;
 
   /* =====================================================================
-     9. ELEVATION
+     9. ELEVATION — JobLeads live scale (tokens.css). md/xl have no live
+     token; kept for existing LP usages.
      ===================================================================== */
-  --shadow-xs: 0 1px 2px rgba(0,0,0,0.15);
-  --shadow-sm: 0 3px 5px rgba(0,0,0,0.15);
-  --shadow-md: 0 8px 16px rgba(0,0,0,0.16);
-  --shadow-lg: 0 8px 20px rgba(0,0,0,0.10), 0 12px 24px rgba(0,0,0,0.10);
-  --shadow-xl: 0 12px 24px rgba(0,0,0,0.10), 0 20px 30px rgba(0,0,0,0.10);
+  --shadow-xs: 0 0 4px rgba(0,0,0,0.10);
+  --shadow-sm: 0 2px 3px rgba(0,0,0,0.15);
+  --shadow-md: 0 8px 16px rgba(0,0,0,0.16);   /* LP-only */
+  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.10), 0 4px 6px -4px rgba(0,0,0,0.10);
+  --shadow-xl: 0 12px 24px rgba(0,0,0,0.10), 0 20px 30px rgba(0,0,0,0.10);  /* LP-only */
+  --shadow-dropdown: 0 -2px 10px rgba(0,0,0,0.10);
+  --shadow-strong:   0 0 6px rgba(0,0,0,0.40);
 
   /* =====================================================================
-     10. MOTION
+     10. MOTION — JobLeads live durations + easings (tokens.css).
      ===================================================================== */
-  --motion-fast: 120ms; /* @kind other */
-  --motion-base: 200ms; /* @kind other */
-  --motion-slow: 320ms; /* @kind other */
-  --easing-standard:    cubic-bezier(0.2, 0, 0, 1); /* @kind other */
-  --easing-emphasized:  cubic-bezier(0.3, 0, 0, 1); /* @kind other */
+  --motion-fast: 150ms;
+  --motion-base: 300ms;
+  --motion-slow: 400ms;
+  --easing-standard:   cubic-bezier(0.4, 0, 0.2, 1);
+  --easing-emphasized: cubic-bezier(0.22, 0.61, 0.36, 1);
+  /* Live token names */
+  --duration-fast: 150ms; --duration-base: 300ms; --duration-slow: 400ms; --duration-hero: 500ms;
+  --ease-standard:  cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-enter:     cubic-bezier(0, 0, 0.2, 1);
+  --ease-exit:      cubic-bezier(0.4, 0, 1, 1);
+  --ease-signature: cubic-bezier(0.22, 0.61, 0.36, 1);
 
   /* =====================================================================
      11. LAYOUT
@@ -593,14 +673,15 @@
 */
 @media (max-width: 768px) {
   :root {
-    --font-h1-size: 3rem;     --font-h1-line: 3.5rem;
-    --font-h2-size: 2.5rem;   --font-h2-line: 3rem;
-    --font-h3-size: 2rem;     --font-h3-line: 2.375rem;
-    --font-h4-size: 1.5rem;   --font-h4-line: 1.875rem;
-    --font-h5-size: 1.25rem;  --font-h5-line: 1.75rem;
-    --font-h6-size: 1.125rem; --font-h6-line: 1.75rem;
-    --font-h7-size: 1rem;     --font-h7-line: 1.5rem;
-    --font-h8-size: 1rem;     --font-h8-line: 1.5rem;
+    /* Mobile = JobLeads live marketing scale --text-mh1..mh7 (mobile). */
+    --font-h1-size: 4rem;     --font-h1-line: 4.375rem;  /* 64 / 70 */
+    --font-h2-size: 3.5rem;   --font-h2-line: 4rem;      /* 56 / 64 */
+    --font-h3-size: 2.75rem;  --font-h3-line: 3rem;      /* 44 / 48 */
+    --font-h4-size: 2.375rem; --font-h4-line: 2.75rem;   /* 38 / 44 */
+    --font-h5-size: 2rem;     --font-h5-line: 2.375rem;  /* 32 / 38 */
+    --font-h6-size: 1.5rem;   --font-h6-line: 2.25rem;   /* 24 / 36 */
+    --font-h7-size: 1.25rem;  --font-h7-line: 1.875rem;  /* 20 / 30 */
+    --font-h8-size: 1rem;     --font-h8-line: 1.5rem;    /* 16 / 24 */
   }
 }
 
@@ -694,7 +775,7 @@ a { text-decoration: none; }
 .des148-stack.is-center { align-items: center; text-align: center; }
 .des148-stack.is-center .des148-eyebrow { align-self: center; }
 
-.des148-eyebrow { display: inline-flex; align-items: center; align-self: flex-start; padding: 0.25rem 0.75rem; border-radius: var(--radius-xs); background: var(--surface-black); color: var(--text-white); font-family: var(--font-body); font-weight: 500; font-size: var(--font-body-xs-size); line-height: 1.5; }
+.des148-eyebrow { display: inline-flex; align-items: center; align-self: flex-start; padding: 0.25rem 0.75rem; border-radius: var(--radius-sm); background: var(--surface-black); color: var(--text-white); font-family: var(--font-body); font-weight: 500; font-size: var(--font-body-xs-size); line-height: 1.5; }
 .des148-h2 { font-size: 3.5rem; line-height: 4rem; color: var(--text-black); letter-spacing: normal; max-width: 16ch; }
 
 @media (min-width: 1024px) { .des148-h2 { font-size: 4rem; line-height: 4.375rem; } }
@@ -807,6 +888,8 @@ a { text-decoration: none; }
 .des148-herobg[data-hv="3"] .des148-herocard { cursor: pointer; }
 .des148-herohead { display: flex; flex-direction: column; gap: var(--space-xs); }
 .des148-herocard h1 { font-size: var(--font-h1-size); line-height: 1.2; color: var(--text-black); letter-spacing: normal; }
+.des148-herocard h1.des148-h1-ash2 { font-size: 3.5rem; line-height: 4rem; }   /* header headline mirrors the H2 scale + H2 viewport behaviour; <h1> tag kept for semantics */
+@media (min-width: 1024px) { .des148-herocard h1.des148-h1-ash2 { font-size: 4rem; line-height: 4.375rem; } }
 .des148-hl { background: var(--surface-secondary-default); color: var(--text-black); border-radius: var(--radius-xxs); padding: 0 0.375rem; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
 .des148-hero-sub { font-size: var(--font-body-lg-size); line-height: var(--font-body-lg-line); color: var(--text-default); max-width: 46ch; }
 .des148-hero-actions { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-sm); }
@@ -911,7 +994,7 @@ a { text-decoration: none; }
 .des148-jobscroll { position: absolute; inset: 0; }
 .des148-jobtrack { display: flex; flex-direction: column; gap: 0.5rem; padding: 0.5rem 0.75rem; animation: des148-jobscroll 20s linear infinite; }
 @keyframes des148-jobscroll { from { transform: translateY(0); } to { transform: translateY(-50%); } }
-.des148-match { display: flex; align-items: center; gap: 0.625rem; flex: none; background: var(--surface-white); border-radius: var(--radius-sm); padding: 0.625rem 0.75rem; transform: translateY(1.25rem); transition: transform .5s cubic-bezier(.16,.6,.28,1); }
+.des148-match { display: flex; align-items: center; gap: 0.625rem; flex: none; background: var(--surface-white); border-radius: var(--radius-md); padding: 0.625rem 0.75rem; transform: translateY(1.25rem); transition: transform .5s cubic-bezier(.16,.6,.28,1); }
 /* each card slides in staggered and docks into place; the group's opacity handles the fade */
 .des148-scene[data-scene="2"].is-active .des148-match { transform: none; }
 .des148-scene[data-scene="2"].is-active .des148-match:nth-child(1) { transition-delay: 0s; }
@@ -1046,7 +1129,7 @@ a { text-decoration: none; }
 .des148-v3panel.is-matched .des148-v3-cardtrack { animation: des148-v3cardscroll 6s linear both; animation-delay: 0s; }   /* the whole group drifts up from the very start, at the same time as the cards slide in */
 @keyframes des148-v3cardscroll { from { transform: translateY(0); } to { transform: translateY(-28%); } }
 /* card: white, match% pill + job title + location (content mirrors V2); shadow adopted from the resume — dark + soft */
-.des148-v3-job { --jx: 6rem; display: flex; align-items: center; gap: 0.875rem; flex: none; background: var(--surface-white); border-radius: var(--radius-sm); padding: 0.875rem 1rem; box-shadow: 38px 38px 50px rgba(0,0,0,0.4); opacity: 0; transform: translateX(var(--jx)); }
+.des148-v3-job { --jx: 6rem; display: flex; align-items: center; gap: 0.875rem; flex: none; background: var(--surface-white); border-radius: var(--radius-md); padding: 0.875rem 1rem; box-shadow: 38px 38px 50px rgba(0,0,0,0.4); opacity: 0; transform: translateX(var(--jx)); }
 .des148-v3-job-pct { flex: none; min-width: 3.625rem; height: 2.5rem; padding: 0 0.875rem; border-radius: var(--radius-round); background: var(--surface-primary-default); color: var(--text-white); font: var(--font-weight-heading) 1.0625rem/2.5rem var(--font-heading); text-align: center; }
 .des148-v3-job-body { display: flex; flex-direction: column; gap: 0.125rem; min-width: 0; }
 .des148-v3-job-title { font: var(--font-weight-heading) 1.0625rem/1.3 var(--font-heading); color: var(--text-black); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -1173,7 +1256,7 @@ a { text-decoration: none; }
 @media (prefers-reduced-motion: reduce) { .des148-logos { animation: none; } .des148-logos-track { animation: none; } }
 
 /* ════════ PROBLEM DIAGRAM — keyword-search "browser window" ════════ */
-.des148-problemwin { position: relative; border: 2px solid var(--surface-primary-default); border-radius: var(--radius-xl); padding: 2rem 2rem 2.25rem; display: flex; flex-direction: column; gap: 1.375rem; }
+.des148-problemwin { position: relative; border: 2px solid var(--surface-primary-default); border-radius: var(--radius-20); padding: 2rem 2rem 2.25rem; display: flex; flex-direction: column; gap: 1.375rem; }
 /* mac-style window dots (decorative only) */
 .des148-pw-dots { display: flex; gap: 0.5rem; margin: -0.75rem 0 0 -0.75rem; }
 .des148-pw-dots i { width: 0.8125rem; height: 0.8125rem; border-radius: 50%; background: rgba(245,100,98,0.55); }
@@ -1193,9 +1276,17 @@ a { text-decoration: none; }
 .des148-pw-mark { flex: none; height: calc(0.68em + 1px); width: auto; }   /* colour baked into pw-mark-f56462.svg */
 /* job cards, two per row, each with a fit score + fit bar */
 .des148-pw-jobs { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+/* group chips inside "Hidden from you": Aurora badge pattern (b-dark), one line, never wraps */
+.des148-pw-subchip { align-self: flex-start; display: inline-flex; align-items: center; height: 1.5rem; padding: 0 0.625rem; border-radius: 999px; background: var(--surface-black); color: var(--text-white); font: 500 0.75rem/1.125rem var(--font-body); white-space: nowrap; }
+.des148-pw-group .des148-pw-subchip + .des148-pw-jobs { margin-top: -0.125rem; }
 .des148-pw-job { display: flex; flex-direction: column; gap: 0.4375rem; background: var(--surface-white); border-radius: var(--radius-md); padding: 1.125rem 1.25rem; min-width: 0; }   /* let the grid cell shrink so the title/meta can ellipsize */
 .des148-pw-jobtitle { font: var(--font-weight-heading) 1.0625rem/1.3 var(--font-heading); color: var(--text-black); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .des148-pw-jobmeta { font: 400 0.875rem/1.2 var(--font-body); color: var(--text-subtle); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+/* fit bars are gone: the visible/hidden contrast is carried by the cards themselves.
+   "What you see" = greyed out (weak results), "Hidden from you" (.is-hi) = white + flamingo accent (the good stuff) */
+.des148-pw-job:not(.is-hi) { background: var(--surface-default); }
+.des148-pw-job:not(.is-hi) .des148-pw-jobtitle { color: var(--text-subtle); }
+.des148-pw-job.is-hi { box-shadow: inset 0 0 0 1.5px var(--flamingo-60); }
 /* progress bar: taller pill, the fit % lives inside the fill and rides its right edge; the fill animates from a small pill out to its width when the card reveals */
 .des148-pw-bar { position: relative; height: 1.75rem; border-radius: 999px; background: var(--surface-default); overflow: hidden; margin-top: 0.375rem; }
 .des148-pw-bar i { display: flex; align-items: center; justify-content: flex-end; height: 100%; width: 3.5rem; min-width: 3.5rem; border-radius: 999px; background: #8A867F; transition: width 1.6s cubic-bezier(.65,0,.35,1); transition-delay: calc(var(--rd, 0s) + 0.3s); }
@@ -1227,7 +1318,7 @@ a { text-decoration: none; }
 .des148-rvl .des148-tl-card.des148-reveal-in, .des148-rvl .des148-tl-num.des148-reveal-in { opacity: 1; transform: none; }
 .des148-tl-step { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; column-gap: 2.75rem; }
 .des148-tl-step > * { grid-row: 1; }
-.des148-tl-card { grid-column: 1; justify-self: stretch; border-radius: var(--radius-xl); padding: 3rem; display: flex; flex-direction: row; align-items: center; gap: 1.75rem; color: var(--text-white); }
+.des148-tl-card { grid-column: 1; justify-self: stretch; border-radius: var(--radius-20); padding: 3rem; display: flex; flex-direction: row; align-items: center; gap: 1.75rem; color: var(--text-white); }
 .des148-tl-body { display: flex; flex-direction: column; gap: 0.75rem; min-width: 0; }
 .des148-tl-ic { flex: none; width: 5.5rem; height: 5.5rem; border-radius: 50%; background: var(--surface-white); display: flex; align-items: center; justify-content: center; }
 .des148-tl-ic .des148-ms { font-size: 48px; }
@@ -1244,6 +1335,8 @@ a { text-decoration: none; }
 .des148-tl-step:nth-child(2) .des148-tl-ic { color: var(--surface-black); }
 .des148-tl-step:nth-child(3) .des148-tl-card { background: var(--surface-secondary-default); color: var(--text-black); }
 .des148-tl-step:nth-child(3) .des148-tl-ic { background: var(--surface-black); color: var(--surface-secondary-default); }
+.des148-tl-step:nth-child(4) .des148-tl-card { background: var(--surface-default); color: var(--text-black); }
+.des148-tl-step:nth-child(4) .des148-tl-ic { background: var(--surface-white); }
 .des148-tl-final { background: var(--surface-subtle); border-radius: var(--radius-xxl); padding: 3rem; margin-top: 0.5rem; }
 .des148-tl-final .des148-two--vtop { align-items: stretch; gap: 3rem; }
 
@@ -1252,10 +1345,10 @@ a { text-decoration: none; }
 .des148-hiw-visual { position: relative; align-self: stretch; min-height: 20rem; }
 /* resume is anchored top + bottom (like the header) so it always starts at the same top point and can't overflow the box, no matter the width; the tall SVG is cover-cropped at the bottom */
 /* the bottom always fades out to transparent so the resume melts softly into the beige box — never a hard edge, at any resolution */
-.des148-hiw-doc { position: absolute; left: 0; top: 8%; bottom: 0; width: 60%; border-radius: var(--radius-md); overflow: hidden; background: var(--surface-white); -webkit-mask-image: linear-gradient(to bottom, #000 60%, transparent 100%); mask-image: linear-gradient(to bottom, #000 60%, transparent 100%); }
+.des148-hiw-doc { position: absolute; left: 0; top: 8%; bottom: 0; width: 60%; border-radius: var(--radius-lg); overflow: hidden; background: var(--surface-white); -webkit-mask-image: linear-gradient(to bottom, #000 60%, transparent 100%); mask-image: linear-gradient(to bottom, #000 60%, transparent 100%); }
 .des148-hiw-doc .des148-hiw-svg { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center top; }
 .des148-hiw-cards { position: absolute; top: 0; left: 30%; right: 3%; display: flex; flex-direction: column; gap: 0.875rem; }
-.des148-hiw-job { display: flex; align-items: center; gap: 1rem; background: var(--surface-white); border-radius: var(--radius-md); padding: 0.9375rem 1.125rem; box-shadow: -1.25rem 1.5rem 2.5rem rgba(16,15,14,0.16); }
+.des148-hiw-job { display: flex; align-items: center; gap: 1rem; background: var(--surface-white); border-radius: var(--radius-lg); padding: 0.9375rem 1.125rem; box-shadow: -1.25rem 1.5rem 2.5rem rgba(16,15,14,0.16); }
 .des148-hiw-job-pct { flex: none; min-width: 5.25rem; height: 3.25rem; padding: 0 1.25rem; border-radius: var(--radius-round); background: var(--surface-primary-default); color: var(--text-white); font: var(--font-weight-heading) 1.375rem/3.25rem var(--font-heading); text-align: center; }
 .des148-hiw-job-body { display: flex; flex-direction: column; gap: 0.125rem; min-width: 0; }
 .des148-hiw-job-title { font: var(--font-weight-heading) 1.1875rem/1.3 var(--font-heading); color: var(--text-black); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -1283,7 +1376,7 @@ a { text-decoration: none; }
 
 
 
-.des148-callout { background: var(--surface-primary-default); color: var(--text-white); border-radius: var(--radius-lg); padding: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem; }
+.des148-callout { background: var(--surface-primary-default); color: var(--text-white); border-radius: var(--radius-xl); padding: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem; }
 .des148-callout .des148-lbl { font-family: var(--font-heading); font-weight: var(--font-weight-heading); font-size: 2.125rem; line-height: 2.5rem; }
 .des148-callout .des148-ln { font-size: var(--font-body-md-size); line-height: var(--font-body-md-line); }
 
@@ -1297,21 +1390,30 @@ a { text-decoration: none; }
 @media (max-width: 960px) { .des148-rvl .des148-why-img { transform: translateX(1.25rem); } }   /* tighter padding here → smaller slide */
 
 /* ════════ NUMBER TILES ════════ */
-.des148-tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
-.des148-tile { background: var(--surface-black); border-radius: var(--radius-xl); padding: 3rem; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 0.75rem; }
+.des148-tiles { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+.des148-tile { position: relative; background: var(--surface-black); border-radius: var(--radius-20); padding: 3rem; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 0.75rem; }
 .des148-tile .des148-big { font-family: var(--font-heading); font-weight: 500; font-size: 5rem; line-height: 1; color: var(--surface-secondary-default); }
 .des148-tile .des148-fact { font-size: var(--font-body-md-size); color: var(--surface-white); }
+/* Info affordance: small icon, 44x44 tap target, top-right of the tile */
+.des148-tile-info { position: absolute; top: 0.5rem; right: 0.5rem; width: 2.75rem; height: 2.75rem; padding: 0; border: 0; background: transparent; cursor: pointer; display: flex; align-items: center; justify-content: center; border-radius: 50%; -webkit-tap-highlight-color: transparent; }
+.des148-tile-info .des148-ms { width: 1.25rem; height: 1.25rem; opacity: 0.45; transition: opacity 0.2s ease-in; }
+.des148-tile-info .des148-ms img { width: 100%; height: 100%; display: block; }
+.des148-tile-info:hover .des148-ms, .des148-tile-info[aria-expanded="true"] .des148-ms { opacity: 0.9; }
+.des148-tile-info:focus-visible { outline: 2px solid #2361C5; outline-offset: 2px; }
+/* Popover: hidden until .is-open; stays inside the tile width so it never overflows the viewport */
+.des148-tile-pop { position: absolute; top: 3rem; left: 1rem; right: 1rem; z-index: 5; background: var(--surface-white); color: var(--text-default); text-align: left; font: 400 var(--font-body-sm-size)/var(--font-body-sm-line) var(--font-body); padding: 0.875rem 1rem; border-radius: var(--radius-lg); box-shadow: 0 1rem 2.5rem rgba(16,15,14,0.28); opacity: 0; transform: translateY(-0.25rem); pointer-events: none; transition: opacity 0.18s ease-in, transform 0.18s ease-in; }
+.des148-tile-pop.is-open { opacity: 1; transform: none; pointer-events: auto; }
 
 /* ════════ POWER-TOOL CARDS ════════ */
 .des148-cards { display: flex; flex-direction: column; gap: 1rem; }
-.des148-card { background: var(--surface-subtle); border-radius: var(--radius-lg); padding: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem; }
+.des148-card { background: var(--surface-subtle); border-radius: var(--radius-xl); padding: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem; }
 .des148-card h3 { font: var(--font-weight-heading) 1.5rem/2rem var(--font-heading); color: var(--text-black); display: flex; align-items: center; gap: var(--space-xs); }
 .des148-card-ic { width: 1.75rem; height: auto; flex: none; }   /* colour baked into card-arrow-f56462.svg */
 .des148-card p { font-size: var(--font-body-sm-size); line-height: var(--font-body-sm-line); color: var(--text-default); }
 .des148-card a { color: var(--text-primary-action); font-weight: 600; }
 .des148-card a:hover { text-decoration: underline; }
 /* image fills its column's full height (matches the text beside it); object-fit cover crops instead of distorting */
-.des148-powerimg { border-radius: var(--radius-xl); overflow: hidden; position: relative; }
+.des148-powerimg { border-radius: var(--radius-20); overflow: hidden; position: relative; }
 .des148-powerimg img { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; }
 
 /* frosted-glass caption pill over the image: white 90% (bottom-right) -> 100% (top-left) gradient, image shows through blurred */

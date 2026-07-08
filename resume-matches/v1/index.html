@@ -121,12 +121,12 @@ document.documentElement.classList.add('des148-rvl');
 <main>
 
 <!-- ════════ HERO · [NEW] · the floating V1/V2/V3 switcher is a prototype-only design tool (ship V3) ════════ -->
-<section class="des148-herobg" data-hv="3">
+<section class="des148-herobg" data-hv="2">
   <!-- Header-version switcher, shown on hover near this section's right edge -->
   <div class="des148-vswitch" role="group" aria-label="Header version">
     <button class="des148-vswitch-btn" type="button" data-v="1">V1</button>
-    <button class="des148-vswitch-btn" type="button" data-v="2">V2</button>
-    <button class="des148-vswitch-btn is-active" type="button" data-v="3">V3</button>
+    <button class="des148-vswitch-btn is-active" type="button" data-v="2">V2</button>
+    <button class="des148-vswitch-btn" type="button" data-v="3">V3</button>
   </div>
   <div class="des148-container">
   <div class="des148-herocard">
@@ -135,21 +135,17 @@ document.documentElement.classList.add('des148-rvl');
       <div class="des148-herodrop-inner">
         <span class="des148-herodrop-ic"><span class="des148-ms" aria-hidden="true"><img src="assets/icons/upload_file-f56462.svg" alt=""></span></span>
         <p class="des148-herodrop-title">Drop your resume to upload</p>
-        <div class="des148-herodrop-types">
-          <span class="des148-dz-chip"><span class="des148-ms" aria-hidden="true"><img src="assets/icons/picture_as_pdf-787673.svg" alt=""></span>PDF</span>
-          <span class="des148-dz-chip"><span class="des148-ms" aria-hidden="true"><img src="assets/icons/description-787673.svg" alt=""></span>Word</span>
-        </div>
       </div>
     </div>
     <div class="des148-heropill" aria-hidden="true"><span class="des148-ms" aria-hidden="true"><img src="assets/icons/upload_file-ffffff.svg" alt=""></span>Drop your resume here</div>
     <div class="des148-herocard-text">
       <div class="des148-herohead">
-        <h1>Find jobs that match your <span class="des148-hl">resume</span></h1>
-        <p class="des148-hero-sub">Upload your resume and let our resume matcher find jobs based on your skills and experience, including roles you&#8217;d never find by searching keywords one at a time.</p>
+        <h1 class="des148-h1-ash2">Find jobs that match your <span class="des148-hl">skills</span> and <span class="des148-hl">experience</span></h1>
+        <p class="des148-hero-sub">Your resume knows more about you than a keyword ever will. Upload it, we analyze it, and uncover the jobs you&#8217;d never find by searching keywords one at a time.</p>
       </div>
       <div class="des148-hero-actions">
         <button class="des148-btn des148-btn-primary des148-btn-lg" type="button" onclick="pickResume()"><span class="des148-ms" aria-hidden="true"><img src="assets/icons/upload-ffffff.svg" alt=""></span>Upload my resume</button>
-        <span class="des148-hero-note"><span class="des148-hero-note-msg is-on"><span class="des148-freepill"><span class="des148-ms" aria-hidden="true"><img src="assets/icons/check-0b782d.svg" alt=""></span>Free</span>See your matches before you&nbsp;apply.</span><span class="des148-hero-note-msg">Supports <span class="des148-dz-chip"><span class="des148-ms" aria-hidden="true"><img src="assets/icons/picture_as_pdf-787673.svg" alt=""></span>PDF</span> <span class="des148-dz-chip"><span class="des148-ms" aria-hidden="true"><img src="assets/icons/description-787673.svg" alt=""></span>Word</span></span></span>
+        <span class="des148-hero-note"><span class="des148-hero-note-msg is-on"><span class="des148-freepill"><span class="des148-ms" aria-hidden="true"><img src="assets/icons/check-0b782d.svg" alt=""></span>Free</span>See your matches before you&nbsp;apply.</span></span>
       </div>
       <div class="des148-trust">
         <div class="des148-trust-item">
@@ -165,17 +161,13 @@ document.documentElement.classList.add('des148-rvl');
     <div class="des148-herocard-media">
       <!-- Version 1: interactive dropzone + 3-step tracker -->
       <div class="des148-hero-v1">
-        <div class="des148-dz" id="des148-dz" role="button" tabindex="0" aria-label="Upload your resume: drag and drop a PDF or Word file, or click to browse">
+        <div class="des148-dz" id="des148-dz" role="button" tabindex="0" aria-label="Upload your resume: drag and drop your file, or click to browse">
           <div class="des148-dz-inner">
             <span class="des148-dz-ic"><span class="des148-ms" aria-hidden="true"><img src="assets/icons/upload-f56462.svg" alt=""></span></span>
             <p class="des148-dz-title">Upload your resume here</p>
             <p class="des148-dz-sub">Drag &amp; drop, or <span class="des148-dz-link">click to browse</span></p>
-            <div class="des148-dz-types">
-              <span class="des148-dz-chip"><span class="des148-ms" aria-hidden="true"><img src="assets/icons/picture_as_pdf-787673.svg" alt=""></span>PDF</span>
-              <span class="des148-dz-chip"><span class="des148-ms" aria-hidden="true"><img src="assets/icons/description-787673.svg" alt=""></span>Word</span>
-            </div>
           </div>
-          <ol class="des148-steps" aria-label="How it works: upload your resume, we review it, then you get ranked job matches">
+          <ol class="des148-steps" aria-label="How it works: upload your resume, we analyze it, then you get personalized job matches">
             <li class="des148-step"><span class="des148-step-dot">1</span><span class="des148-step-lbl">Upload resume</span></li>
             <li class="des148-step"><span class="des148-step-dot">2</span><span class="des148-step-lbl">We analyze</span></li>
             <li class="des148-step"><span class="des148-step-dot">3</span><span class="des148-step-lbl">Matched jobs</span></li>
@@ -186,15 +178,11 @@ document.documentElement.classList.add('des148-rvl');
       <div class="des148-hero-v2">
         <div class="des148-v2grid">
           <!-- Top field: interactive dropzone -->
-          <div class="des148-dz des148-dz--slim des148-v2-drop" id="des148-dz2" role="button" tabindex="0" aria-label="Upload your resume: drag and drop a PDF or Word file, or click to browse">
+          <div class="des148-dz des148-dz--slim des148-v2-drop" id="des148-dz2" role="button" tabindex="0" aria-label="Upload your resume: drag and drop your file, or click to browse">
             <div class="des148-dz-inner">
               <span class="des148-dz-ic"><span class="des148-ms" aria-hidden="true"><img src="assets/icons/upload-f56462.svg" alt=""></span></span>
               <p class="des148-dz-title">Upload your resume here</p>
               <p class="des148-dz-sub">Drag &amp; drop, or <span class="des148-dz-link">click to browse</span></p>
-              <div class="des148-dz-types">
-                <span class="des148-dz-chip"><span class="des148-ms" aria-hidden="true"><img src="assets/icons/picture_as_pdf-787673.svg" alt=""></span>PDF</span>
-                <span class="des148-dz-chip"><span class="des148-ms" aria-hidden="true"><img src="assets/icons/description-787673.svg" alt=""></span>Word</span>
-              </div>
             </div>
           </div>
           <!-- Bottom-left field: vertical steps (drive the stage) -->
@@ -462,26 +450,24 @@ document.documentElement.classList.add('des148-rvl');
       <div class="des148-stack is-tight">
         <span class="des148-eyebrow">The problem</span>
         <h2 class="des148-h2">Searching by keyword hides the jobs that fit your resume</h2>
-        <p class="des148-lead">Type a job title and you only see jobs that use your exact words. Roles with different titles, your transferable skills, the hidden market: all missed. The right job is often the one you did not know to search for, and that is exactly what a resume match surfaces.</p>
+        <p class="des148-lead">Type a job title and you only see jobs that use your exact words. Roles with different titles, your transferable skills, the hidden market: all missed. The right job is often the one you did not know to search for, and that is exactly what a resume match uncovers.</p>
       </div>
       <div class="des148-problemwin">
         <span class="des148-pw-dots" aria-hidden="true"><i></i><i></i><i></i></span>
         <div class="des148-pw-search des148-pw-rvl">
           <span class="des148-pw-searchicon"><span class="des148-ms" aria-hidden="true"><img src="assets/icons/search-ffffff.svg" alt=""></span></span>
-          <span class="des148-pw-searchtext"><span class="des148-pw-typed">Product manager</span><span class="des148-pw-caret" aria-hidden="true"></span></span>
+          <span class="des148-pw-searchtext"><span class="des148-pw-typed">Project manager</span><span class="des148-pw-caret" aria-hidden="true"></span></span>
         </div>
         <div class="des148-pw-group">
           <div class="des148-pw-label des148-pw-rvl">What you see</div>
           <div class="des148-pw-jobs">
             <div class="des148-pw-job des148-pw-rvl">
-              <span class="des148-pw-jobtitle">Product Manager</span>
+              <span class="des148-pw-jobtitle">Project Manager</span>
               <span class="des148-pw-jobmeta">New York &middot; Onsite</span>
-              <div class="des148-pw-bar"><i style="--pw-fill:56%"><span class="des148-pw-fit"><span class="des148-pw-fit-word">Fit&nbsp;</span><span class="des148-pw-fit-num">56%</span></span></i></div>
             </div>
             <div class="des148-pw-job des148-pw-rvl">
-              <span class="des148-pw-jobtitle">Product Manager, B2B</span>
+              <span class="des148-pw-jobtitle">Project Manager, IT</span>
               <span class="des148-pw-jobmeta">San Francisco &middot; Hybrid</span>
-              <div class="des148-pw-bar"><i style="--pw-fill:52%"><span class="des148-pw-fit"><span class="des148-pw-fit-word">Fit&nbsp;</span><span class="des148-pw-fit-num">52%</span></span></i></div>
             </div>
           </div>
         </div>
@@ -490,16 +476,26 @@ document.documentElement.classList.add('des148-rvl');
             <img class="des148-pw-mark" src="assets/icons/pw-mark-f56462.svg" alt="" aria-hidden="true">
             Hidden from you
           </div>
+          <div class="des148-pw-subchip des148-pw-rvl">Same job, different title</div>
           <div class="des148-pw-jobs">
             <div class="des148-pw-job is-hi des148-pw-rvl">
-              <span class="des148-pw-jobtitle">Head of Product</span>
+              <span class="des148-pw-jobtitle">Program Manager</span>
               <span class="des148-pw-jobmeta">Austin &middot; Remote</span>
-              <div class="des148-pw-bar"><i style="--pw-fill:93%"><span class="des148-pw-fit"><span class="des148-pw-fit-word">Fit&nbsp;</span><span class="des148-pw-fit-num">93%</span></span></i></div>
             </div>
             <div class="des148-pw-job is-hi des148-pw-rvl">
-              <span class="des148-pw-jobtitle">Group Product Lead</span>
+              <span class="des148-pw-jobtitle">Delivery Manager</span>
               <span class="des148-pw-jobmeta">Seattle &middot; Hybrid</span>
-              <div class="des148-pw-bar"><i style="--pw-fill:89%"><span class="des148-pw-fit"><span class="des148-pw-fit-word">Fit&nbsp;</span><span class="des148-pw-fit-num">89%</span></span></i></div>
+            </div>
+          </div>
+          <div class="des148-pw-subchip des148-pw-rvl">Your next career level</div>
+          <div class="des148-pw-jobs">
+            <div class="des148-pw-job is-hi des148-pw-rvl">
+              <span class="des148-pw-jobtitle">Senior Project Manager</span>
+              <span class="des148-pw-jobmeta">Denver &middot; Remote</span>
+            </div>
+            <div class="des148-pw-job is-hi des148-pw-rvl">
+              <span class="des148-pw-jobtitle">Program Director</span>
+              <span class="des148-pw-jobmeta">Chicago &middot; Hybrid</span>
             </div>
           </div>
         </div>
@@ -522,7 +518,7 @@ document.documentElement.classList.add('des148-rvl');
           <span class="des148-tl-ic"><span class="des148-ms" aria-hidden="true"><img src="assets/icons/upload-f56462.svg" alt=""></span></span>
           <div class="des148-tl-body">
             <span class="des148-tl-title">Upload your resume</span>
-            <p class="des148-tl-desc">PDF or Word, once.</p>
+            <p class="des148-tl-desc">Your resume as it is, no polishing needed.</p>
           </div>
         </div>
         <span class="des148-tl-node"></span>
@@ -532,7 +528,7 @@ document.documentElement.classList.add('des148-rvl');
         <div class="des148-tl-card">
           <span class="des148-tl-ic"><span class="des148-ms" aria-hidden="true"><img src="assets/icons/manage_search-100f0e.svg" alt=""></span></span>
           <div class="des148-tl-body">
-            <span class="des148-tl-title">We read your profile</span>
+            <span class="des148-tl-title">We analyze your resume</span>
             <p class="des148-tl-desc">Your real skills and experience, not just keywords.</p>
           </div>
         </div>
@@ -543,12 +539,23 @@ document.documentElement.classList.add('des148-rvl');
         <div class="des148-tl-card">
           <span class="des148-tl-ic"><span class="des148-ms" aria-hidden="true"><img src="assets/icons/target-e8ff63.svg" alt=""></span></span>
           <div class="des148-tl-body">
-            <span class="des148-tl-title">Get jobs ranked by fit</span>
-            <p class="des148-tl-desc">Each match explained against your resume.</p>
+            <span class="des148-tl-title">Get personalized job matches</span>
+            <p class="des148-tl-desc">Ranked by fit, based on your skills and experience.</p>
           </div>
         </div>
         <span class="des148-tl-node"></span>
         <div class="des148-tl-num">03</div>
+      </div>
+      <div class="des148-tl-step">
+        <div class="des148-tl-card">
+          <span class="des148-tl-ic"><span class="des148-ms" aria-hidden="true"><img src="assets/icons/edit-100f0e.svg" alt=""></span></span>
+          <div class="des148-tl-body">
+            <span class="des148-tl-title">Tailor your application in minutes</span>
+            <p class="des148-tl-desc">Job-specific resume and cover letter, so you land more interviews.</p>
+          </div>
+        </div>
+        <span class="des148-tl-node"></span>
+        <div class="des148-tl-num">04</div>
       </div>
     </div>
 
@@ -567,7 +574,7 @@ document.documentElement.classList.add('des148-rvl');
         </div>
       </div>
       <div class="des148-stack">
-        <p class="des148-lead">Every match shows the skills and experience it is based on, so you trust the jobs that fit your resume.</p>
+        <p class="des148-lead">Every match is based on your real skills and experience, so the jobs that fit you rise to the top.</p>
         <div class="des148-callout">
           <div class="des148-lbl">Why it beats manual keyword search</div>
           <div class="des148-ln">Manual keyword search matches the words you type. Resume matching reads your whole resume (skills, experience, seniority) and finds jobs that fit, even when the title is different.</div>
@@ -585,16 +592,25 @@ document.documentElement.classList.add('des148-rvl');
       <div class="des148-why-text des148-stack is-tight">
         <span class="des148-eyebrow">Why our matches are better</span>
         <h2 class="des148-h2">Smarter job matching across more jobs</h2>
-        <p class="des148-lead">We scan 40,000+ sources every day and bring them into one place. More jobs to match against means better matches, and the right jobs, not just more of them.</p>
+        <p class="des148-lead">We scan 40,000+ sources every day, validate the listings, and bring them into one place. More real jobs to match against means better matches, and the right jobs, not just more of them.</p>
       </div>
       <div class="des148-why-imgwrap">
         <img class="des148-why-img" src="assets/illustration-31.svg" alt="" width="400" height="400" loading="lazy" decoding="async">
       </div>
     </div>
     <div class="des148-tiles">
-      <div class="des148-tile"><div class="des148-big">40k+</div><div class="des148-fact">sources scanned daily</div></div>
-      <div class="des148-tile"><div class="des148-big" data-from="20">1</div><div class="des148-fact">place, not 20 tabs</div></div>
-      <div class="des148-tile"><div class="des148-big" data-from="20">0</div><div class="des148-fact">paid-promotion boosting</div></div>
+      <div class="des148-tile"><div class="des148-big" data-animate>40k+</div><div class="des148-fact">sources scanned daily</div></div>
+      <div class="des148-tile"><div class="des148-big">1</div><div class="des148-fact">place instead of 20 job sites</div></div>
+      <div class="des148-tile">
+        <button class="des148-tile-info" type="button" aria-expanded="false" aria-label="What listing validation means"><span class="des148-ms" aria-hidden="true"><img src="assets/icons/info-ffffff.svg" alt=""></span></button>
+        <div class="des148-big">100%</div><div class="des148-fact">of listings validated</div>
+        <div class="des148-tile-pop" role="dialog" aria-label="Listing validation" hidden>Ghost jobs are listings that are expired, already filled, or were never real. We validate listings and check links every day, and remove ghost jobs as soon as we spot them.</div>
+      </div>
+      <div class="des148-tile">
+        <button class="des148-tile-info" type="button" aria-expanded="false" aria-label="What ranking by fit means"><span class="des148-ms" aria-hidden="true"><img src="assets/icons/info-ffffff.svg" alt=""></span></button>
+        <div class="des148-big">0</div><div class="des148-fact">jobs ranked by who pays</div>
+        <div class="des148-tile-pop" role="dialog" aria-label="How ranking works" hidden>On most job sites, employers can pay to push their listings to the top of your results. On JobLeads they can&#8217;t: ranking is based only on fit to your resume.</div>
+      </div>
     </div>
   </div>
 </section>
@@ -609,18 +625,18 @@ document.documentElement.classList.add('des148-rvl');
       </div>
       <div class="des148-stack">
         <div class="des148-stack is-tight">
-          <span class="des148-eyebrow">Your resume</span>
-          <h2 class="des148-h2">Your resume becomes a job matcher</h2>
-          <p class="des148-lead">Your resume does two jobs: it finds jobs that actually fit, and it helps you apply as the obvious candidate.</p>
+          <span class="des148-eyebrow">Match my resume to jobs and job descriptions</span>
+          <h2 class="des148-h2">Your resume works twice for you</h2>
+          <p class="des148-lead">It finds the jobs that fit you, and it helps you win the one you want.</p>
         </div>
         <div class="des148-cards">
           <div class="des148-card">
-            <h3><img class="des148-card-ic" src="assets/icons/card-arrow-f56462.svg" alt="" aria-hidden="true">Match my resume to jobs</h3>
-            <p>Your resume job matcher becomes a live feed of roles that fit your skills and experience.</p>
+            <h3><img class="des148-card-ic" src="assets/icons/card-arrow-f56462.svg" alt="" aria-hidden="true">Find jobs that fit you</h3>
+            <p>Upload once and get a live feed of roles matching your skills and experience.</p>
           </div>
           <div class="des148-card">
-            <h3><img class="des148-card-ic" src="assets/icons/card-arrow-f56462.svg" alt="" aria-hidden="true">Match my resume to a job description</h3>
-            <p>See how your resume matches a role and what to sharpen before you apply.</p>
+            <h3><img class="des148-card-ic" src="assets/icons/card-arrow-f56462.svg" alt="" aria-hidden="true">Win the job you want</h3>
+            <p>Tailor your resume and cover letter to any job in minutes.</p>
           </div>
         </div>
       </div>
@@ -639,19 +655,19 @@ document.documentElement.classList.add('des148-rvl');
       <div class="des148-faq-list">
         <div class="des148-acc" data-toggle>
           <button type="button" class="des148-acc-row"><h3 class="des148-acc-title">How does JobLeads match jobs to my resume?</h3><span class="des148-ms des148-acc-chevron" aria-hidden="true"><img src="assets/icons/add-f56462.svg" alt=""></span></button>
-          <div class="des148-acc-body">You upload your resume once, and JobLeads reads your skills, experience, and seniority, then matches you against jobs gathered from 40,000+ sources. Instead of relying on the words you type into a search bar, it uses your whole resume to surface roles that fit, and shows you the skills and experience behind every match.</div>
+          <div class="des148-acc-body">You upload your resume once, and JobLeads analyzes your skills, experience, and seniority, then matches you against jobs gathered from 40,000+ sources. Instead of relying on the words you type into a search bar, it uses your whole resume to uncover roles that fit.</div>
         </div>
         <div class="des148-acc" data-toggle>
           <button type="button" class="des148-acc-row"><h3 class="des148-acc-title">How do I find jobs based on my resume for free?</h3><span class="des148-ms des148-acc-chevron" aria-hidden="true"><img src="assets/icons/add-f56462.svg" alt=""></span></button>
-          <div class="des148-acc-body">Upload your resume in PDF or Word, and you can see the jobs that match it before you apply. Add your resume once and your matches appear in seconds.</div>
+          <div class="des148-acc-body">Upload your resume and you can see the jobs that match it before you apply. Add it once and your matches appear in seconds.</div>
         </div>
         <div class="des148-acc" data-toggle>
           <button type="button" class="des148-acc-row"><h3 class="des148-acc-title">What is AI job matching, and how is it different from keyword search?</h3><span class="des148-ms des148-acc-chevron" aria-hidden="true"><img src="assets/icons/add-f56462.svg" alt=""></span></button>
-          <div class="des148-acc-body">AI job matching uses your full resume as the search, not a single keyword. Manual keyword search only returns jobs that contain the exact words you type, so roles with a different title or wording stay hidden. Resume matching reads your skills and experience and finds jobs that fit you, including ones you would never think to search for.</div>
+          <div class="des148-acc-body">AI job matching uses your full resume as the search, not a single keyword. Manual keyword search only returns jobs that contain the exact words you type, so roles with a different title or wording stay hidden. Resume matching analyzes your skills and experience and finds jobs that fit you, including ones you would never think to search for.</div>
         </div>
         <div class="des148-acc" data-toggle>
           <button type="button" class="des148-acc-row"><h3 class="des148-acc-title">Can I match my resume to a specific job description?</h3><span class="des148-ms des148-acc-chevron" aria-hidden="true"><img src="assets/icons/add-f56462.svg" alt=""></span></button>
-          <div class="des148-acc-body">Yes. As well as finding jobs that fit your resume, you can see how well your resume matches a specific role and what to sharpen before you apply, so you come across as the obvious candidate.</div>
+          <div class="des148-acc-body">Yes. You can tailor your resume and cover letter to a specific job in minutes, so you apply as the obvious candidate.</div>
         </div>
         <div class="des148-acc" data-toggle>
           <button type="button" class="des148-acc-row"><h3 class="des148-acc-title">What if my resume is out of date?</h3><span class="des148-ms des148-acc-chevron" aria-hidden="true"><img src="assets/icons/add-f56462.svg" alt=""></span></button>
@@ -660,6 +676,10 @@ document.documentElement.classList.add('des148-rvl');
         <div class="des148-acc" data-toggle>
           <button type="button" class="des148-acc-row"><h3 class="des148-acc-title">Will my resume stay private when I upload it?</h3><span class="des148-ms des148-acc-chevron" aria-hidden="true"><img src="assets/icons/add-f56462.svg" alt=""></span></button>
           <div class="des148-acc-body">Your resume is used to find your matches and is not posted publicly. You stay in control of what you share and with whom.</div>
+        </div>
+        <div class="des148-acc" data-toggle>
+          <button type="button" class="des148-acc-row"><h3 class="des148-acc-title">Can JobLeads help me apply?</h3><span class="des148-ms des148-acc-chevron" aria-hidden="true"><img src="assets/icons/add-f56462.svg" alt=""></span></button>
+          <div class="des148-acc-body">Yes. When you find a job you want, JobLeads tailors your resume to that specific role and creates a matching cover letter in minutes. A job-specific application speaks directly to what the employer is looking for, so you stand out as the obvious candidate and land more interviews.</div>
         </div>
       </div>
     </div>
@@ -676,7 +696,7 @@ document.documentElement.classList.add('des148-rvl');
       </div>
       <div class="des148-final-actions">
         <button class="des148-btn des148-btn-primary des148-btn-lg" type="button" onclick="pickResume()"><span class="des148-ms" aria-hidden="true"><img src="assets/icons/upload-ffffff.svg" alt=""></span>Upload my resume</button>
-        <span class="des148-hero-note"><span class="des148-hero-note-msg is-on"><span class="des148-freepill"><span class="des148-ms" aria-hidden="true"><img src="assets/icons/check-ffffff.svg" alt=""></span>Free</span>See your matches before you&nbsp;apply.</span><span class="des148-hero-note-msg">Supports <span class="des148-dz-chip"><span class="des148-ms" aria-hidden="true"><img src="assets/icons/picture_as_pdf-787673.svg" alt=""></span>PDF</span> <span class="des148-dz-chip"><span class="des148-ms" aria-hidden="true"><img src="assets/icons/description-787673.svg" alt=""></span>Word</span></span></span>
+        <span class="des148-hero-note"><span class="des148-hero-note-msg is-on"><span class="des148-freepill"><span class="des148-ms" aria-hidden="true"><img src="assets/icons/check-ffffff.svg" alt=""></span>Free</span>See your matches before you&nbsp;apply.</span></span>
       </div>
     </div>
   </div>
@@ -806,16 +826,10 @@ document.documentElement.classList.add('des148-rvl');
 <div class="des148-stickycta" id="des148-stickycta" aria-hidden="true">
   <div class="des148-container des148-stickycta-inner">
     <div class="des148-stickycta-copy">
-      <span class="des148-stickycta-slide des148-stickycta-title is-on">Find jobs that match your resume</span>
+      <span class="des148-stickycta-slide des148-stickycta-title is-on">Find jobs that match your skills and experience</span>
       <span class="des148-stickycta-slide des148-stickycta-msg des148-stickycta-msg-value"><span class="des148-freepill"><span class="des148-ms" aria-hidden="true"><img src="assets/icons/check-0b782d.svg" alt=""></span>Free</span><span class="des148-stickycta-msgtext">See your matches before you&nbsp;apply.</span></span>
-      <span class="des148-stickycta-slide des148-stickycta-msg des148-stickycta-msg-formats"><span class="des148-fmt-txt">Supports PDF and Word files</span><span class="des148-fmt-pills">Supports <span class="des148-dz-chip"><span class="des148-ms" aria-hidden="true"><img src="assets/icons/picture_as_pdf-787673.svg" alt=""></span>PDF</span> <span class="des148-dz-chip"><span class="des148-ms" aria-hidden="true"><img src="assets/icons/description-787673.svg" alt=""></span>Word</span></span></span>
     </div>
     <div class="des148-stickycta-actions">
-      <span class="des148-stickycta-types">
-        <span class="des148-fmtlabel">Supported<br>files</span>
-        <span class="des148-dz-chip"><span class="des148-ms" aria-hidden="true"><img src="assets/icons/picture_as_pdf-787673.svg" alt=""></span>PDF</span>
-        <span class="des148-dz-chip"><span class="des148-ms" aria-hidden="true"><img src="assets/icons/description-787673.svg" alt=""></span>Word</span>
-      </span>
       <button class="des148-btn des148-btn-primary des148-btn-lg" type="button" onclick="pickResume()"><span class="des148-ms" aria-hidden="true"><img src="assets/icons/upload-ffffff.svg" alt=""></span>Upload my resume</button>
     </div>
   </div>
@@ -826,12 +840,13 @@ document.documentElement.classList.add('des148-rvl');
   "@context": "https://schema.org",
   "@type": "FAQPage",
   "mainEntity": [
-    { "@type": "Question", "name": "How does JobLeads match jobs to my resume?", "acceptedAnswer": { "@type": "Answer", "text": "You upload your resume once, and JobLeads reads your skills, experience, and seniority, then matches you against jobs gathered from 40,000+ sources. It uses your whole resume to surface roles that fit, and shows you the skills and experience behind every match." } },
-    { "@type": "Question", "name": "How do I find jobs based on my resume for free?", "acceptedAnswer": { "@type": "Answer", "text": "Upload your resume in PDF or Word, and you can see the jobs that match it before you apply. Add your resume once and your matches appear in seconds." } },
-    { "@type": "Question", "name": "What is AI job matching, and how is it different from keyword search?", "acceptedAnswer": { "@type": "Answer", "text": "AI job matching uses your full resume as the search, not a single keyword. Manual keyword search only returns jobs that contain the exact words you type, so roles with a different title stay hidden. Resume matching reads your skills and experience and finds jobs that fit you." } },
-    { "@type": "Question", "name": "Can I match my resume to a specific job description?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. As well as finding jobs that fit your resume, you can see how well your resume matches a specific role and what to sharpen before you apply." } },
+    { "@type": "Question", "name": "How does JobLeads match jobs to my resume?", "acceptedAnswer": { "@type": "Answer", "text": "You upload your resume once, and JobLeads analyzes your skills, experience, and seniority, then matches you against jobs gathered from 40,000+ sources. It uses your whole resume to uncover roles that fit." } },
+    { "@type": "Question", "name": "How do I find jobs based on my resume for free?", "acceptedAnswer": { "@type": "Answer", "text": "Upload your resume and you can see the jobs that match it before you apply. Add it once and your matches appear in seconds." } },
+    { "@type": "Question", "name": "What is AI job matching, and how is it different from keyword search?", "acceptedAnswer": { "@type": "Answer", "text": "AI job matching uses your full resume as the search, not a single keyword. Manual keyword search only returns jobs that contain the exact words you type, so roles with a different title stay hidden. Resume matching analyzes your skills and experience and finds jobs that fit you." } },
+    { "@type": "Question", "name": "Can I match my resume to a specific job description?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. You can tailor your resume and cover letter to a specific job in minutes, so you apply as the obvious candidate." } },
     { "@type": "Question", "name": "What if my resume is out of date?", "acceptedAnswer": { "@type": "Answer", "text": "It still works. Upload what you have and JobLeads matches you based on it. You can also get a free resume review to tighten it first." } },
-    { "@type": "Question", "name": "Will my resume stay private when I upload it?", "acceptedAnswer": { "@type": "Answer", "text": "Your resume is used to find your matches and is not posted publicly. You stay in control of what you share and with whom." } }
+    { "@type": "Question", "name": "Will my resume stay private when I upload it?", "acceptedAnswer": { "@type": "Answer", "text": "Your resume is used to find your matches and is not posted publicly. You stay in control of what you share and with whom." } },
+    { "@type": "Question", "name": "Can JobLeads help me apply?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. When you find a job you want, JobLeads tailors your resume to that specific role and creates a matching cover letter in minutes. A job-specific application speaks directly to what the employer is looking for, so you stand out as the obvious candidate and land more interviews." } }
   ]
 }
 </script>
