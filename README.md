@@ -9,6 +9,8 @@ Each prototype lives under `<page>/<version>/`:
 ```
 resume-matches/
   v1/            → Resume Matches landing page (DES-148)
+job-city-tracker/
+  v1/            → Job City Tracker microsite (DES-160) — hub + 46 city pages in one file
 ```
 
 - **New version** of the same page → add `resume-matches/v2/`, `v3/`, …
@@ -23,6 +25,17 @@ After enabling GitHub Pages, each prototype is reachable at:
 ```
 https://<user>.github.io/<repo>/resume-matches/v1/
 ```
+
+The Job City Tracker is one HTML file holding every page, so its routes live behind the `#`:
+
+```
+…/job-city-tracker/v1/#/us/job-city-tracker                                  the hub
+…/job-city-tracker/v1/#/data-hub/job-market/united-states/texas/houston      a city
+…/job-city-tracker/v1/#/data-hub/job-market/…/houston?industry=Finance       with a filter applied
+```
+
+Everything after the `#` is a fragment, so no server ever sees it — the same file also opens by double-click
+from a local folder.
 
 ## Notes
 
