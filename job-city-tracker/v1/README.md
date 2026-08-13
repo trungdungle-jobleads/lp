@@ -3,27 +3,29 @@
 **Double-click `index.html`.** No server, no install, no internet. Send the folder (or a zip of it)
 to anyone; it also works unchanged on GitLab Pages or any other static host.
 
-The hub page and all 46 city pages live in this one HTML file and are addressed by the part after
+The hub page and all 100 city pages live in this one HTML file and are addressed by the part after
 the `#`:
 
 | URL | Page |
 |-----|------|
 | `index.html` | opens the hub (redirects to `#/us/job-city-tracker`) |
 | `index.html#/us/job-city-tracker` | hub: hero, explorer (ranking list + world map), key findings, FAQ |
-| `index.html#/us/job-city-tracker/london` | city page — also `new-york`, `sao-paulo`, `metro-manila`, … (46 in total) |
+| `index.html#/data-hub/job-market/united-kingdom/england/london` | city page. The path is country, region, city, so also `united-states/new-york/new-york`, `brazil/sao-paulo/sao-paulo`, `singapore/singapore/singapore`, … (100 in total) |
 
-Also hosted (same build): <https://landing-page-prototypes-a8ffbc.gitlab.io/job-city-tracker/>
+A copy is also hosted at <https://landing-page-prototypes-a8ffbc.gitlab.io/job-city-tracker/>, but it is the build of
+11 August 2026 and cannot be refreshed: that GitLab namespace has no compute minutes left, so its publishing job is
+refused before it starts. This folder is the current build.
 
 ## What is in the folder
 
 | Path | Contents |
 |------|----------|
-| `index.html` | the page **and** the whole app: the built JavaScript is embedded as one inline module (~11.6 MB) |
+| `index.html` | the page **and** the whole app: the built JavaScript is embedded as one inline module (~11.8 MB) |
 | `css/app.css` | every stylesheet of the build, concatenated (tokens, fonts, Tailwind, design system, component styles) |
 | `js/offline.js` | the world map (Natural Earth 1:50m topojson) inlined, plus the shim described below |
 | `fonts/`, `images/` | Right Grotesk 500, Inter 400/500, and the two logos header and footer use |
 
-Everything else — the 46 cities' numbers, the flags, all icons — is already inside `index.html`.
+Everything else — the 100 cities' numbers, the flags, all icons — is already inside `index.html`.
 
 ## Why it is built this way
 
