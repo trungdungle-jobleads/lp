@@ -20,9 +20,9 @@ refused before it starts. This folder is the current build.
 
 | Path | Contents |
 |------|----------|
-| `index.html` | the page **and** the whole app: the built JavaScript is embedded as one inline module (~11.8 MB) |
-| `css/app.css` | every stylesheet of the build, concatenated (tokens, fonts, Tailwind, design system, component styles) |
-| `js/offline.js` | the world map (Natural Earth 1:50m topojson) inlined, plus the shim described below |
+| `index.html` | the page **and** the whole app: the built JavaScript, the world map and the 100 cities’ numbers, embedded as one inline module (~12.7 MB) |
+| `css/app.css` | every stylesheet of the build, concatenated (tokens, Tailwind, design system, component styles) |
+| `js/offline.js` | the small shim described below |
 | `fonts/`, `images/` | Right Grotesk 500, Inter 400/500, and the two logos header and footer use |
 
 Everything else — the 100 cities' numbers, the flags, all icons — is already inside `index.html`.
@@ -34,10 +34,10 @@ Three things stop a normal Nuxt export from opening by double-click, and each ha
 1. **Module scripts are blocked over `file://`** (origin `null`). Browsers refuse to *load* a
    module file, but an inline `<script type="module">` fetches nothing — so the built chunks are
    bundled into one module and embedded in the HTML.
-2. **`fetch()` cannot read `file://` URLs.** The map's topojson would fail, so it ships as a global
-   in `js/offline.js`, where a small shim answers the app's request for it. The same shim answers
-   every JobLeads API call with an empty object: unanswered calls make the app jump to
-   `/maintenance.html`, and the prototype needs no backend anyway.
+2. **`fetch()` cannot read `file://` URLs.** Nothing here needs one: the map and all numbers ship
+   inside the module. The shim in `js/offline.js` answers every JobLeads API call with an empty
+   object: unanswered calls make the app jump to `/maintenance.html`, and the prototype needs no
+   backend anyway.
 3. **A history-mode router reads the file path** under `file://` and lands on the 404 page — hence
    the `#` URLs.
 
