@@ -66,6 +66,7 @@ asset copying and the HTML rewrite. (An earlier variant with real per-route URLs
 - Login, search and shop are absent by design. What does work: the quarter dropdown, the industry
   filter, city search, map zoom (buttons, double click, ctrl/cmd + wheel, pinch) and pan, the
   highlighting in both directions (hovering a row moves the zoomed map to that city; hovering a dot
-  marks its row and scrolls the list to it), and on phones the bottom-sheet preview a tap on a dot or
-  a country opens — which stays open while the map keeps working.
+  marks its row and scrolls the list to it), on narrow viewports the shortened colour scale under the
+  map, which expands to all five figures on a tap and collapses again, and on phones the bottom-sheet
+  preview a tap on a dot or a country opens — which stays open while the map keeps working.
 - Every page is `noindex`.
