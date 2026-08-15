@@ -1,72 +1,37 @@
-# Job City Tracker — standalone static build (DES-160)
+# Job City Tracker — hosted build (DES-160)
 
-**Double-click `index.html`.** No server, no install, no internet. Send the folder (or a zip of it)
-to anyone; it also works unchanged on GitLab Pages or any other static host.
+Open <https://trungdungle-jobleads.github.io/lp/job-city-tracker/v1/us/job-city-tracker/>. Links that
+still carry the old `#`-URLs keep working: the entry page translates them into the real path.
 
-The hub page and all 100 city pages live in this one HTML file and are addressed by the part after
-the `#`:
+This folder is the **hosted** variant. It is the real Nuxt app with one HTML file per page and its
+code split into route chunks, so a page loads what it needs and nothing else. That is why it is
+fast — and why it needs a web server: opened by double-click it cannot boot, because browsers refuse
+to load ES modules over `file://`.
 
-| URL | Page |
-|-----|------|
-| `index.html` | opens the hub (redirects to `#/us/job-city-tracker`) |
-| `index.html#/us/job-city-tracker` | hub: hero, explorer (ranking list + world map), key findings, FAQ |
-| `index.html#/data-hub/job-market/united-kingdom/england/london` | city page. The path is country, region, city, so also `united-states/new-york/new-york`, `brazil/sao-paulo/sao-paulo`, `singapore/singapore/singapore`, … (100 in total) |
-
-A copy is also hosted at <https://landing-page-prototypes-a8ffbc.gitlab.io/job-city-tracker/>, but it is the build of
-11 August 2026 and cannot be refreshed: that GitLab namespace has no compute minutes left, so its publishing job is
-refused before it starts. This folder is the current build.
-
-## What is in the folder
+**To send the prototype around, use the single-file build instead.** It lives in the ticket folder
+under `02_work/html/static` and opens by double-click; every page sits behind a `#`-URL there.
 
 | Path | Contents |
 |------|----------|
-| `index.html` | the page **and** the whole app: the built JavaScript, the world map and the 100 cities’ numbers, embedded as one inline module (~12.7 MB) |
-| `css/app.css` | every stylesheet of the build, concatenated (tokens, Tailwind, design system, component styles) |
-| `js/offline.js` | the small shim described below |
-| `fonts/`, `images/` | Right Grotesk 500, Inter 400/500, and the two logos header and footer use |
+| `us/job-city-tracker/` | the hub: hero, explorer with ranking list and world map, key findings, FAQ |
+| `data-hub/job-market/<country>/<region>/<city>/` | the 100 city pages, e.g. `united-kingdom/england/london/` |
+| `assets/` | the build's JavaScript and stylesheets, hashed |
+| `css/`, `fonts/`, `images/` | the font sheet, Right Grotesk 500, Inter 400/500, the two logos |
+| `index.html` | forwards to the hub, and translates an old `#`-URL into its page |
 
-Everything else — the 100 cities' numbers, the flags, all icons — is already inside `index.html`.
+## What was left out
 
-## Why it is built this way
-
-Three things stop a normal Nuxt export from opening by double-click, and each has a fix here:
-
-1. **Module scripts are blocked over `file://`** (origin `null`). Browsers refuse to *load* a
-   module file, but an inline `<script type="module">` fetches nothing — so the built chunks are
-   bundled into one module and embedded in the HTML.
-2. **`fetch()` cannot read `file://` URLs.** Nothing here needs one: the map and all numbers ship
-   inside the module. The shim in `js/offline.js` answers every JobLeads API call with an empty
-   object: unanswered calls make the app jump to `/maintenance.html`, and the prototype needs no
-   backend anyway.
-3. **A history-mode router reads the file path** under `file://` and lands on the 404 page — hence
-   the `#` URLs.
-
-## Updating it after a feedback round
-
-In the Nuxt PoC repo (`jobleads-poc-20260723`) — the prototype's source of truth:
-
-```bash
-rm -rf .output
-STATIC_EXPORT=1 STATIC_BUNDLE=1 NUXT_APP_BASE_URL=./ npx nuxi generate
-python3 tools/bundle-export.py .output/public "<this folder>"
-```
-
-`tools/bundle-export.py` does the bundling, the CSS concatenation, the inlining of the map, the
-asset copying and the HTML rewrite. (An earlier variant with real per-route URLs
-(`/us/job-city-tracker/london/`), which needs a web server, sits in `../_archive/`.)
+The export drops what no data hub page uses: the six translated dictionaries (the prototype is
+English only, and English is rendered from the keys), error reporting, the illustrations that ride
+along through the import graph, the duplicated base64 fonts, and the stylesheet rules whose class
+names appear nowhere in the application. None of this is removed from the app itself — it happens in
+the export tooling, after the build.
 
 ## Known limits
 
-- The page renders in the browser, so "view source" shows the app, not readable page markup. If
-  someone needs static HTML per page, that is a different artifact (a hand-written mirror like
-  `des-148_resume-matches-lp/…/resume-matches-v1-nuxt`).
-- **Only the tracker's routes are built in.** Header and footer are the app's real components, but
-  every other page of the app was dropped from the build, so their links show the app's own 404
-  page. That is deliberate: it keeps the bundle to the pages this prototype is about.
+- Only the tracker's routes are built. Header and footer are the app's real components, but every
+  other link lands on the app's own 404 page.
 - Login, search and shop are absent by design. What does work: the quarter dropdown, the industry
-  filter, city search, map zoom (buttons, double click, ctrl/cmd + wheel, pinch) and pan, the
-  highlighting in both directions (hovering a row moves the zoomed map to that city; hovering a dot
-  marks its row and scrolls the list to it), on narrow viewports the shortened colour scale under the
-  map, which expands to all five figures on a tap and collapses again, and on phones the bottom-sheet
-  preview a tap on a dot or a country opens — which stays open while the map keeps working.
+  filter, city search, map zoom and pan, the highlighting in both directions, the shortened colour
+  scale that expands on a tap, and on phones the bottom-sheet preview.
 - Every page is `noindex`.
