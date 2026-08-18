@@ -1,0 +1,1 @@
+import{_ as a}from"./svg-e47ccJsF.b14dcdee.js";import{d as m,o as n,c as o}from"./entry.b14dcdee.js";import"./svg-BDvVKyf2.b14dcdee.js";const s=m({__name:"ResumeTemplate18",props:{data:{}},setup(e){return(c,p)=>{const t=a;return n(),o(t,{class:"resume-template-18",data:e.data,icons:!0},null,8,["data"])}}}),l=Object.assign(s,{__name:"ResumeTemplate18"});export{l as default};

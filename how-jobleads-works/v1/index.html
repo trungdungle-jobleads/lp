@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head><meta name="robots" content="noindex, nofollow">
+<meta charset="utf-8">
+<title>How Jobleads Works</title>
+<style>
+  body { margin: 0; display: grid; place-items: center; min-height: 100vh;
+         font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: #1a1a1a }
+  main { max-width: 34rem; padding: 2rem }
+  h1 { font-size: 1.5rem; margin: 0 0 1rem }
+  code { background: #f2efe9; border-radius: .25rem; padding: .15rem .35rem; font-size: .9em }
+  pre { background: #f2efe9; border-radius: .5rem; padding: .75rem 1rem; overflow-x: auto }
+</style>
+</head>
+<body>
+<main id="hint" hidden>
+  <h1>This prototype needs a local server</h1>
+  <p>It is the real Nuxt app, so it loads its code as an ES module — browsers block that over
+     <code>file://</code>. Double-click <code>start-server.command</code> in this folder, or run
+     this inside the folder:</p>
+  <pre>python3 -m http.server 4183</pre>
+  <p>…and open <code>http://localhost:4183/lp/how-jobleads-works/v1/how-jobleads-works/</code></p>
+</main>
+<script>
+  if (location.protocol === 'file:') {
+    document.getElementById('hint').hidden = false;
+  } else {
+    /* The bundled variant addressed every page behind a #-URL, and those links are in circulation.
+       Translate one into the real path so a shared link keeps landing on the page it named. */
+    var hash = location.hash.replace(/^#\/?/, '');
+    var ziel = hash ? '/lp/how-jobleads-works/v1/' + hash.replace(/\/$/, '') + '/' : '/lp/how-jobleads-works/v1/how-jobleads-works/';
+    location.replace(ziel);
+  }
+</script>
+</body>
+</html>
