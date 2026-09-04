@@ -1,0 +1,20 @@
+{
+  "format": 1,
+  "name": "Job City Tracker",
+  "ticket": "DES-160",
+  "exportDate": "2026-09-04",
+  "output": "web",
+  "variants": [
+    "launch",
+    "full"
+  ],
+  "cityCount": 100,
+  "sourceRevision": "49c76df566b8ef7ca6f08075b9edcb54ba54a714",
+  "includesUncommittedSourceChanges": true,
+  "sourceFingerprint": "9649fc2b5bc32e264abfdc2fa924b45716420565b0e74f5f9d49dd31ee8583e1",
+  "buildCompletedAt": "2026-09-04T09:14:49.899Z",
+  "deploymentBase": "/lp/job-city-tracker/v1/",
+  "hostedPreview": "https://trungdungle-jobleads.github.io/lp/job-city-tracker/v1/us/job-city-tracker/",
+  "dataStatus": "Prototype snapshots and documented synthetic values; not verified production data",
+  "backendIntegration": false
+}

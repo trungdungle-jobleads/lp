@@ -1,37 +1,29 @@
-# Job City Tracker — hosted build (DES-160)
+# Job City Tracker — hosted preview
 
-Open <https://trungdungle-jobleads.github.io/lp/job-city-tracker/v1/us/job-city-tracker/>. Links that
-still carry the old `#`-URLs keep working: the entry page translates them into the real path.
+Export: 4 September 2026. Launch and Full are included. See `RELEASE.json` for the source fingerprint and build identity.
 
-This folder is the **hosted** variant. It is the real Nuxt app with one HTML file per page and its
-code split into route chunks, so a page loads what it needs and nothing else. That is why it is
-fast — and why it needs a web server: opened by double-click it cannot boot, because browsers refuse
-to load ES modules over `file://`.
+Launch: https://trungdungle-jobleads.github.io/lp/job-city-tracker/v1/us/job-city-tracker/
 
-**To send the prototype around, use the single-file build instead.** It lives in the ticket folder
-under `02_work/html/static` and opens by double-click; every page sits behind a `#`-URL there.
+Full: https://trungdungle-jobleads.github.io/lp/job-city-tracker/v1/us/job-city-tracker/?variant=full
 
-| Path | Contents |
-|------|----------|
-| `us/job-city-tracker/` | the hub: hero, explorer with ranking list and world map, key findings, FAQ |
-| `data-hub/job-market/<country>/<region>/<city>/` | the 100 city pages, e.g. `united-kingdom/england/london/` |
-| `assets/` | the build's JavaScript and stylesheets, hashed |
-| `css/`, `fonts/`, `images/` | the font sheet, Right Grotesk 500, Inter 400/500, the two logos |
-| `index.html` | forwards to the hub, and translates an old `#`-URL into its page |
+This is a client-rendered Nuxt static build with separate route folders for Main and all 100 cities. It requires HTTP hosting; it does not open by double-click. For offline use, use the separately generated `static` folder. The root entry preserves legacy hash-link forwarding.
 
-## What was left out
+## Deployment contract
 
-The export drops what no data hub page uses: the six translated dictionaries (the prototype is
-English only, and English is rendered from the keys), error reporting, the illustrations that ride
-along through the import graph, the duplicated base64 fonts, and the stylesheet rules whose class
-names appear nowhere in the application. None of this is removed from the app itself — it happens in
-the export tooling, after the build.
+- Repository: `trungdungle-jobleads/lp`
+- Branch: `main`; GitHub Pages publishes from the repository root.
+- Replace only `job-city-tracker/v1/` with this entire reviewed folder.
+- Required build base: `/lp/job-city-tracker/v1/`. Moving it to another path requires a rebuild.
+- Do not include the sibling offline folder, ZIP archives, backups or other private material.
 
-## Known limits
+Both formats have fixed safe public configuration, no backend bypass value and a preview-only background-network boundary. Packaged assets may load; background APIs receive empty demo responses. Login, production job search and unfinished Full topic links are not implemented. Existing outbound navigation links are deliberately retained.
 
-- Only the tracker's routes are built. Header and footer are the app's real components, but every
-  other link lands on the app's own 404 page.
-- Login, search and shop are absent by design. What does work: the quarter dropdown, the industry
-  filter, city search, map zoom and pan, the highlighting in both directions, the shortened colour
-  scale that expands on a tap, and on phones the bottom-sheet preview.
-- Every page is `noindex`.
+Data includes prototype snapshots and synthetic demo values. This is not a production-data, complete design-system or accessibility approval. `noindex` is not access control: GitHub Pages is public.
+
+Only English is packaged. The existing header shows EN with one English option; the mobile language panel has no alternate language.
+
+## Safe updates
+
+Edit the Nuxt source, generate with an allowlisted environment in an isolated copy, pack into a fresh folder, scan every final file and test actual route loads, interactions and PNG/CSV downloads. Publish only the tested bytes. Keep source/build identity and file hashes with each release.
+
+Historical exports contained a backend bypass value. Its owner must revoke/rotate it; replacing this directory does not erase historical copies. Do not roll back by republishing a credential-bearing old export.

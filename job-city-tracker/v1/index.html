@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<head><meta name="robots" content="noindex, nofollow">
+<head><meta name="robots" content="noindex, nofollow"><meta http-equiv="Content-Security-Policy" content="default-src &#x27;none&#x27;; base-uri &#x27;none&#x27;; script-src &#x27;self&#x27; &#x27;unsafe-inline&#x27; blob:; style-src &#x27;self&#x27; &#x27;unsafe-inline&#x27;; img-src &#x27;self&#x27; data: blob:; font-src &#x27;self&#x27; data:; connect-src &#x27;self&#x27; data: blob:; worker-src &#x27;self&#x27; blob:; media-src &#x27;self&#x27; data: blob:; object-src &#x27;none&#x27;; frame-src &#x27;none&#x27;; form-action &#x27;none&#x27;"><script src="/lp/job-city-tracker/v1/js/offline.js"></script>
 <meta charset="utf-8">
 <title>Job City Tracker</title>
 <style>
@@ -28,8 +28,8 @@
     /* The bundled variant addressed every page behind a #-URL, and those links are in circulation.
        Translate one into the real path so a shared link keeps landing on the page it named. */
     var hash = location.hash.replace(/^#\/?/, '');
-    var ziel = hash ? '/lp/job-city-tracker/v1/' + hash.replace(/\/$/, '') + '/' : '/lp/job-city-tracker/v1/us/job-city-tracker/';
-    location.replace(ziel);
+    var destination = hash ? '/lp/job-city-tracker/v1/' + hash.replace(/\/$/, '') + '/' : '/lp/job-city-tracker/v1/us/job-city-tracker/';
+    location.replace(destination);
   }
 </script>
 </body>
