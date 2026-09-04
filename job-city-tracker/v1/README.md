@@ -27,3 +27,7 @@ Only English is packaged. The existing header shows EN with one English option; 
 Edit the Nuxt source, generate with an allowlisted environment in an isolated copy, pack into a fresh folder, scan every final file and test actual route loads, interactions and PNG/CSV downloads. Publish only the tested bytes. Keep source/build identity and file hashes with each release.
 
 Historical exports contained a backend bypass value. Its owner must revoke/rotate it; replacing this directory does not erase historical copies. Do not roll back by republishing a credential-bearing old export.
+
+## Flag export correction
+
+This refreshed build loads PNG flags from the same lazy country asset resolver as the UI. Search results no longer determine which flag artwork can be exported. No chart design, data, filters, CSV formatting, citation wording or dropdown behavior was changed. See VALIDATION.md for the checks specific to this update.

@@ -11,10 +11,13 @@
   "cityCount": 100,
   "sourceRevision": "49c76df566b8ef7ca6f08075b9edcb54ba54a714",
   "includesUncommittedSourceChanges": true,
-  "sourceFingerprint": "9649fc2b5bc32e264abfdc2fa924b45716420565b0e74f5f9d49dd31ee8583e1",
-  "buildCompletedAt": "2026-09-04T09:14:49.899Z",
+  "sourceFingerprint": "b59b11610dc4b66a28f4ff8ce226a5d409883885a7483998be47a8969031428e",
+  "buildCompletedAt": "2026-09-04T10:04:41.033Z",
   "deploymentBase": "/lp/job-city-tracker/v1/",
   "hostedPreview": "https://trungdungle-jobleads.github.io/lp/job-city-tracker/v1/us/job-city-tracker/",
   "dataStatus": "Prototype snapshots and documented synthetic values; not verified production data",
-  "backendIntegration": false
+  "backendIntegration": false,
+  "update": "Search-independent flag assets for Main PNG download and Copy image",
+  "releaseLabel": "2026-09-04-flags",
+  "previousPreviewCommit": "b1e8b81c62e90413f9963805328c97521004f58b"
 }

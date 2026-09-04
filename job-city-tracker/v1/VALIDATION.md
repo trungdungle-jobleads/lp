@@ -1,35 +1,23 @@
-# Validation — JCT preview, 4 September 2026
+# Validation — search-independent PNG flags
 
-This records the separately built offline and hosted artifacts, not a production release or comprehensive design-system/accessibility certification. Runtime files were frozen before the final runs; documentation and SHA256SUMS were added afterwards.
+Updated 4 September 2026. Both Full and Launch are included. This is a refreshed prototype, not a production or universal browser/accessibility release. Runtime files were frozen before QA; only this documentation, release metadata and checksums were added afterwards.
 
-## Completed checks
+## Verified in this update
 
-| Check | Result |
-| --- | --- |
-| Focused Nuxt feature/configuration tests | 188/188 passed across 22 files |
-| Preview packer tests | 13 passed, including guard refusals, asset embedding and final-manifest cleanup order |
-| Scoped ESLint | Eight changed TS files checked; zero errors or warnings after explicitly including the two default-ignored test files |
-| Actual offline Chrome matrix | 165/165 passed, including 100 distinct direct city loads |
-| Actual route-folder Chrome matrix | 165/165 passed, including 100 distinct direct city loads under the exact deployment subpath |
-| Plain entry and reload | Passed in both formats |
-| Existing language control | Desktop English option and mobile single-language state passed; hosted mode also passed with existing German cookies |
-| Actual downloads | Six PNG and six CSV downloads per artifact: Volume, Company and Close in Full desktop and Launch mobile |
-| Assets and runtime | Zero page exceptions, console errors, failed local requests, 404s or external/backend request attempts in the final runs |
-| Source/build binding | Isolated build source matches final app/config/tool source; source fingerprint in RELEASE.json |
-| Structural review | All 104 HTML files protected; web820/offline12 permitted runtime asset paths exist |
+- 200/200 JCT tests across23 files;25 focused asset/export/golden cases pass. All existing Canvas goldens unchanged. Five source/test files pass explicit lint.
+- Both isolated clean-environment builds and existing packers succeeded. The build copies match the canonical source; only five source/test files changed from the verified pre-fix checkpoint.
+- Main: offline and strict hosted route output, Full/Launch,1440/390px, All industries/Q1 2026 and Finance/Q3 2025, unfiltered/New York/London/no-results states. All128 real PNG download/copy payloads retain100 flags and100 correctly ordered rows with the same flag identities as the unfiltered baseline.192 recorded Main checks pass.
+- City: both output modes, Full desktop and Launch mobile, all8 cards with actual PNG and CSV downloads;100 recorded checks pass, including flags/header assets and fonts.
+- Candidate runs have zero reported page/console/network/static-asset errors. Unexpected backend/external requests are blocked and treated as failures.
+- Root visually reviewed actual searched Main PNGs, including the previously missing non-US flags.
+- Final files scanned for sensitive/private values, source maps, filesystem paths, symlinks, unsafe config and missing preview protections. SHA256SUMS describes every other packaged file. The offline ZIP is test-extracted and byte-compared.
 
-The matrix covers Full/Launch at390 and1440px, map geometry/keyboard/zoom, city search and shared column widths, filters, tooltips, chart tables, panels, route navigation/reload/back and downloads. City Volume/Growth/Days active retain eight quarters; Jobs per company retains five. PNGs were decoded and checked for visible content; CSV values were compared with the accessible tables. Representative actual screenshots and PNGs were also visually inspected.
+## Preserved scope and limits
 
-Independent final scans check known private configuration values, public bypass settings, private filesystem paths, sensitive filenames, symlinks, source maps, CSP and noindex. SHA256SUMS identifies every packaged file except the checksum list itself. The offline ZIP is separately test-extracted and compared byte-for-byte before delivery.
+Only PNG flag asset resolution changed. Compact Main CSV numbers, Salary CSV/citation footnote omissions, ambiguous Growth scope labels, missing-national Seniority comparisons, absent Industry cards for four cities, accepted contrast and unfinished links remain as documented. The prior Full-desktop combined scroll/menu-dismissal case is not corrected or retested here.
 
-## Explicit limits
+Clipboard checks capture image payloads in an isolated browser adapter; native OS clipboard permissions/pasting remain untested. Chrome desktop/mobile viewports are covered, not every physical device/browser or every city/filter permutation. All100 routes were generated but were not each reopened in this narrow regression. Earlier broader route and all-card audits are historical supporting evidence, not reruns of this candidate. Source-wide strict typecheck and backend/real-data correctness remain outside this release.
 
-- Chrome on macOS is the tested browser, including mobile viewport simulation. This is not physical iOS/Android/Safari/Firefox certification.
-- The 100-city smoke covers every city once per format, alternating Full/Launch. Detailed two-variant behavior and downloads are covered on New York; every chart export for every city is not exhaustively tested.
-- Clipboard image permissions, live authentication, backend data/search, translations and intentionally unfinished links are not release-tested production features.
-- Background services are disabled for this preview. Deliberate outbound links can still leave it. English is the sole packaged language.
-- Source-wide strict typecheck, previously documented accessibility exceptions, accepted contrast/dropdowns, data claims and country-scoped routing remain separate handoff issues.
-- Existing build sourcemap/chunk warnings and a Python escape deprecation warning remain recorded; generated source maps are excluded from the package.
-- Replacing the active export does not revoke the historical exposed bypass value or erase old copies/Git history; its owner must revoke/rotate it.
+No app renderer geometry, stylesheet, snapshot, route, packer or menu implementation changed. Ordinary build warnings remain in private build logs. Deployment status and post-publication verification are recorded separately after publishing.
 
-Raw evidence is retained privately in the source handoff audit directory. Earlier failed attempts are preserved; only the final runs above establish this artifact acceptance. GitHub deployment/live verification is recorded separately after publishing and cannot be inferred from this pre-deployment note.
+Audit-only assertion correction: the first City run required every declared font, including unused fallback and unrelated families, to load. All PNG/CSV/menu checks passed. Final City evidence combines48 original passing checks per format with2 fresh actual-font/asset checks, bound to the preserved raw result hashes. It does not claim a full50-case rerun. No runtime change was made for this correction.
